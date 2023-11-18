@@ -23,17 +23,13 @@ class Header
             </div>
             <nav class="navbar navbar-expand-lg navbar-dark col-11">
                 <ul class="navbar-nav mx-auto justify-content-around" style="width:100%">
-                    <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('IndexController', 'index'); ?>">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'connexion'); ?>">Se connecter</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('IndexController', 'displayIndex'); ?>">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ConnexionController', 'displayConnexion'); ?>">Se connecter</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'inscription'); ?>">S'enregistrer</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'dexonnexion'); ?>">Se déconnecter</a></li>
                 </ul>
             </nav>
         </header>
-
-
-
-
 <?php
     }
 }
