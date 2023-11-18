@@ -1,13 +1,10 @@
+<!-- Create the index view -->
 <html>
- <?php
-echo ('<li><a href="http://localhost/phpobjet/phpTestComposer/index.php?controller=LivreController&method=displayLivres">Afficher la liste des livres </a> </li>');
+<?php
 
-echo ('<li><a href="http://localhost/phpobjet/phpTestComposer/index.php?controller=AbonneController&method=displayAbonnes">Afficher la liste des abonnés </a> </li>');
+use Keha\Test\Controller\IndexController;
 
-echo ('<li><a href="http://localhost/phpobjet/phpTestComposer/index.php?controller=FormController&method=constructAbonneForm">Ajouter un abonné</a> </li>');
-
-echo ('<li><a href="http://localhost/phpobjet/phpTestComposer/index.php?controller=FormController&method=constructLivreForm">Ajouter un livre</a> </li>');
-
-// var_dump($result[0]);
- ?>
-</html>
+//Create the instance of IndexController
+$controller = new IndexController();
+//Call the index Method
+$controller->index();
