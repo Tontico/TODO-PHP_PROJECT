@@ -3,10 +3,10 @@
 namespace Keha\Test\Config;
 
 class Config {
-    const DBNAME = "formation";
+    const DBNAME = "gestion_projet";
     const DBHOST = 'localhost';
-    const DBUSER = 'thib';
-    const DBPWD = 'thib';
+    const DBUSER = 'root';
+    const DBPWD = 'root';
     const ENTITY = 'Keha\Test\Entity\\';
     const CONTROLLER = 'Keha\Test\Controller\\';
     const DEFAULT_CONTROLLER = 'IndexController';
