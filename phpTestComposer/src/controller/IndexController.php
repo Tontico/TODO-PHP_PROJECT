@@ -3,12 +3,18 @@
 namespace Keha\Test\Controller;
 
 use Keha\Test\App\AbstractController;
-use Keha\Test\App\Model;
+use Keha\Test\views\header;
+use Keha\Test\views\head;
 
-class IndexController extends AbstractController {
-
-    public function index()
+class IndexController extends AbstractController
+{
+    public function displayIndex()
     {
-        $this->render('index.php',[]);
+        // Create the instances of Head & Header
+        $head = new head();
+        $header = new header();
+        // Call the displayHead & Header methods
+        $head->displayHead();
+        $header->displayHeader();
     }
 }
