@@ -14,6 +14,7 @@ class ConnexionController extends AbstractController
 
     public function __construct()
     {
+        session_start();
         $datas = ['axell' => "pwett"];
         $this->connexionForm = new ConnexionForm($datas); // Create an instance of ConnexionForm
     }
@@ -21,7 +22,6 @@ class ConnexionController extends AbstractController
     // Method to display connection form
     public function displayConnexion()
     {
-        session_start();
         $head = new Head();
         $header = new Header();
         $head->displayHead();
@@ -50,8 +50,11 @@ class ConnexionController extends AbstractController
         return false;
     }
 
-    public static function disconnect()
+    public static function deconnexion()
     {
-        echo "pdza";
+        if ($_SESSION['connected']) {
+            session_destroy();
+            UrlGenerator::redirect('IndexController', 'displayIndex');
+        }
     }
 }
