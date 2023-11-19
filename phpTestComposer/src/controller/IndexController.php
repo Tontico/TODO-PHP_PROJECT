@@ -16,10 +16,5 @@ class IndexController extends AbstractController
         // Call the displayHead & Header methods
         $head->displayHead();
         $header->displayHeader();
-        if (isset($_SESSION)) {
-            var_dump($_SESSION);
-        } else {
-            session_start();
-        }
     }
 }
