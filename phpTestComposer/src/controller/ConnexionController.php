@@ -15,7 +15,7 @@ class ConnexionController extends AbstractController
     public function __construct()
     {
         session_start();
-        $datas = ['axell' => "pwett"];
+        $datas = ['thib' => "thib"];
         $this->connexionForm = new ConnexionForm($datas); // Create an instance of ConnexionForm
     }
 
