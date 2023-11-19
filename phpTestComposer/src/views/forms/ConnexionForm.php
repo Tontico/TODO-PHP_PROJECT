@@ -2,8 +2,7 @@
 
 namespace Keha\Test\views\forms;
 
-// Import the urlGenerator Method
-require_once(__DIR__ . './../../App/UrlGenerator.php');
+
 
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\Model\GetUser;

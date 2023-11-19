@@ -3,11 +3,9 @@
 namespace Keha\Test\Views;
 
 // Import the urlGenerator Method
-require_once(__DIR__ . './../App/UrlGenerator.php');
-
 
 use Keha\Test\App\UrlGenerator;
-
+use Keha\Test\Controller\ConnexionController;
 
 //Class that create the header
 class Header
@@ -26,7 +24,9 @@ class Header
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('IndexController', 'displayIndex'); ?>">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ConnexionController', 'displayConnexion'); ?>">Se connecter</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'inscription'); ?>">S'enregistrer</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'dexonnexion'); ?>">Se déconnecter</a></li>
+                    <?php if (!ConnexionController::isConnected()) : ?>
+                        <li class="nav-item"><a class="nav-link text-light" href="<?= ConnexionController::disconnect(); ?>">Se déconnecter</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </header>

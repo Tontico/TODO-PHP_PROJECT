@@ -1,10 +1,13 @@
-<!-- Create the index view -->
-<html>
 <?php
 
+namespace Keha\Test\views;
+
+use Keha\Test\Controller\ConnexionController;
 use Keha\Test\Controller\IndexController;
 
-//Create the instance of IndexController
-$controller = new IndexController();
-//Call the index Method
-$controller->displayIndex();
+
+$connexionController = new ConnexionController();
+$indexController = new IndexController();
+$indexController->displayIndex();
+
+echo "dzad";

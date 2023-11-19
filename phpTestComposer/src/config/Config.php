@@ -14,5 +14,5 @@ class Config
     const ENTITY = 'Keha\Test\Entity\\';
     const CONTROLLER = 'Keha\Test\Controller\\';
     const DEFAULT_CONTROLLER = 'IndexController';
-    const DEFAULT_METHOD = 'index';
+    const DEFAULT_METHOD = 'displayIndex';
 }

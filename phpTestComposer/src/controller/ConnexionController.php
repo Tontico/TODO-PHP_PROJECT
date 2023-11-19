@@ -2,9 +2,6 @@
 
 namespace Keha\Test\Controller;
 
-// Import the urlGenerator Method
-require_once(__DIR__ . './../App/UrlGenerator.php');
-
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
@@ -24,11 +21,13 @@ class ConnexionController extends AbstractController
     // Method to display connection form
     public function displayConnexion()
     {
+        session_start();
         $head = new Head();
         $header = new Header();
         $head->displayHead();
         $header->displayHeader();
         $this->connexionForm->displayConnexionForm();
+        var_dump($_SESSION);
     }
 
     // Method to handle login process
@@ -37,8 +36,22 @@ class ConnexionController extends AbstractController
         $error = $this->connexionForm->processFormLogin(); // Process the login form
         if ($error === true) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if login ok
+            exit;
         } else {
             $this->displayConnexion($error); // Redisplay the login form with error value
         }
+    }
+
+    public static function isConnected()
+    {
+        if (isset($_SESSION['connected'])) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function disconnect()
+    {
+        echo "pdza";
     }
 }
