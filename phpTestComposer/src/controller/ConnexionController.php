@@ -27,7 +27,6 @@ class ConnexionController extends AbstractController
         $head->displayHead();
         $header->displayHeader();
         $this->connexionForm->displayConnexionForm();
-        var_dump($_SESSION);
     }
 
     // Method to handle login process
