@@ -4,24 +4,24 @@ namespace Keha\Test\Entity;
 
 class Projet
 {
-    private int $id_projet;
-    private ?string $titre_projet;
-    private ?string $descritpion_projet;
-    private ?int $id_administrateur;
+    private int $Id_projet;
+    private ?string $Titre_projet;
+    private ?string $Descritpion_projet;
+    private ?int $Id_administrateur;
 
     public function __construct($id, $titre, $descritpion, $id_admin)
     {
-        $this->id_projet = $id;
-        $this->titre_projet = $titre;
-        $this->descritpion_projet = $descritpion;
-        $this->id_administrateur = $id_admin;
+        $this->Id_projet = $id;
+        $this->Titre_projet = $titre;
+        $this->Descritpion_projet = $descritpion;
+        $this->Id_administrateur = $id_admin;
     }
     /**
      * Get the value of id_projet
      */
     public function getId_projet()
     {
-        return $this->id_projet;
+        return $this->Id_projet;
     }
 
     /**
@@ -29,7 +29,7 @@ class Projet
      */
     public function getTitre_projet()
     {
-        return $this->titre_projet;
+        return $this->Titre_projet;
     }
 
     /**
@@ -39,7 +39,7 @@ class Projet
      */
     public function setTitre_projet($titre_projet)
     {
-        $this->titre_projet = $titre_projet;
+        $this->Titre_projet = $titre_projet;
 
         return $this;
     }
@@ -49,7 +49,7 @@ class Projet
      */
     public function getDescritpion_projet()
     {
-        return $this->descritpion_projet;
+        return $this->Descritpion_projet;
     }
 
     /**
@@ -59,7 +59,7 @@ class Projet
      */
     public function setDescritpion_projet($descritpion_projet)
     {
-        $this->descritpion_projet = $descritpion_projet;
+        $this->Descritpion_projet = $descritpion_projet;
 
         return $this;
     }
@@ -69,7 +69,7 @@ class Projet
      */
     public function getId_administrateur()
     {
-        return $this->id_administrateur;
+        return $this->Id_administrateur;
     }
 
     /**
@@ -79,7 +79,7 @@ class Projet
      */
     public function setId_administrateur($id_administrateur)
     {
-        $this->id_administrateur = $id_administrateur;
+        $this->Id_administrateur = $id_administrateur;
 
         return $this;
     }

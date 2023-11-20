@@ -36,22 +36,16 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
     }
 
-    public function getById($entity, $id)
+    public function readBy($entity, $parameter)
     {
-        $query = $this->query('select * from ' . $entity . ' where id=' . $id);
+        $query = $this->query('select ' . $parameter . ' from ' . $entity);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
+    }
+
+    public function getById($entity, $conditions, $id)
+    {
+        $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
-    }
-
-    public function getLivreByIdEditeur($entity, $idEditeur)
-    {
-        $query = $this->query('select * from ' . $entity . ' where id_editeur=' . $idEditeur);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
-    }
-
-    public function getByIdAuteur($entity, $idAuteur)
-    {
-        $query = $this->query('select * from ' . $entity . ' where id_auteur=' . $idAuteur);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
     }
 
     public function save($entity, $datas): void
@@ -84,13 +78,21 @@ class Model extends PDO
         $preparedRequest->execute($preparedDatas);
     }
 
-    public function getByAttribute($entity, $attribute, $value, $comp = '=')
+    public function getByAttribute($entity, $attribute, $value)
     {
         // SELECT * FROM table WHERE attribute = value
-        $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute = '$value'");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
-    
+
+
+    public function getByRequest($entity, $attribute, $entity1, $attribute1, $value)
+    {
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute = (SELECT * FROM $entity1 WHERE $attribute1 = $value)");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
+
     public function updateById($entity, $id, $datas): void
     {
         $sql = 'UPDATE ' . $entity . ' SET ';
@@ -111,11 +113,12 @@ class Model extends PDO
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
     }
-    public function deleteById($entity, $id): void
+
+    /*public function deleteById($entity, $id): void
     {
         $sql = "DELETE from $entity WHERE id = '$id'";
         $this->exec($sql);
-    }
+    }*/
 
     public function delete($entity, $param, $condition)
     {

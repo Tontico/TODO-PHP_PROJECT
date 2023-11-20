@@ -4,31 +4,31 @@ namespace Keha\Test\Entity;
 
 class Tache
 {
-    private int $id_tache;
+    private int $Id_tache;
     private ?string $Nom_tache;
     private ?string $Descritpion_tache;
-    private ?string $date_debut_tache;
-    private ?string $date_realisation_tache;
-    private ?string $date_butoire_tache;
-    private int $id_charge;
-    private int $id_priorite;
-    private int $id_utilisateur;
-    private int $id_projet;
-    private int $id_status;
+    private ?string $Date_debut_tache;
+    private ?string $Date_realisation_tache;
+    private ?string $Date_butoire_tache;
+    private int $Id_charge;
+    private int $Id_priorite;
+    private int $Id_utilisateur;
+    private int $Id_projet;
+    private int $Id_status;
 
     public function __construct($id, $nom, $descritpion, $date_debut, $date_fin, $date_butoire, $idcharge, $idprio, $iduser, $idprojet, $idstatus)
     {
-        $this->id_tache = $id;
+        $this->Id_tache = $id;
         $this->Nom_tache = $nom;
         $this->Descritpion_tache = $descritpion;
-        $this->date_debut_tache = $date_debut;
-        $this->date_butoire_tache = $date_butoire;
-        $this->date_realisation_tache = $date_fin;
-        $this->id_charge = $idcharge;
-        $this->id_priorite = $idprio;
-        $this->id_utilisateur = $iduser;
-        $this->id_projet = $idprojet;
-        $this->id_status = $idstatus;
+        $this->Date_debut_tache = $date_debut;
+        $this->Date_realisation_tache = $date_butoire;
+        $this->Date_realisation_tache = $date_fin;
+        $this->Id_charge = $idcharge;
+        $this->Id_priorite = $idprio;
+        $this->Id_utilisateur = $iduser;
+        $this->Id_projet = $idprojet;
+        $this->Id_status = $idstatus;
     }
 
     /**
@@ -52,9 +52,9 @@ class Tache
      *
      * @return  self
      */
-    public function setDescritpion_tache($Descritpion_tache)
+    public function setDescritpion_tache($descritpion_tache)
     {
-        $this->Descritpion_tache = $Descritpion_tache;
+        $this->Descritpion_tache = $descritpion_tache;
 
         return $this;
     }
@@ -64,7 +64,7 @@ class Tache
      */
     public function getDate_debut_tache()
     {
-        return $this->date_debut_tache;
+        return $this->Date_debut_tache;
     }
 
     /**
@@ -74,7 +74,7 @@ class Tache
      */
     public function setDate_debut_tache($date_debut_tache)
     {
-        $this->date_debut_tache = $date_debut_tache;
+        $this->Date_debut_tache = $date_debut_tache;
 
         return $this;
     }
@@ -84,7 +84,7 @@ class Tache
      */
     public function getDate_realisation_tache()
     {
-        return $this->date_realisation_tache;
+        return $this->Date_realisation_tache;
     }
 
     /**
@@ -94,7 +94,7 @@ class Tache
      */
     public function setDate_realisation_tache($date_realisation_tache)
     {
-        $this->date_realisation_tache = $date_realisation_tache;
+        $this->Date_realisation_tache = $date_realisation_tache;
 
         return $this;
     }
@@ -104,7 +104,7 @@ class Tache
      */
     public function getDate_butoire_tache()
     {
-        return $this->date_butoire_tache;
+        return $this->Date_butoire_tache;
     }
 
     /**
@@ -114,7 +114,7 @@ class Tache
      */
     public function setDate_butoire_tache($date_butoire_tache)
     {
-        $this->date_butoire_tache = $date_butoire_tache;
+        $this->Date_butoire_tache = $date_butoire_tache;
 
         return $this;
     }
