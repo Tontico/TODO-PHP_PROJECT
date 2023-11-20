@@ -42,11 +42,11 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
     }
 
-    public function getById($entity, $conditions, $id)
-    {
-        $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
-    }
+    // public function getById($entity, $conditions, $id)
+    // {
+    //     $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
+    //     return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
+    // }
 
     public function save($entity, $datas): void
     {
