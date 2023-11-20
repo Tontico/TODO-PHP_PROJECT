@@ -14,7 +14,7 @@ class Body
         echo "<body>
         <div class='container'>
             <div class='row'>
-            <a href ='" . UrlGenerator::generateUrl('FormController', 'ConstructProjectForm') . "'>Ajoutez un projet</a><br>";
+            <a href ='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "'>Ajoutez un projet</a><br>";
         foreach ($projects as $project) {
             echo "<div class='col-4'>
             <h2 class=''> " . $project->getTitre_projet() . "</h2>
@@ -25,12 +25,13 @@ class Body
             </div>";
         }
 
-
         echo "     
 </div>
         </div>
     </body>";
     }
+
+  
 
     public function displayBodyTaches($datas)
     {

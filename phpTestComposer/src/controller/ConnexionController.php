@@ -7,8 +7,8 @@ use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\forms\ConnexionForm;
+use Keha\Test\views\forms\ProjectForm;
 use Keha\Test\App\Model;
-
 class ConnexionController extends AbstractController
 {
     private $connexionForm;
@@ -23,6 +23,7 @@ class ConnexionController extends AbstractController
         $datas[$datas1[0]->getNom_utilisateur()] = $datas1[0]->getMdp_utilisateur();*/
         
         $this->connexionForm = new ConnexionForm(); // Create an instance of ConnexionForm
+        
     }
 
     // Method to display connection form
@@ -33,6 +34,15 @@ class ConnexionController extends AbstractController
         $head->displayHead();
         $header->displayHeader();
         $this->connexionForm->displayConnexionForm();
+    }
+
+    public function displayNewProject()
+    {
+        $head = new Head();
+        $header = new Header();
+        $head->displayHead();
+        $header->displayHeader();
+       
     }
 
     // Method to handle login process

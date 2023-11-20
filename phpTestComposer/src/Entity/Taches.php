@@ -4,7 +4,7 @@ namespace Keha\Test\Entity;
 
 class Taches
 {
-    private int $Id_tache;
+    private int $Id_taches;
     private ?string $Nom_tache;
     private ?string $Descritpion_tache;
     private ?string $Date_debut_tache;
@@ -18,7 +18,7 @@ class Taches
 
     public function __construct($id, $nom, $descritpion, $date_debut, $date_fin, $date_butoire, $idcharge, $idprio, $iduser, $idprojet, $idstatus)
     {
-        $this->Id_tache = $id;
+        $this->Id_taches = $id;
         $this->Nom_tache = $nom;
         $this->Descritpion_tache = $descritpion;
         $this->Date_debut_tache = $date_debut;

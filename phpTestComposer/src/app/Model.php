@@ -48,7 +48,7 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
     }
 
-    public function save($entity, $datas): void
+    public function save($entity, $datas): int
     {
         $sql = 'INSERT into ' . $entity . ' (';
         $count = count($datas) - 1;
@@ -72,10 +72,12 @@ class Model extends PDO
             $i++;
         }
         $sql = $sql . ')';
-        echo $sql . '<br>';
-        var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
         $preparedRequest->execute($preparedDatas);
+
+        $lastInsertId = $this->lastInsertId();
+
+        return $lastInsertId;
     }
 
     public function getByAttribute($entity, $attribute, $value)
@@ -85,6 +87,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
+    public function getByJoin($entity, $entityJoin, $attribute, $attributeJoin,$attributeUser, $value)
+    {
+        $query = $this->query("SELECT * FROM $entity JOIN $entityJoin ON $entity.$attribute = $entityJoin.$attributeJoin WHERE $entityJoin.$attributeUser = $value");
+        var_dump($query);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
 
     public function getByRequest($entity, $attribute, $entity1, $attribute1, $value)
     {
