@@ -90,7 +90,15 @@ class Model extends PDO
         $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
-    
+
+
+    public function getByRequest($entity, $attribute,$entity1, $attribute1, $value)
+    {
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute = (SELECT * FROM $entity1 WHERE $attribute1 = $value)");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
+
     public function updateById($entity, $id, $datas): void
     {
         $sql = 'UPDATE ' . $entity . ' SET ';
@@ -122,6 +130,8 @@ class Model extends PDO
         $sql = "DELETE FROM $entity WHERE $param=$condition";
         $this->exec($sql);
     }
+
+
 
     public function update($entity, $column, $value, $condition)
     {
