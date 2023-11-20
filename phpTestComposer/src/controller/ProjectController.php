@@ -25,8 +25,8 @@ class ProjectController extends AbstractController
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
-        $projects = Model::getInstance()->getByJoin('Projet','Administrateur', 'Id_administrateur','Id_administrateur','Id_utilisateur', $_SESSION['userId']);
-    
+        $projects = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
+
 
         $head = new Head();
         $header = new Header();
@@ -76,11 +76,8 @@ class ProjectController extends AbstractController
 
         Model::getInstance()->save('projet', $datas);
 
-        $nameProject = $_POST["Titre_projet"];
-        if ($nameProject) {
+        return UrlGenerator::redirect('ProjectController', 'displayProjet');
 
-            return UrlGenerator::redirect('ProjectController', 'displayProjet');
-        }
         //} else {
         //echo "L'administrateur n'a pas été trouvé pour l'utilisateur avec l'ID : {$_SESSION['userId']}";
         //}

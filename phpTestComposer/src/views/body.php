@@ -10,28 +10,31 @@ class Body
 {
     public function displayBodyProject($projects)
     {
-
         echo "<body>
         <div class='container'>
             <div class='row'>
-            <a href ='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "'>Ajoutez un projet</a><br>";
+                <div class='col-12 mb-3'>
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Ajoutez un projet</a>
+                </div>";
+
         foreach ($projects as $project) {
-            echo "<div class='col-4'>
-            <h2 class=''> " . $project->getTitre_projet() . "</h2>
-            <p class=''>" . $project->getDescription_projet() . "</p>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&id_projet=" . $project->getId_projet() . "' class='link'> Lien vers le projet</a><br>
-            <a href =''>Supprimez un projet</a>
-            
+            echo "<div class='col-md-4 mb-4'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
+                        <p class='card-text'>" . $project->getDescription_projet() . "</p>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&id_projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
+                        <a href='' class='btn btn-danger'>Supprimez le projet</a>
+                    </div>
+                </div>
             </div>";
         }
 
-        echo "     
-</div>
-        </div>
+        echo "</div>
+            </div>
     </body>";
     }
 
-  
 
     public function displayBodyTaches($datas)
     {
@@ -66,7 +69,7 @@ class Body
     {
         //Il faudra ajouter le nom du projet
         echo "<body>
-<h1>NOM PROJET</h1>";
+        <h1>NOM PROJET</h1>";
 
 
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
