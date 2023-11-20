@@ -1,5 +1,5 @@
 # Ignorer le dossier vendre
-/vendor
+/vendor/
 
 # ignorer le fichier config
-/config
+/config/
