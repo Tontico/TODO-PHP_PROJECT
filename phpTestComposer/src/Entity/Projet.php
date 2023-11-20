@@ -47,7 +47,7 @@ class Projet
     /**
      * Get the value of descritpion_projet
      */
-    public function getDescritpion_projet()
+    public function getDescription_projet()
     {
         return $this->Description_projet;
     }

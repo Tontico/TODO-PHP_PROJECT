@@ -5,7 +5,7 @@ use Keha\Test\App\Model;
 
 class Taches
 {
-    private int $Id_tache;
+    private int $Id_taches;
     private ?string $Nom_tache;
     private ?string $Descritpion_tache;
     private ?string $Date_debut_tache;
@@ -141,9 +141,17 @@ class Taches
     }
 
 
-    // public function getUtilisateur()
-    // { echo "toto";
-    //     return Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$this->Id_utilisateur);
-    // }
+ public function getUtilisateur()
+ { 
+    return Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$this->Id_utilisateur);
+ }
 
+
+    /**
+     * Get the value of Id_taches
+     */ 
+    public function getId_taches()
+    {
+        return $this->Id_taches;
+    }
 }
