@@ -2,7 +2,7 @@
 
 namespace Keha\Test\Entity;
 
-class Tache
+class Taches
 {
     private int $Id_tache;
     private ?string $Nom_tache;

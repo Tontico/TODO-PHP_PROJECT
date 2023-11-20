@@ -3,24 +3,28 @@
 namespace Keha\Test\views;
 
 use Keha\Test\App\UrlGenerator;
+use Keha\Test\App\Model;
 
 //Class that create the Body
 class Body
 {
-    public function displayBodyProject($datas)
+    public function displayBodyProject($projects)
     {
 
         echo "<body>
         <div class='container'>
-            <div class='row'>";
-
-        foreach ($datas as $data => $key) {
+            <div class='row'>
+            <a href ='" . UrlGenerator::generateUrl('FormController', 'ConstructProjectForm') . "'>Ajoutez un projet</a><br>";
+        foreach ($projects as $project) {
             echo "<div class='col-4'>
-            <h2 class=''> " . $key->getTitre_projet() . "</h2>
-            <p class=''>" . $key->getDescritpion_projet() . "</p>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "' class='link'> Lien vers le projet</a>
+            <h2 class=''> " . $project->getTitre_projet() . "</h2>
+            <p class=''>" . $project->getDescription_projet() . "</p>
+            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&id_projet=" . $project->getId_projet() . "' class='link'> Lien vers le projet</a><br>
+            <a href =''>Supprimez un projet</a>
+            
             </div>";
         }
+
 
         echo "     
 </div>
@@ -65,19 +69,19 @@ class Body
 
 
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
-            echo "<div>
+        echo "<div>
             <h2 class=''> " . $data->getNom_tache() . "</h2>
             <p>Priorité taches, et statut tache<p/>
             <h3 class='h4'> Utilisateur en charge de la tache: Moi</h3>
             <p class=''>" . $data->getDescritpion_tache() . "</p>";
 
-            If (($data->getDate_realisation_tache())=== NULL) {
-                echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache(). " et à finir pour le : " . $data->getDate_butoire_tache(). "</p>";
-            } else {
-                echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache(). " et fini le : " . $data->getDate_realisation_tache(). "</p>";
-            }
+        if (($data->getDate_realisation_tache()) === NULL) {
+            echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et à finir pour le : " . $data->getDate_butoire_tache() . "</p>";
+        } else {
+            echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et fini le : " . $data->getDate_realisation_tache() . "</p>";
+        }
 
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'modifyTache') . "' class=''> Modifier la tache</a><br>
+        echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'modifyTache') . "' class=''> Modifier la tache</a><br>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTache') . "' class=''>Supprimer la tache</a><br>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>
             </div>

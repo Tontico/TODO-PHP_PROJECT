@@ -6,16 +6,10 @@ class Projet
 {
     private int $Id_projet;
     private ?string $Titre_projet;
-    private ?string $Descritpion_projet;
+    private ?string $Description_projet;
     private ?int $Id_administrateur;
 
-    public function __construct($id, $titre, $descritpion, $id_admin)
-    {
-        $this->Id_projet = $id;
-        $this->Titre_projet = $titre;
-        $this->Descritpion_projet = $descritpion;
-        $this->Id_administrateur = $id_admin;
-    }
+
     /**
      * Get the value of id_projet
      */
@@ -47,9 +41,9 @@ class Projet
     /**
      * Get the value of descritpion_projet
      */
-    public function getDescritpion_projet()
+    public function getDescription_projet()
     {
-        return $this->Descritpion_projet;
+        return $this->Description_projet;
     }
 
     /**
@@ -59,7 +53,7 @@ class Projet
      */
     public function setDescritpion_projet($descritpion_projet)
     {
-        $this->Descritpion_projet = $descritpion_projet;
+        $this->Description_projet = $descritpion_projet;
 
         return $this;
     }
