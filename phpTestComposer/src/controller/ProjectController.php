@@ -17,7 +17,8 @@ class ProjectController extends AbstractController
     // Display project if user is connected
     public function displayProjet()
     {
-        if (!ConnexionController::isConnected()) {
+        echo "p";
+        if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
 
@@ -38,7 +39,7 @@ class ProjectController extends AbstractController
     // Display all tache if user is connected
     public function displayTaches()
     {
-        if (!ConnexionController::isConnected()) {
+        if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
 
@@ -63,13 +64,13 @@ class ProjectController extends AbstractController
     //Display one tache if user is connected
     public function displayTache()
     {
-        if (!ConnexionController::isConnected()) {
+        if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
 
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-   
+
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
@@ -83,7 +84,7 @@ class ProjectController extends AbstractController
     }
     public function ConfirmationDelete()
     {
-        if (!ConnexionController::isConnected()) {
+        if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
         $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_SESSION['userId']);
@@ -96,13 +97,13 @@ class ProjectController extends AbstractController
     }
     public function deleteproject()
     {
-        if (!ConnexionController::isConnected()) {
+        if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
 
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-   
+
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
@@ -114,6 +115,4 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayBodyTache($task);
     }
-
-
 }

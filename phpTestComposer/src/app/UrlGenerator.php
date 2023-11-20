@@ -6,9 +6,13 @@ namespace Keha\Test\App;
 class UrlGenerator
 {
     // Method to generate a URL from query parameters
-    public static function generateUrl($controller, $method, $query = [])
+    public static function generateUrl($controller, $method, $formName = null, $query = [])
     {
         $url = 'index.php?controller=' . $controller . '&method=' . $method;
+        // add the formName parameter if exist
+        if ($formName !== null) {
+            $url .= '&formName=' . $formName;
+        }
         if (!empty($query) && is_array($query)) {
             foreach ($query as $key => $value) {
                 $url .= '&' . $key . '=' . $value;
