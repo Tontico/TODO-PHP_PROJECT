@@ -60,4 +60,24 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayBodyTaches($data);
     }
+
+    public function displayTache()
+    {
+        if (!ConnexionController::isConnected()) {
+            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+        }
+
+        $data = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
+   
+
+
+
+
+        $head = new Head();
+        $header = new Header();
+        $body = new Body;
+        $head->displayHead();
+        $header->displayHeader();
+        $body->displayBodyTache($data);
+    }
 }

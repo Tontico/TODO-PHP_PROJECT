@@ -22,7 +22,7 @@ class Tache
         $this->nom_tache = $nom;
         $this->descritpion_tache = $descritpion;
         $this->date_debut_tache = $date_debut;
-        $this->date_realisation_tache = $date_butoire;
+        $this->date_butoire_tache = $date_butoire;
         $this->date_realisation_tache = $date_fin;
         $this->id_charge = $idcharge;
         $this->id_priorite = $idprio;
