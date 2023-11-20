@@ -29,7 +29,7 @@ class ProjectController extends AbstractController
 
         $head = new Head();
         $header = new Header();
-        $body = new Body;
+        $body = new Body();
         $head->displayHead();
         $header->displayHeader();
         $body->displayBodyProject($data);
