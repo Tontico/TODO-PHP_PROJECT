@@ -36,6 +36,12 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
     }
 
+    public function readBy($entity, $parameter)
+    {
+        $query = $this->query('select ' . $parameter . ' from ' . $entity);
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
+    }
+
     public function getById($entity, $conditions, $id)
     {
         $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
@@ -72,10 +78,10 @@ class Model extends PDO
         $preparedRequest->execute($preparedDatas);
     }
 
-    public function getByAttribute($entity, $attribute, $value, $comp = '=')
+    public function getByAttribute($entity, $attribute, $value)
     {
         // SELECT * FROM table WHERE attribute = value
-        $query = $this->query("SELECT * FROM $entity WHERE $attribute $comp '$value'");
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute = '$value'");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
@@ -119,7 +125,7 @@ class Model extends PDO
         $sql = "DELETE FROM $entity WHERE $param=$condition";
         $this->exec($sql);
     }
-  
+
     public function update($entity, $column, $value, $condition)
     {
         $sql = " UPDATE $entity SET $column = '$value' WHERE id = $condition";

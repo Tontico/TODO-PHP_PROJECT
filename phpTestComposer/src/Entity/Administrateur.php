@@ -3,15 +3,15 @@
 namespace Keha\Test\Entity;
 
 class Administrateur{
-    private int $id_administrateur;
-    private int $id_utilisateur;
+    private int $Id_administrateur;
+    private int $Id_utilisateur;
 
     /**
      * Get the value of id_administrateur
      */ 
     public function getId_administrateur()
     {
-        return $this->id_administrateur;
+        return $this->Id_administrateur;
     }
 
     /**
@@ -19,6 +19,6 @@ class Administrateur{
      */ 
     public function getId_utilisateur()
     {
-        return $this->id_utilisateur;
+        return $this->Id_utilisateur;
     }
 }

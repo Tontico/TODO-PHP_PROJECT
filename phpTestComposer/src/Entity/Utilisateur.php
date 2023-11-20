@@ -3,18 +3,18 @@
 namespace Keha\Test\Entity;
 
 class Utilisateur {
-    private int $id_utilisateur;
-    private ?string $nom_utilisateur;
-    private ?string $prenom_utilisateur;
-    private string $mdp_utilisateur;
-    private string $email_utilisateur;
+    private int $Id_utilisateur;
+    private string $Nom_utilisateur;
+    private string $Prenom_utilisateur;
+    private string $Mdp_utilisateur;
+    private string $Email_utilisateur;
 
     /**
      * Get the value of id_utilisateur
      */ 
     public function getId_utilisateur()
     {
-        return $this->id_utilisateur;
+        return $this->Id_utilisateur;
     }
 
     /**
@@ -22,7 +22,7 @@ class Utilisateur {
      */ 
     public function getNom_utilisateur()
     {
-        return $this->nom_utilisateur;
+        return $this->Nom_utilisateur;
     }
 
     /**
@@ -30,7 +30,7 @@ class Utilisateur {
      */ 
     public function getPrenom_utilisateur()
     {
-        return $this->prenom_utilisateur;
+        return $this->Prenom_utilisateur;
     }
 
     /**
@@ -38,7 +38,7 @@ class Utilisateur {
      */ 
     public function getMdp_utilisateur()
     {
-        return $this->mdp_utilisateur;
+        return $this->Mdp_utilisateur;
     }
 
     /**
@@ -46,6 +46,6 @@ class Utilisateur {
      */ 
     public function getEmail_utilisateur()
     {
-        return $this->email_utilisateur;
+        return $this->Email_utilisateur;
     }
 }

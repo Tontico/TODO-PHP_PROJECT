@@ -3,15 +3,15 @@
 namespace Keha\Test\Entity;
 
 class Participant_projet{
-    private int $id_projet;
-    private int $id_utilisateur;
+    private int $Id_projet;
+    private int $Id_utilisateur;
 
     /**
      * Get the value of id_projet
      */ 
     public function getId_projet()
     {
-        return $this->id_projet;
+        return $this->Id_projet;
     }
 
     /**
@@ -19,6 +19,6 @@ class Participant_projet{
      */ 
     public function getId_utilisateur()
     {
-        return $this->id_utilisateur;
+        return $this->Id_utilisateur;
     }
 }

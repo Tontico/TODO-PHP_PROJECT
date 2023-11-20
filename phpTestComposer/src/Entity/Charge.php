@@ -4,15 +4,15 @@ namespace Keha\Test\Entity;
 
 
 class Charge{
-    private int $id_charge;
-    private string $etat_charge;
+    private int $Id_charge;
+    private string $Etat_charge;
 
     /**
      * Get the value of id_charge
      */ 
     public function getId_charge()
     {
-        return $this->id_charge;
+        return $this->Id_charge;
     }
 
     /**
@@ -20,6 +20,6 @@ class Charge{
      */ 
     public function getEtat_charge()
     {
-        return $this->etat_charge;
+        return $this->Etat_charge;
     }
 }

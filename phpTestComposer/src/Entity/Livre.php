@@ -3,13 +3,13 @@
 namespace Keha\Test\Entity;
 
 class Livre {
-    private int $id;
-    private ?string $titre;
-    private ?string $genre;
-    private ?string $categorie;
-    private ?int $id_auteur;
-    private ?int $id_editeur;
-    private ?int $id_genre;
+    private int $Id;
+    private ?string $Titre;
+    private ?string $Genre;
+    private ?string $Categorie;
+    private ?int $Id_auteur;
+    private ?int $Id_editeur;
+    private ?int $Id_genre;
 
     /**
      * Get the value of nom

@@ -7,6 +7,7 @@ use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\forms\ConnexionForm;
+use Keha\Test\App\Model;
 
 class ConnexionController extends AbstractController
 {
@@ -15,8 +16,13 @@ class ConnexionController extends AbstractController
     public function __construct()
     {
         session_start();
-        $datas = ['thib' => "thib"];
-        $this->connexionForm = new ConnexionForm($datas); // Create an instance of ConnexionForm
+        
+        /*$datas = [];
+        $datas1 = Model::getInstance()->getByAttribute("utilisateur","Id_utilisateur",1);
+        var_dump($datas1);
+        $datas[$datas1[0]->getNom_utilisateur()] = $datas1[0]->getMdp_utilisateur();*/
+        
+        $this->connexionForm = new ConnexionForm(); // Create an instance of ConnexionForm
     }
 
     // Method to display connection form
