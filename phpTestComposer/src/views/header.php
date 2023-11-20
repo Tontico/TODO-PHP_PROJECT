@@ -25,6 +25,9 @@ class Header
             <nav class="navbar navbar-expand-lg navbar-dark col-11">
                 <ul class="navbar-nav mx-auto justify-content-around" style="width:100%">
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('IndexController', 'displayIndex'); ?>">Accueil</a></li>
+                    <?php if (ConnexionController::isConnected()) : ?>
+                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ProjectController', 'displayProjet'); ?>">Voir ses projets</a></li>
+                    <?php endif; ?>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ConnexionController', 'displayConnexion'); ?>">Se connecter</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'inscription'); ?>">S'enregistrer</a></li>
                     <?php if (ConnexionController::isConnected()) : ?>
