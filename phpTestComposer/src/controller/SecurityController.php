@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
     {
         if ($_SESSION['connected']) {
             session_destroy();
-            UrlGenerator::redirect('IndexController', 'displayIndex');
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion');
         }
     }
 
@@ -60,7 +60,6 @@ class SecurityController extends AbstractController
                 }
             }
         }
-
         // User isn't admin of the project
         return false;
     }

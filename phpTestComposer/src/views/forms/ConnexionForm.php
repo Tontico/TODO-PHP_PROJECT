@@ -16,39 +16,40 @@ class ConnexionForm extends AbstractForm
     public function displayConnexionForm()
     {
 ?>
-        <form id="form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST" style="width: 20%; margin: auto; margin-top: 150px; border: 1px solid #007BFF; border-radius: 20px; padding: 20px;">
+        <main>
+            <form id="form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST" style="width: 20%; margin: auto; border: 1px solid #007BFF; border-radius: 20px; padding: 20px;">
 
-            <?php if (!empty($this->error)) : ?>
-                <div class="alert alert-danger" role="alert">
-                    <?php foreach ($this->error as $key => $value) {
-                        echo $value . "</br>";
-                    } ?></div>
-            <?php endif; ?>
+                <?php if (!empty($this->error)) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php foreach ($this->error as $key => $value) {
+                            echo $value . "</br>";
+                        } ?></div>
+                <?php endif; ?>
 
-            <label for="email">Username</label>
-            <input type="text" name="email" class="form-control" placeholder="Adresse mail" required autofocus style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
+                <label for="email">Username</label>
+                <input type="text" name="email" class="form-control" placeholder="Adresse mail" required autofocus style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
 
-            <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">
-                Log in
-            </button>
+                <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">
+                    Log in
+                </button>
 
-            <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
-            <script>
-                function addShadow() {
-                    //Look for the ID loginForm + Add class focused
-                    document.getElementById("form").classList.add("focused");
-                }
+                <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
+                <script>
+                    function addShadow() {
+                        //Look for the ID loginForm + Add class focused
+                        document.getElementById("form").classList.add("focused");
+                    }
 
-                function removeShadow() {
-                    //Look for the ID loginForm + Remove class focused
-                    document.getElementById("form").classList.remove("focused");
-                }
-            </script>
+                    function removeShadow() {
+                        //Look for the ID loginForm + Remove class focused
+                        document.getElementById("form").classList.remove("focused");
+                    }
+                </script>
 
-        </form>
-
+            </form>
+        </main>
 <?php
     }
     // Method to process the login form

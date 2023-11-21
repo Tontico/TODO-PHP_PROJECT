@@ -22,13 +22,17 @@ class UrlGenerator
     }
 
     // Method to redirect from query parameters
-    public static function redirect($controllerName, $method)
+    public static function redirect($controllerName, $method, $formName = null)
     {
         // Stocker the datas session
         $sessionData = $_SESSION;
 
         // Redirect
-        header('Location: ' . self::generateUrl($controllerName, $method));
+        if ($formName !== null) {
+            header('Location: ' . self::generateUrl($controllerName, $method, $formName));
+        } else {
+            header('Location: ' . self::generateUrl($controllerName, $method));
+        }
 
         // Open Session if it's not already
         if (!isset($_SESSION)) {

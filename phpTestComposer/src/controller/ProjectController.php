@@ -20,7 +20,7 @@ class ProjectController extends AbstractController
     {
         echo "p";
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
@@ -147,7 +147,7 @@ class ProjectController extends AbstractController
     public function deleteproject()
     {
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
