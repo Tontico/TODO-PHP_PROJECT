@@ -5,6 +5,7 @@ namespace Keha\Test\views\forms;
 
 
 use Keha\Test\App\UrlGenerator;
+use Keha\Test\Controller\UserController;
 use Keha\Test\Views\Forms\AbstractForm;
 
 // Function to display the connection form
@@ -89,7 +90,7 @@ class InscriptionForm extends AbstractForm
             $this->validateLastname($formDatas['lastname']);
             // If error still empty, form is valide
             if (empty($this->error)) {
-                return true;
+                return [true, $formDatas];
             }
         }
         return $this->error;
@@ -124,25 +125,25 @@ class InscriptionForm extends AbstractForm
         }
     }
 
-    // Method that check the validity of the password
+    // Method that check the validity of the firstname
     private function validateFirstname($firstname)
     {
         // Check for the length of the firstname
         if (strlen($firstname) < 2) {
             $this->error['erreurFirstnameLength'] = "Le prénom doit faire au moins 2 caractères";
         }
-        // Check if a number is in the firstname
-        if (preg_match('/\d/', $firstname) || preg_match('/[!@#$%^&*()-_=+{};:,<.>]/', $firstname)) {
-            $this->error['erreurFirstnameNumber'] = "Le prénom ne doit pas contenir de chiffre  ou de caractère spécial";
+        // Check if there is only letter on firstname
+        if (preg_match('/\d/', $firstname) || preg_match('/[^a-zA-ZÀ-ÖØ-öø-ÿ]/u', $firstname)) {
+            $this->error['erreurFirstnameNumber'] = "Le prénom ne doit pas contenir de chiffre ou de caractère spécial";
         }
     }
 
-    // Method that check the validity of the password
+    // Method that check the validity of the lastname
     private function validateLastname($lastname)
     {
-        // Check if a number is in the lastname
-        if (preg_match('/\d/', $lastname) || preg_match('/[!@#$%^&*()-_=+{};:,<.>]/', $lastname)) {
-            $this->error['erreurLastnameNumber'] = "Le nom ne doit pas contenir de chiffre ou de caractère spécial";
+        // Check if there is only letter on lastname
+        if (preg_match('/\d/', $lastname) || preg_match('/[^a-zA-ZÀ-ÖØ-öø-ÿ]/u', $lastname)) {
+            $this->error['erreurLastnameNumber'] = "Le Nom ne doit pas contenir de chiffre ou de caractère spécial";
         }
     }
 }

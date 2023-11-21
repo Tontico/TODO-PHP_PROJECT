@@ -68,13 +68,14 @@ class ConnexionForm extends AbstractForm
             if (empty($utilisateur) || $utilisateur[0]->getMdp_utilisateur() !== $password) {
                 $this->error[] = 'Identifiants invalides';
                 return $this->error;
-            }
+            } else {
 
-            // Stock the user data in SESSION
-            $_SESSION['connected'] = 'connected';
-            $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
-            $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
-            return true;
+                // Stock the user data in SESSION
+                $_SESSION['connected'] = 'connected';
+                $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
+                $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
+                return [true, $formDatas];
+            }
         }
     }
 }

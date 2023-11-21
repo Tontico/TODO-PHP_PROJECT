@@ -2,6 +2,7 @@
 
 namespace Keha\Test\Controller;
 
+use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
@@ -58,12 +59,30 @@ class UserController extends AbstractController
     // Method to handle registration process
     public function handleSubmit()
     {
+        // Error is used to stock errors DATA AND user's datas if no error
         $error = $this->form->processForm(); // Process the registration form
-        if ($error === true) {
+        if (isset($error[0]) && $error[0] === true) {
+            // If form is inscription, save user in DB
+            if ($this->formName === "inscription") {
+                $this->createUser($error[1]);
+            }
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if login ok
             exit;
         } else {
             $this->displayForm($error); // Redisplay the login form with error value
         }
+    }
+
+    // Method to create the user in DB
+    public function createUser($dataForms)
+    {
+        $datas = [
+            "Nom_utilisateur" => $dataForms['lastname'],
+            "Prenom_utilisateur" => $dataForms['firstname'],
+            "Mdp_utilisateur" => $dataForms['password'],
+            "Email_utilisateur" => $dataForms['email'],
+        ];
+
+        Model::getInstance()->save('utilisateur', $datas);
     }
 }
