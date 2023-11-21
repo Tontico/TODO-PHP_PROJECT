@@ -23,7 +23,7 @@ class Body
                     <div class='card-body'>
                         <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
                         <p class='card-text'>" . $project->getDescription_projet() . "</p>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&id_projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
                         <a href='' class='btn btn-danger'>Supprimez le projet</a>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ class Body
         <div class='container-fluid w-100 m-0'>
             <div class='row'>;
             <div class='col-2'>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'createTache') . "' class=''> Creer une nouvelle Tache</a>
+            <a href='" . UrlGenerator::generateUrl('ProjectController', 'createTache') . "&Id_projet=" . $datas[0]->getId_projet() . "' class=''> Creer une nouvelle Tache</a>
             </div>
             <div class='row col-10'>";
 

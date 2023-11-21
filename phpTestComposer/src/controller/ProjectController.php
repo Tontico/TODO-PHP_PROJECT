@@ -10,7 +10,7 @@ use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
-use Keha\Test\views\forms\ProjectForm;
+
 
 class ProjectController extends AbstractController
 {
@@ -25,7 +25,7 @@ class ProjectController extends AbstractController
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
-        $projectAdmins = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
+        $projectAdmin = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
 
 
         $head = new Head();
@@ -33,7 +33,7 @@ class ProjectController extends AbstractController
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyProject($projectAdmins);
+        $body->displayBodyProject($projectAdmin);
     }
 
     public function displayFormProject()
@@ -83,7 +83,11 @@ class ProjectController extends AbstractController
         //}
     }
 
-    // Display tache if user is connected
+    public function createTask()
+    {
+        
+    }
+     // Display tache if user is connected
     public function displayTaches()
     {
         if (!ConnexionController::isConnected()) {
@@ -115,11 +119,6 @@ class ProjectController extends AbstractController
         }
 
         $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-
-
-
-
-
         $head = new Head();
         $header = new Header();
         $body = new Body;
