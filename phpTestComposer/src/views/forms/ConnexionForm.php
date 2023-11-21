@@ -6,18 +6,11 @@ namespace Keha\Test\views\forms;
 
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\Model;
+use Keha\Test\Views\Forms\AbstractForm;
 
 // Function to display the connection form
-class ConnexionForm
+class ConnexionForm extends AbstractForm
 {
-    public $datas;
-    public $error;
-
-    public function __construct()
-    {
-        //$this->datas = $datas;
-        $this->error = [];
-    }
 
     // Method to display the connection form
     public function displayConnexionForm()
@@ -26,7 +19,10 @@ class ConnexionForm
         <form id="form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST" style="width: 20%; margin: auto; margin-top: 150px; border: 1px solid #007BFF; border-radius: 20px; padding: 20px;">
 
             <?php if (!empty($this->error)) : ?>
-                <div class="alert alert-danger" role="alert"><?= $this->error ?></div>
+                <div class="alert alert-danger" role="alert">
+                    <?php foreach ($this->error as $key => $value) {
+                        echo $value . "</br>";
+                    } ?></div>
             <?php endif; ?>
 
             <label for="email">Username</label>
@@ -58,19 +54,23 @@ class ConnexionForm
     // Method to process the login form
     public function processForm()
     {
-        $this->error = false;
+        $this->error = [];
         if (isset($_POST['submit'])) {
-            $username = $_POST['email'];
+            $formDatas = ['email' => $_POST['email'], 'password' => $_POST['password']];
+            // Call the sanitize method
+            $sanitizedDatas = $this->sanitizeFormInputs($formDatas);
+            // Update the formDatas & error value with the sanitized ones
+            $this->error = $sanitizedDatas['error'];
+            $username = $sanitizedDatas['formDatas']['email'];
+            $password = $sanitizedDatas['formDatas']['password'];
             $utilisateur = Model::getInstance()->getByAttribute('Utilisateur', 'Nom_utilisateur', $username);
-            //var_dump($utilisateur);
-            if (empty($utilisateur)) {
-                $this->error = 'Identifiants invalide';
+            // Look if login is empty OR if password doesn't match with the DB
+            if (empty($utilisateur) || $utilisateur[0]->getMdp_utilisateur() !== $password) {
+                $this->error[] = 'Identifiants invalides';
                 return $this->error;
             }
-            if ($utilisateur[0]->getMdp_utilisateur() !== $_POST['password']) {
-                $this->error = 'Identifiants invalide';
-                return $this->error;
-            }
+
+            // Stock the user data in SESSION
             $_SESSION['connected'] = 'connected';
             $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
             $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
