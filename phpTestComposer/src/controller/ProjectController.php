@@ -156,6 +156,9 @@ class ProjectController extends AbstractController
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        // $priority = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        // $charge = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        // $status = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
 
         $head = new Head();
         $header = new Header();
