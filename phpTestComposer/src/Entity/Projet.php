@@ -9,7 +9,13 @@ class Projet
     private ?string $Description_projet;
     private ?int $Id_administrateur;
 
-
+    // public function __construct($id, $titre, $descritpion, $id_admin)
+    // {
+    //     $this->Id_projet = $id;
+    //     $this->Titre_projet = $titre;
+    //     $this->Description_projet = $descritpion;
+    //     $this->Id_administrateur = $id_admin;
+    // }
     /**
      * Get the value of id_projet
      */

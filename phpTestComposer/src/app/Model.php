@@ -42,11 +42,11 @@ class Model extends PDO
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity);
     }
 
-    public function getById($entity, $conditions, $id)
-    {
-        $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
-        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
-    }
+    // public function getById($entity, $conditions, $id)
+    // {
+    //     $query = $this->query('select * from ' . $entity . ' where ' . $conditions . '=' . $id);
+    //     return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . $entity)[0];
+    // }
 
     public function save($entity, $datas): int
     {
@@ -98,6 +98,12 @@ class Model extends PDO
     {
         $query = $this->query("SELECT * FROM $entity WHERE $attribute = (SELECT * FROM $entity1 WHERE $attribute1 = $value)");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
+    }
+
+    public function getProjectByIdUser($id_utilisateur)
+    {
+        $query = $this->query("SELECT * FROM projet JOIN participants_projet ON projet.Id_projet=participants_projet.Id_projet WHERE Id_utilisateur = '$id_utilisateur'");
+        return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst("projet"));
     }
 
 
