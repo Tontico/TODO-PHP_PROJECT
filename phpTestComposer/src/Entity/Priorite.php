@@ -2,7 +2,7 @@
 
 namespace Keha\Test\Entity;
 
-class Priorité{
+class Priorite{
     private int $Id_priorite;
     private string $Etat_priorite;
 

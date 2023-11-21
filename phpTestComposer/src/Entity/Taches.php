@@ -1,6 +1,7 @@
 <?php
 
 namespace Keha\Test\Entity;
+
 use Keha\Test\App\Model;
 
 class Taches
@@ -11,11 +12,11 @@ class Taches
     private ?string $Date_debut_tache;
     private ?string $Date_realisation_tache;
     private ?string $Date_butoire_tache;
-    private int $Id_charge;
-    private int $Id_priorite;
-    private int $Id_utilisateur;
-    private int $Id_projet;
-    private int $Id_status;
+    private ?int $Id_charge;
+    private ?int $Id_priorite;
+    private ?int $Id_utilisateur;
+    private ?int $Id_projet;
+    private ?int $Id_status;
 
     // public function __construct($id, $nom, $descritpion, $date_debut, $date_fin, $date_butoire, $idcharge, $idprio, $iduser, $idprojet, $idstatus)
     // {
@@ -122,7 +123,7 @@ class Taches
 
     /**
      * Get the value of Id_utilisateur
-     */ 
+     */
     public function getId_utilisateur()
     {
         return $this->Id_utilisateur;
@@ -132,7 +133,7 @@ class Taches
      * Set the value of Id_utilisateur
      *
      * @return  self
-     */ 
+     */
     public function setId_utilisateur($Id_utilisateur)
     {
         $this->Id_utilisateur = $Id_utilisateur;
@@ -141,17 +142,44 @@ class Taches
     }
 
 
- public function getUtilisateur()
- { 
-    return Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$this->Id_utilisateur);
- }
+    public function getUtilisateur()
+    {
+        return Model::getInstance()->getByAttribute('utilisateur', 'Id_utilisateur', $this->Id_utilisateur);
+    }
 
 
     /**
      * Get the value of Id_taches
-     */ 
+     */
     public function getId_taches()
     {
         return $this->Id_taches;
+    }
+
+    public function getPriorite()
+    {
+        return Model::getInstance()->getByAttribute('priorite', 'Id_priorite', $this->Id_priorite);
+    }
+
+    public function getStatus()
+    {
+        return Model::getInstance()->getByAttribute('status', 'Id_status', $this->Id_status);
+    }
+
+    public function getCharge()
+    {
+        return Model::getInstance()->getByAttribute('charge', 'Id_charge', $this->Id_charge);
+    }
+
+    
+
+   
+
+    /**
+     * Get the value of Id_projet
+     */ 
+    public function getProjet()
+    {
+        return Model::getInstance()->getByAttribute('projet', 'Id_projet', $this->Id_projet);
     }
 }

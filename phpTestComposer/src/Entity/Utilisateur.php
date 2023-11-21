@@ -4,7 +4,7 @@ namespace Keha\Test\Entity;
 
 class Utilisateur {
     private int $Id_utilisateur;
-    private string $Nom_utilisateur;
+    private ?string $Nom_utilisateur;
     private string $Prenom_utilisateur;
     private string $Mdp_utilisateur;
     private string $Email_utilisateur;
