@@ -24,14 +24,14 @@ class ProjectController extends AbstractController
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
-        $projects = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
+        $projectUser = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
 
         $head = new Head();
         $header = new Header();
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyProject($projects);
+        $body->displayBodyProject($projectUser);
     }
 
 
