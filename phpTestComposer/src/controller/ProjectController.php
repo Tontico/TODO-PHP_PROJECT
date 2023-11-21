@@ -9,7 +9,8 @@ use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\Body;
-use Keha\Test\app\Model;
+use Keha\Test\App\Model;
+use Keha\Test\views\forms\ProjectForm;
 
 class ProjectController extends AbstractController
 {
@@ -25,14 +26,62 @@ class ProjectController extends AbstractController
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
-        $projects = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
+        $projectAdmin = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
+
+        $projectUser = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
 
         $head = new Head();
         $header = new Header();
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyProject($projects);
+        $body->displayBodyProject($projectAdmin, $projectUser);
+    }
+    public function displayFormProject()
+    {
+
+        $head = new Head();
+        $header = new Header();
+        $form = new FormController();
+        $head->displayHead();
+        $header->displayHeader();
+        $form->constructProjectForm();
+        /*if (isset($_POST['submit']))
+        {
+        $this->createProject();
+        }*/
+    }
+
+    public function createProject()
+    {
+        if (!SecurityController::isConnected()) {
+            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+        }
+        //$idAdmin = Model::getInstance()->getByAttribute('Administrateur', 'Id_administrateur', $_SESSION['userId']);
+        //if (!empty($idAdmin)) {
+        // $idAdminArray = $idAdmin[0]->getId_administrateur();
+
+        $userId =  $_SESSION['userId'];
+
+        $adminInsertData = [
+            "Id_utilisateur" => $userId,
+        ];
+
+        $idAdmin = Model::getInstance()->save('administrateur', $adminInsertData);
+
+        $datas = [
+            "Titre_projet" => $_POST["Titre_projet"],
+            "Description_projet" => $_POST["Description_projet"],
+            "Id_administrateur" => $idAdmin,
+        ];
+
+        Model::getInstance()->save('projet', $datas);
+
+        return UrlGenerator::redirect('ProjectController', 'displayProjet');
+
+        //} else {
+        //echo "L'administrateur n'a pas été trouvé pour l'utilisateur avec l'ID : {$_SESSION['userId']}";
+        //}
     }
 
 
@@ -56,7 +105,7 @@ class ProjectController extends AbstractController
 
         $head = new Head();
         $header = new Header();
-        $body = new Body;
+        $body = new Body();
         $head->displayHead();
         $header->displayHeader();
         $body->displayBodyTaches($task, $project);
