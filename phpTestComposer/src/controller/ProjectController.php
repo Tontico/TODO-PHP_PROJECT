@@ -136,7 +136,8 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
-        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_SESSION['userId']);
+        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_GET['Id_Projet']);
+        var_dump($projects);
         $head = new Head();
         $header = new Header();
         $body = new Body;
@@ -149,22 +150,20 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
+        $tasks = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($tasks)) {
+            foreach ($tasks as $task) {
+                Model::getInstance()->delete('taches', 'Id_taches', $task->getId_taches());
+            }
+        }
+        
+        // Model::getInstance()->ChangeConstraint();
+        Model::getInstance()->delete('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        // Model::getInstance()->ChangeConstraint('participants_projet', 'check',);
+        Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
+        Model::getInstance()->delete('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
 
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
 
-
-
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $priority = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $charge = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $status = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-
-        $head = new Head();
-        $header = new Header();
-        $body = new Body;
-        $head->displayHead();
-        $header->displayHeader();
-        $body->displayBodyTache($task);
+        UrlGenerator::redirect('IndexController', 'displayProjet');
     }
 }
