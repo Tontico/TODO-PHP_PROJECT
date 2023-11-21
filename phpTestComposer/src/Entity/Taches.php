@@ -154,4 +154,20 @@ class Taches
     {
         return $this->Id_taches;
     }
+
+    public function getPriorite()
+ { 
+    return Model::getInstance()->getByAttribute('priorite','Id_priorite',$this->Id_priorite);
+ }
+ 
+ public function getStatus()
+ { 
+    return Model::getInstance()->getByAttribute('status','Id_status',$this->Id_status);
+ }
+ 
+ public function getCharge()
+ { 
+    return Model::getInstance()->getByAttribute('charge','Id_charge',$this->Id_charge);
+ }
+    
 }

@@ -5,6 +5,7 @@ namespace Keha\Test\views;
 use Keha\Test\App\UrlGenerator;
 use Keha\test\controller\Utilisateur;
 use Keha\Test\App\Model;
+use Keha\Test\App\Entity\Priorite;
 
 //Class that create the Body
 class Body
@@ -85,15 +86,25 @@ class Body
     public function displayBodyTache($data)
     {
         $data= $data[0];
+        
         //Il faudra ajouter le nom du projet
         echo "<body>
         <h1>NOM PROJET</h1>";
+
+        if(($data->getStatus()[0]) !== NULL){
+            echo "<p>Statut de la tache: ".$data->getStatus()[0]->getEtat_status(). "<p/>";
+        }
+        if(($data->getPriorite()[0]) !== NULL){
+            echo "<p>Priorite de la tache: ".$data->getPriorite()[0]->getEtat_priorite(). "<p/>";
+        }
+        if(($data->getCharge()[0]) !== NULL){
+            echo "<p>Charge de la tache: ".$data->getCharge()[0]->getEtat_charge(). "<p/>";
+        }
 
 
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
         echo "<div>
             <h2 class=''> " . $data->getNom_tache() . "</h2>
-            <p>Priorité taches, et statut tache<p/>
             <h3 class='h4'> Utilisateur en charge de la tache: ".($data->getUtilisateur())[0]->getNom_utilisateur(). "</h3>
             <p class=''>" . $data->getDescritpion_tache() . "</p>";
 
