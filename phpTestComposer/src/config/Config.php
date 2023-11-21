@@ -13,6 +13,6 @@ class Config
     const DBPWD = 'root';
     const ENTITY = 'Keha\Test\Entity\\';
     const CONTROLLER = 'Keha\Test\Controller\\';
-    const DEFAULT_CONTROLLER = 'IndexController';
-    const DEFAULT_METHOD = 'displayIndex';
+    const DEFAULT_CONTROLLER = 'ProjectController';
+    const DEFAULT_METHOD = 'displayProjet';
 }

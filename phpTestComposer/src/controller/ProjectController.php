@@ -55,7 +55,7 @@ class ProjectController extends AbstractController
     public function createProject()
     {
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
         //$idAdmin = Model::getInstance()->getByAttribute('Administrateur', 'Id_administrateur', $_SESSION['userId']);
         //if (!empty($idAdmin)) {
@@ -89,7 +89,7 @@ class ProjectController extends AbstractController
     public function displayTaches()
     {
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
         // $data[0] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
@@ -114,7 +114,7 @@ class ProjectController extends AbstractController
     public function displayTache()
     {
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
         // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
@@ -134,7 +134,7 @@ class ProjectController extends AbstractController
     public function ConfirmationDelete()
     {
         if (!SecurityController::isConnected()) {
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
         $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_SESSION['userId']);
         $head = new Head();
