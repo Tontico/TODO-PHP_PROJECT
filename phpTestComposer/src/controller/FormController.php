@@ -5,30 +5,42 @@ namespace Keha\Test\Controller;
 use Keha\Test\App\AbstractController;
 use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
+use Keha\Test\views\Head;
+use Keha\Test\Views\Header;
+use Keha\Test\views\Body;
 
 class FormController extends AbstractController
 {
+    public $error;
 
+    public function __construct()
+    {
+        //$this->datas = $datas;
+        $this->error = false;
+    }
     public function constructProjectForm()
     {
 
-        $form = "<form action='" . UrlGenerator::generateUrl('ProjectController', 'CreateProject') . "' method='POST'>
-            <label for='nom'>Nom du projet </label>
-            <input type='text' name='nom' required>
+        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'createProject') . "' method='POST'>";
+
+        if ($this->error !== false) {
+            echo "<div class='alert alert-danger' role='alert'>$this->error</div>";
+        }
+        echo "<label for='nom'>Nom du projet </label>
+            <input type='text' name='Titre_projet' required>
 
             <label for='description'>Description</label>
-            <input type='text' name='prenom' id='prenom' required>
+            <input type='text' name='Description_projet' id='prenom' required>
 
-            <button type='submit' name='submit'>
-                créer un projet
-            </button>
+            <input type='submit' name='submit' value='créer un projet'>
+                
+            </input>
         </form>";
-        var_dump($form);
+
         if (isset($_POST["submit"])) {
             return UrlGenerator::redirect('ProjectController', 'displayProjet');
         }
     }
-
     function validateDeleteForm()
     {
         $form = "<form action='http://localhost/phpobjet/phpTestComposer/index.php?controller=AbonneController&method=deleteAbonne&id=" . $_GET['id'] . "' method='POST'>

@@ -9,40 +9,59 @@ use Keha\Test\App\Model;
 //Class that create the Body
 class Body
 {
-    public function displayBodyProject($projects)
-    { var_dump($projects);
-
+    public function displayBodyProject($projectsAdmin, $projectsUser)
+    { var_dump($projectsAdmin);
         echo "<body>
-        <div class='container'>
+        <div class='container-fluid'>
             <div class='row'>
-            <a href ='" . UrlGenerator::generateUrl('FormController', 'ConstructProjectForm') . "'>Ajoutez un projet</a><br>";
-        foreach ($projects as $project) {
-            echo "<div class='col-4'>
-            <h2 class=''> " . $project->getTitre_projet() . "</h2>
-            <p class=''>" . $project->getDescription_projet() . "</p>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='link'> Lien vers le projet</a><br>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='link'>Supprimez un projet</a>
-            
+                <div class='col-12 mb-3'>
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Ajoutez un projet</a>
+                </div>
+                <h3>Projet dont je suis l'administrateur</h3>";
+
+        foreach ($projectsAdmin as $project) {
+            echo "<div class='col-md-4 mb-4'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
+                        <p class='card-text'>" . $project->getDescription_projet() . "</p>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
+                        <a href='' class='btn btn-danger'>Supprimez le projet</a>
+                    </div>
+                </div>
+            </div>";
+        }
+        echo "<h3>Projet dont je suis un utilisateur</h3>";
+        foreach ($projectsUser as $project) {
+            echo "<div class='col-md-4 mb-4'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
+                        <p class='card-text'>" . $project->getDescription_projet() . "</p>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
+                        <a href='' class='btn btn-danger'>Supprimez le projet</a>
+                    </div>
+                </div>
             </div>";
         }
 
-
-        echo "     
-</div>
-        </div>
+        echo "</div>
+            </div>
     </body>";
     }
+
 
     //Affiche la view avec les différentes taches du projet
     public function displayBodyTaches($task, $project)
     {
-        // var_dump($project);
+         var_dump($project);
+         echo $project[0]->getId_projet();
         echo "<body>
 <h1>". $project[0]->getTitre_projet()."</h1>
         <div class='container-fluid w-100 m-0'>
             <div class='row'>;
             <div class='col-2'>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'createTache') . "' class=''> Creer une nouvelle Tache</a>
+            <a href='" . UrlGenerator::generateUrl('ProjectController', 'createTache') . "&Id_Projet=". $project[0]->getId_projet() ."'> Creer une nouvelle Tache</a>
             </div>
             <div class='row col-10'>";
 
@@ -68,7 +87,7 @@ class Body
         $data= $data[0];
         //Il faudra ajouter le nom du projet
         echo "<body>
-<h1>NOM PROJET</h1>";
+        <h1>NOM PROJET</h1>";
 
 
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
