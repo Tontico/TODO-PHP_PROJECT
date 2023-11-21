@@ -25,7 +25,7 @@ class ProjectController extends AbstractController
         /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
-        $projects = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
+        $projectAdmins = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
 
 
         $head = new Head();
@@ -33,7 +33,7 @@ class ProjectController extends AbstractController
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyProject($projects);
+        $body->displayBodyProject($projectAdmins);
     }
 
     public function displayFormProject()
@@ -60,7 +60,7 @@ class ProjectController extends AbstractController
         //if (!empty($idAdmin)) {
         // $idAdminArray = $idAdmin[0]->getId_administrateur();
 
-        $userId = $_SESSION['userId'];
+        $userId =  $_SESSION['userId'];
 
         $adminInsertData = [
             "Id_utilisateur" => $userId,
