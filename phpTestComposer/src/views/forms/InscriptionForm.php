@@ -5,7 +5,6 @@ namespace Keha\Test\views\forms;
 
 
 use Keha\Test\App\UrlGenerator;
-use Keha\Test\Controller\UserController;
 use Keha\Test\Views\Forms\AbstractForm;
 
 // Function to display the connection form
@@ -15,59 +14,60 @@ class InscriptionForm extends AbstractForm
     // Method to display the connection form
     public function displayInscriptionForm()
     {
-?>
-        <form id="form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'inscription') ?>" method="POST" style="width: 20%; margin: auto; margin-top: 150px; border: 1px solid #007BFF; border-radius: 20px; padding: 20px;">
+?><main>
+            <form id="security_form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'inscription') ?>" method="POST">
 
-            <div class="mb-3">
-                <?php if (!empty($this->error)) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php foreach ($this->error as $key => $value) {
-                            echo $value . "</br>";
-                        } ?></div>
-                <?php endif; ?>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="firstname">Prénom </label>
-                    <input type="text" class="form-control" name="firstname" required placeholder="Prénom" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                <div class="mb-3">
+                    <?php if (!empty($this->error)) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($this->error as $key => $value) {
+                                echo $value . "</br>";
+                            } ?></div>
+                    <?php endif; ?>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="lastname">Nom <small>(facultatif)</small></label>
-                    <input type="text" class="form-control" name="lastname" placeholder="Nom" autofocus style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstname">Prénom </label>
+                        <input type="text" class="form-control" name="firstname" required placeholder="Prénom" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="lastname">Nom <small>(facultatif)</small></label>
+                        <input type="text" class="form-control" name="lastname" placeholder="Nom" autofocus style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label for="email">Adresse e-mail</label>
-                <input type="text" class="form-control" name="email" required placeholder="E-mail" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
-            </div>
+                <div class="mb-3">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="text" class="form-control" name="email" required placeholder="E-mail" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                </div>
 
-            <div class="mb-3">
-                <label for="password">Mot de passe</label>
-                <input type="password" class="form-control" name="password" required placeholder="Mot de passe" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
-            </div>
+                <div class="mb-3">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" name="password" required placeholder="Mot de passe" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                </div>
 
-            <div class="mb-3">
-                <label for="confirm_password">Vérification de mot de passe</label>
-                <input type="password" class="form-control" name="confirm_password" required placeholder="Vérification de mot de passe" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
-            </div>
+                <div class="mb-3">
+                    <label for="confirm_password">Vérification de mot de passe</label>
+                    <input type="password" class="form-control" name="confirm_password" required placeholder="Vérification de mot de passe" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                </div>
 
-            <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">S'inscrire</button>
-            <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
-            <script>
-                function addShadow() {
-                    //Look for the ID loginForm + Add class focused
-                    document.getElementById('form').classList.add('focused');
-                }
+                <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">S'inscrire</button>
+                <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
+                <script>
+                    function addShadow() {
+                        //Look for the ID loginForm + Add class focused
+                        document.getElementById('form').classList.add('focused');
+                    }
 
-                function removeShadow() {
-                    //Look for the ID loginForm + Remove class focused
-                    document.getElementById('form').classList.remove('focused');
-                }
-            </script>
-        </form>
+                    function removeShadow() {
+                        //Look for the ID loginForm + Remove class focused
+                        document.getElementById('form').classList.remove('focused');
+                    }
+                </script>
+            </form>
+        </main>
 <?php
     }
 

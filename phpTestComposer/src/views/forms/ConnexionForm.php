@@ -17,8 +17,7 @@ class ConnexionForm extends AbstractForm
     {
 ?>
         <main>
-            <form id="form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST" style="width: 20%; margin: auto; border: 1px solid #007BFF; border-radius: 20px; padding: 20px;">
-
+            <form id="security_form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST">
                 <?php if (!empty($this->error)) : ?>
                     <div class="alert alert-danger" role="alert">
                         <?php foreach ($this->error as $key => $value) {

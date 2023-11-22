@@ -7,6 +7,7 @@ use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
 use Keha\Test\views\Head;
+use Keha\Test\Model\QueryParser;
 
 class UserController extends AbstractController
 {
@@ -18,31 +19,17 @@ class UserController extends AbstractController
         if (!isset($_SESSION)) {
             session_start();
         }
-        // Call the formName method
-        $this->getFormName();
-        // Construct the class & method name
-        $className = "$this->formName" . "Form";
+        // Call the method to check the formName in the query if there is one
+        $this->formName = QueryParser::getFormName();
+        if ($this->formName !== null) {
+            // Construct the class & method name
+            $className = "$this->formName" . "Form";
+        }
+
         // Import the class
         $className = "Keha\\Test\\views\\forms\\$this->formName" . "Form";
         // Create a dynamical instance
         $this->form = new $className();
-    }
-
-    private function getFormName()
-    {
-        // Get the queryStrings values
-        $queryString = $_SERVER['QUERY_STRING'];
-        // Analyse the str
-        parse_str($queryString, $queryArray);
-        // Check if the query exist
-        if (isset($queryArray['formName'])) {
-            // Stock the value of the query method
-            $this->formName = $queryArray['formName'];
-        }
-        if (strpos($this->formName, "display") !== false) {
-            // Supprimer "display" tout en conservant le reste du mot
-            $this->formName = strtolower(str_replace("display", "", $this->formName));
-        }
     }
 
     // Method to display connection form
