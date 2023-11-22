@@ -65,7 +65,7 @@ class ConnexionForm extends AbstractForm
             $password = $sanitizedDatas['formDatas']['password'];
             $utilisateur = Model::getInstance()->getByAttribute('Utilisateur', 'Nom_utilisateur', $username);
             // Look if login is empty OR if password doesn't match with the DB
-            if (empty($utilisateur) || $utilisateur[0]->getMdp_utilisateur() !== $password) {
+            if (empty($utilisateur) || !password_verify($password, $utilisateur[0]->getMdp_utilisateur())) {
                 $this->error[] = 'Identifiants invalides';
                 return $this->error;
             } else {

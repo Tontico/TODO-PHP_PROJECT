@@ -53,6 +53,9 @@ class UserController extends AbstractController
             if ($this->formName === "inscription") {
                 $this->createUser($error[1]);
             }
+            if (SecurityController::isConnected()) {
+                UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+            }
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if login ok
             exit;
         } else {
@@ -66,7 +69,7 @@ class UserController extends AbstractController
         $datas = [
             "Nom_utilisateur" => $dataForms['lastname'],
             "Prenom_utilisateur" => $dataForms['firstname'],
-            "Mdp_utilisateur" => $dataForms['password'],
+            "Mdp_utilisateur" => password_hash($dataForms['password'], PASSWORD_DEFAULT),
             "Email_utilisateur" => $dataForms['email'],
         ];
 

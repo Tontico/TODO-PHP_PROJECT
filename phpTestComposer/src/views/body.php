@@ -54,7 +54,7 @@ class Body
 
 
     //Affiche la view avec les différentes taches du projet
-    public function displayBodyTaches($task, $project)
+    public function displayBodyTaches($task, $project, $participants)
     {
 
 
@@ -63,8 +63,22 @@ class Body
             <div class='container-fluid w-100 m-0'>
                 <div class='row'>
                     <div class='col-2'>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a>
-                    </div>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a><br>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'> Assigner un utilisateur</a><br>";
+
+                    if (isset($_GET["key"])) {
+                        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
+                        <div class='mb-3'>
+                            <input type='text' class='form-control' name='mailUser' placeholder='Adresse mail utilisateur' required>
+                        </div>
+                        <button type='submit' name='submit' class='btn btn-primary'>Assigner</button>
+                    </form>";
+                    }
+                    foreach ($participants as $participant){
+
+                        echo "<h3>".$participant->getUtilisateur()[0]->getNom_utilisateur()."</h3>";
+                    }
+                    echo  "</div>
                 <div class='row col-10'>";
 
 

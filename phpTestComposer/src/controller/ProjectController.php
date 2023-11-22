@@ -11,6 +11,7 @@ use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
 use Keha\Test\Entity\Participants_projet;
+use Keha\Test\Entity\Utilisateur;
 
 class ProjectController extends AbstractController
 {
@@ -135,17 +136,11 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-        // $data[0] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[1] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[2] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[3] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[4] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[5] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"], 'ORDER BY Id_priorite DESC');
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
 
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
+        $participants = Model::getInstance()->getByAttribute('participants_projet','Id_projet', $_GET["Id_Projet"]);
         if (empty($participant)) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
@@ -155,7 +150,7 @@ class ProjectController extends AbstractController
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyTaches($task, $project);
+        $body->displayBodyTaches($task, $project, $participants);
     }
 
     //Display one tache if user is connected
@@ -330,4 +325,21 @@ class ProjectController extends AbstractController
 
         UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
+
+    public function assignUser(){
+
+        $user=Model::getInstance()->getByAttribute("utilisateur", "Email_utilisateur", $_POST['mailUser'] );
+        if(empty($user)){
+            UrlGenerator::redirect('UserController', 'DisplayForm','inscription' );
+        }
+    $data=[
+       'Id_projet' => $_GET['Id_Projet'],
+        'Id_utilisateur' => $user[0]->getId_utilisateur(),
+        ];
+
+   Model::getInstance()->save("participants_projet", $data);
+   //redirection vers les projets
+   UrlGenerator::redirect('ProjectController', 'displayProjet');
+     }
+   
 }
