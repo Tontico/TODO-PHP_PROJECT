@@ -10,6 +10,8 @@ body {
     overflow-y: hidden;
 }
 
+
+
 main {
     height: 100%;
     width: 100%;
@@ -26,6 +28,7 @@ main {
     border: 1px solid #007BFF;
     border-radius: 20px; 
 }
+
 
 #security_form.focused {
     box-shadow: 0 0 10px #007BFF, 0 0 15px #00A0FF, 0 0 20px #00C3FF;
