@@ -28,6 +28,7 @@ class Body
                         <p class='card-text'>" . $project->getDescription_projet() . "</p>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-danger'>Supprimez le projet</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-success mt-1'>Modifiez le projet</a>
                     </div>
                 </div>
             </div>";
