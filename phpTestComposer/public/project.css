@@ -1,3 +1,10 @@
+.title_username {
+    margin-bottom: 50px;
+    color: white !important;
+    width:100%;
+    text-align: center;
+}
+
 h3 {
     color: white !important;
     font-size: 20px !important;
@@ -8,7 +15,8 @@ h3 {
 main {
     height:90% !important;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .resum_container {
@@ -19,6 +27,7 @@ main {
 
 .resum_container_part {
     width:40%;
+    max-height: 500px !important;
     padding: 20px;
     background-color: #2a2b2d;
     border: 1px solid rgb(82, 81, 81);

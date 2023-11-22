@@ -12,18 +12,27 @@ use Keha\Test\Controller\SecurityController;
 //Class that create the Body
 class Body
 {
-    public function displayBodyProject($projectsAdmin, $projectsUser)
+    public function displayBodyProject($projectsAdmin, $projectsUser, $projectAndTasks)
     {
         // Var to change the projects colors
+        // var_dump($userTasks[0]->getNom_tache());
+        // var_dump($projectAndTasks);
+        // var_dump($projectAndTasks[0]->getTitre_projet());
+        // $nomTache = $userTasks[0]->getNom_tache();
         $count = 0;
         $colorProject = "blue";
         echo "
         <main>
+        <h2 class='title_username'>Bienvenue " . $_SESSION['username'] . "</h2>
             <section class='resum_container'>
                 <div class='resum_container_part'>
                 <div class='row'>
-                    <h3>Mes tâches</h3>
-                </div>
+                    <h3>Mes tâches</h3>";
+        foreach ($projectAndTasks as $projectAndTask) {
+            echo $projectAndTask->Nom_tache;
+            echo $projectAndTask->getTitre_projet();
+        }
+        echo "</div>
                 </div>
                 <div class='resum_container_part'>        
                     <div class='row'>
