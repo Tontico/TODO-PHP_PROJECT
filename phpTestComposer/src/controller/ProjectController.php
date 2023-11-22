@@ -11,6 +11,7 @@ use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
 use Keha\Test\Entity\Participants_projet;
+use Keha\Test\Entity\Utilisateur;
 
 class ProjectController extends AbstractController
 {
@@ -50,10 +51,9 @@ class ProjectController extends AbstractController
 
     public function displayUpdateFormProject()
     {
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
-            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
-        }
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+        //  UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
+    }
         $head = new Head();
         $header = new Header();
         $form = new FormController();
@@ -79,7 +79,7 @@ class ProjectController extends AbstractController
     public function displayUpdateFormTask()
     {
         // Redirect user if isn't admin of the project
-        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+        if (!SecurityController::isAdmin($_GET["Id_projet"])) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
             exit();
         }
@@ -150,17 +150,11 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-        // $data[0] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[1] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[2] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[3] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[4] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data[5] = new Tache(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"], 'ORDER BY Id_priorite DESC');
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
 
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
+        $participants = Model::getInstance()->getByAttribute('participants_projet','Id_projet', $_GET["Id_Projet"]);
         if (empty($participant)) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect to his own projects
         }
@@ -170,7 +164,7 @@ class ProjectController extends AbstractController
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyTaches($task, $project);
+        $body->displayBodyTaches($task, $project, $participants);
     }
 
     //Display one tache if user is connected
@@ -179,10 +173,6 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
@@ -193,6 +183,8 @@ class ProjectController extends AbstractController
         if (empty($participant)) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not affiliated with this projet
         }
+
+
 
         $head = new Head();
         $header = new Header();
@@ -285,6 +277,17 @@ class ProjectController extends AbstractController
         return UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
 
+    public function assignUserTask()
+    {
+        //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
+        $data = [
+            'Id_utilisateur' => $_POST['userName'],
+        ];
+        Model::getInstance()->updateById("taches", 'Id_taches', $_GET['Id_taches'], $data);
+
+        UrlGenerator::redirect("ProjectController", "displayProjet");
+    }
+
     public function ConfirmationDelete()
     {
         if (!SecurityController::isConnected()) {
@@ -360,4 +363,21 @@ class ProjectController extends AbstractController
 
         UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
+
+    public function assignUser(){
+
+        $user=Model::getInstance()->getByAttribute("utilisateur", "Email_utilisateur", $_POST['mailUser'] );
+        if(empty($user)){
+            UrlGenerator::redirect('UserController', 'DisplayForm','inscription' );
+        }
+    $data=[
+       'Id_projet' => $_GET['Id_Projet'],
+        'Id_utilisateur' => $user[0]->getId_utilisateur(),
+        ];
+
+   Model::getInstance()->save("participants_projet", $data);
+   //redirection vers les projets
+   UrlGenerator::redirect('ProjectController', 'displayProjet');
+     }
+   
 }

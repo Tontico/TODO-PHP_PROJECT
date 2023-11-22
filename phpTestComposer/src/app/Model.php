@@ -80,15 +80,15 @@ class Model extends PDO
         return $lastInsertId;
     }
 
-    public function getByAttribute($entity, $attribute, $value)
+    public function getByAttribute($entity, $attribute, $value, $order=null)
     {
         // SELECT * FROM table WHERE attribute = value
-        $query = $this->query("SELECT * FROM $entity WHERE $attribute = '$value'");
+        $query = $this->query("SELECT * FROM $entity WHERE $attribute = '$value' $order" );
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
     public function getBy2Attribute($entity, $attribute1, $value1,$attribute2,$value2)
     {
-        // SELECT * FROM table WHERE attribute = value
+        // SELECT * FROM table WHERE attribute1 = value1 & attribute2 = value2
         $query = $this->query("SELECT * FROM $entity WHERE $attribute1 = '$value1' AND $attribute2 = '$value2' ");
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }

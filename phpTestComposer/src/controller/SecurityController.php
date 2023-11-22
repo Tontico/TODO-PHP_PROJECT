@@ -56,6 +56,7 @@ class SecurityController extends AbstractController
 
                 // Check if IDs match
                 if ($idUtilisateur === $_SESSION['userId']) {
+                    
                     return true;
                 }
             }
