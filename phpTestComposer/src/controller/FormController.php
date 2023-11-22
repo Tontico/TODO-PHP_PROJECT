@@ -40,6 +40,7 @@ class FormController extends AbstractController
     }
     public function updateProjectForm()
     {
+
         $updateProject = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
         echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'updateProject') . "&Id_Projet=" . $updateProject[0]->getId_projet() . "' method='POST'>
         <div class='mb-3'>

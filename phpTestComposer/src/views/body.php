@@ -6,6 +6,7 @@ use Keha\Test\App\UrlGenerator;
 use Keha\test\controller\Utilisateur;
 use Keha\Test\App\Model;
 use Keha\Test\App\Entity\Priorite;
+use Keha\Test\Controller\SecurityController;
 
 //Class that create the Body
 class Body
@@ -19,20 +20,29 @@ class Body
                     <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Ajoutez un projet</a>
                 </div>
                 <h3>Projet dont je suis l'administrateur</h3>";
-
         foreach ($projectsAdmin as $project) {
             echo "<div class='col-md-4 mb-4'>
-                <div class='card'>
-                    <div class='card-body'>
-                        <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
-                        <p class='card-text'>" . $project->getDescription_projet() . "</p>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-danger'>Supprimez le projet</a>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-success mt-1'>Modifiez le projet</a>
-                    </div>
-                </div>
-            </div>";
+                        <div class='card'>
+                            <div class='card-body'>
+                                <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
+                                <p class='card-text'>" . $project->getDescription_projet() . "</p>";
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary btn-card-project'>Lien vers le projet</a>";
+
+            // Condition to show or hide link if is administrateur
+            if (SecurityController::isAdmin($project->getId_projet())) {
+                echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-danger btn-card-project'>Supprimez le projet</a>";
+            }
+
+            // Condition to show or hide link if is administrateur
+            if (SecurityController::isAdmin($project->getId_projet())) {
+                echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-success btn-card-project'>Modifiez le projet</a>";
+            }
+
+            echo "</div>
+                        </div>
+                    </div>";
         }
+
         echo "<h3>Projet dont je suis un utilisateur</h3>";
         foreach ($projectsUser as $project) {
             echo "<div class='col-md-4 mb-4'>
@@ -53,41 +63,45 @@ class Body
     }
 
 
-    //Affiche la view avec les différentes taches du projet
+    // Affiche la view avec les différentes taches du projet
     public function displayBodyTaches($task, $project)
     {
-
-
         echo "<body>
-            <h1>" . $project[0]->getTitre_projet() . "</h1>
-            <div class='container-fluid w-100 m-0'>
-                <div class='row'>
-                    <div class='col-2'>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a>
-                    </div>
-                <div class='row col-10'>";
+        <h1>" . $project[0]->getTitre_projet() . "</h1>
+        <div class='container-fluid w-100 m-0'>
+            <div class='row'>
+                <div class='col-2'>";
 
-
-        // a modifier pour ajouter le nom d'utilisateur
-        foreach ($task as $data => $key) {
-            echo "<div class='col-4'>
-            <h2 class=''> " . $key->getNom_tache() . "</h2>
-            <h3 class='h4'> Utilisateur en charge de la tache:" . /*$key->getUtilisateur()[0]->getNom_utilisateur().*/ "</h3>
-            <p class=''>" . $key->getDescritpion_tache() . "</p>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTache') . "&Id_taches=" . $key->getId_taches() . "'class=''> Lien vers la tache</a>
-            </div>";
+        // Condition to show or hide link if is administrateur
+        if (SecurityController::isAdmin($project[0]->getId_projet())) {
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a>";
         }
 
+        echo "</div>
+            <div class='row col-10'>";
+
+        // a modifier pour ajouter le nom d'utilisateur
+        foreach ($task as $key) {
+            echo "<div class='col-4'>
+                <h2 class=''> " . $key->getNom_tache() . "</h2>
+                <h3 class='h4'> Utilisateur en charge de la tache:" . /*$key->getUtilisateur()[0]->getNom_utilisateur().*/ "</h3>
+                <p class=''>" . $key->getDescritpion_tache() . "</p>
+                <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTache') . "&Id_taches=" . $key->getId_taches() . "'class=''> Lien vers la tache</a>
+            </div>";
+        }
         echo " </div>    
-</div>
+            </div>
         </div>
-    </body>";
+        </body>";
     }
+
 
     public function displayBodyTache($data)
     {
+
+
         $data = $data[0];
-        
+
         //Il faudra ajouter le nom du projet
         echo "<body>
         <h1>NOM PROJET</h1>";
@@ -118,16 +132,16 @@ class Body
         } else {
             echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et fini le : " . $data->getDate_realisation_tache() . "</p>";
         }
+        // Condition to show or hide link if is administrateur
+        if (SecurityController::isAdmin($data->getProjet()[0]->getId_projet())) {
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
 
-        echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
-
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a><br>
+            <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a><br>";
+        }
+        echo "</div>
+                </div>
             </div>
-
-
-    </div>
-        </div>
-    </body>";
+        </body>";
         /*<a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>*/
     }
@@ -135,14 +149,11 @@ class Body
 
     public function displayProjectConfirmation($data)
     {
-        $data= $data[0];
+        $data = $data[0];
         echo "<body>
-<h1>Etes vous sur de vouloir supprimer le projet :".$data->getTitre_projet()."?</h1>
+<h1>Etes vous sur de vouloir supprimer le projet :" . $data->getTitre_projet() . "?</h1>
 <div class='d-flex justify-content-center'> 
-<a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteproject') ."&Id_Projet=".$data->getId_projet(). "' class='btn btn-primary p-2 m-3'>Supprimer</a> <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayProjet') . "' class='btn btn-danger p-2 m-3'>Revenir à la page des projets</a><br>
-</div>";       
-
-
-
+<a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteproject') . "&Id_Projet=" . $data->getId_projet() . "' class='btn btn-primary p-2 m-3'>Supprimer</a> <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayProjet') . "' class='btn btn-danger p-2 m-3'>Revenir à la page des projets</a><br>
+</div>";
     }
 }

@@ -54,7 +54,7 @@ class UserController extends AbstractController
             if ($this->formName === "inscription") {
                 $this->createUser($error[1]);
             }
-            UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if login ok
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if login ok
             exit;
         } else {
             $this->displayForm($error, $inputValues); // Redisplay the login form with error value

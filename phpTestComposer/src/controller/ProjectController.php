@@ -50,6 +50,10 @@ class ProjectController extends AbstractController
 
     public function displayUpdateFormProject()
     {
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
+        }
         $head = new Head();
         $header = new Header();
         $form = new FormController();
@@ -60,6 +64,11 @@ class ProjectController extends AbstractController
 
     public function displayFormTask()
     {
+        // Redirect user if isn't admin of the project
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+            exit();
+        }
         $head = new Head();
         $header = new Header();
         $form = new FormController();
@@ -69,6 +78,11 @@ class ProjectController extends AbstractController
     }
     public function displayUpdateFormTask()
     {
+        // Redirect user if isn't admin of the project
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+            exit();
+        }
         $head = new Head();
         $header = new Header();
         $form = new FormController();
@@ -115,6 +129,7 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
+
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
         var_dump($project);
         $datas = [
@@ -147,7 +162,7 @@ class ProjectController extends AbstractController
 
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
         if (empty($participant)) {
-            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect to his own projects
         }
 
         $head = new Head();
@@ -171,12 +186,12 @@ class ProjectController extends AbstractController
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        if(empty($task)){
-            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if task does not exist
+        if (empty($task)) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if task does not exist
         }
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $task[0]->getId_projet());
         if (empty($participant)) {
-            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not affiliated with this projet
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not affiliated with this projet
         }
 
         $head = new Head();
@@ -275,6 +290,11 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
+        // Redirect user if isn't admin of the project
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+            exit();
+        }
         $projects = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
         var_dump($projects);
         $head = new Head();
@@ -289,6 +309,11 @@ class ProjectController extends AbstractController
     {
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
+        // Redirect user if isn't admin of the project
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+            exit();
         }
         $tasks = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
         if (!empty($tasks)) {
@@ -320,6 +345,11 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
+        }
+
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
         var_dump($task);
         if (!empty($task)) {
