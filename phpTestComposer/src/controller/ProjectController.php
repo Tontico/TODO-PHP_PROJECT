@@ -10,7 +10,7 @@ use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
-use Keha\Test\views\forms\ProjectForm;
+use Keha\Test\Entity\Participants_projet;
 
 class ProjectController extends AbstractController
 {
@@ -18,7 +18,7 @@ class ProjectController extends AbstractController
     // Display project if user is connected
     public function displayProjet()
     {
-        echo "p";
+
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
@@ -37,6 +37,7 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayBodyProject($projectAdmin, $projectUser);
     }
+
     public function displayFormProject()
     {
 
@@ -50,6 +51,24 @@ class ProjectController extends AbstractController
         {
         $this->createProject();
         }*/
+    }
+    public function displayFormTask()
+    {
+        $head = new Head();
+        $header = new Header();
+        $form = new FormController();
+        $head->displayHead();
+        $header->displayHeader();
+        $form->constructTaskForm();
+    }
+    public function displayUpdateFormTask()
+    {
+        $head = new Head();
+        $header = new Header();
+        $form = new FormController();
+        $head->displayHead();
+        $header->displayHeader();
+        $form->updateTaskForm();
     }
 
     public function createProject()
@@ -131,12 +150,86 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayBodyTache($task);
     }
+
+    public function createTask()
+    {
+        $date = date("Y-m-d");
+
+        /*$user = Model::getInstance()->getByAttribute('Utilisateur', 'Nom_utilisateur', $_POST['nom_utilisateur']);
+
+        if (!$user) {
+
+            $userData = [
+                "Nom_utilisateur" => $_POST["nom_utilisateur"],
+            ];
+
+            $userId = Model::getInstance()->save('Utilisateur', $userData);
+        } else {
+
+            $userId = $user[0]->getId_utilisateur();
+        }*/
+
+        $datas = [
+            "Nom_tache" => $_POST["Titre_task"],
+            "Descritpion_tache" => $_POST["Description_task"],
+            "Date_debut_tache" => $date,
+            "Id_projet" => $_GET["Id_Projet"],
+        ];
+
+        if (isset($_POST['Date_fin'])) {
+            $datas['Date_butoire_tache'] = $_POST['Date_fin'];
+        }
+        if (isset($_POST['charge'])) {
+            $charge = Model::getInstance()->getByAttribute('Charge', 'Etat_charge', $_POST['charge']);
+            $datas['Id_charge'] = $charge[0]->getId_charge();
+        }
+        if (isset($_POST['priorite'])) {
+            $priorite = Model::getInstance()->getByAttribute('Priorite', 'Etat_priorite', $_POST['priorite']);
+            $datas['Id_priorite'] = $priorite[0]->getId_priorite();
+        }
+        if (isset($_POST['status'])) {
+            $status = Model::getInstance()->getByAttribute('status', 'Etat_status', $_POST['status']);
+            $datas['Id_status'] = $status[0]->getId_status();
+        }
+
+        Model::getInstance()->save('taches', $datas);
+
+        return UrlGenerator::redirect('ProjectController', 'displayProjet');
+    }
+    public function updateTask()
+    {
+        $datas = [
+            "Nom_tache" => $_POST["Titre_task"],
+            "Descritpion_tache" => $_POST["Description_task"],
+            "Id_projet" => $_GET["Id_Projet"],
+        ];
+
+        if (isset($_POST['Date_fin'])) {
+            $datas['Date_butoire_tache'] = $_POST['Date_fin'];
+        }
+        if (isset($_POST['charge'])) {
+            $charge = Model::getInstance()->getByAttribute('Charge', 'Etat_charge', $_POST['charge']);
+            $datas['Id_charge'] = $charge[0]->getId_charge();
+        }
+        if (isset($_POST['priorite'])) {
+            $priorite = Model::getInstance()->getByAttribute('Priorite', 'Etat_priorite', $_POST['priorite']);
+            $datas['Id_priorite'] = $priorite[0]->getId_priorite();
+        }
+        if (isset($_POST['status'])) {
+            $status = Model::getInstance()->getByAttribute('status', 'Etat_status', $_POST['status']);
+            $datas['Id_status'] = $status[0]->getId_status();
+        }
+        Model::getInstance()->updateById('taches', 'Id_taches', $_GET['Id_taches'], $datas);
+
+        return UrlGenerator::redirect('ProjectController', 'displayProjet');
+    }
     public function ConfirmationDelete()
     {
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_SESSION['userId']);
+        $projects = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
+        var_dump($projects);
         $head = new Head();
         $header = new Header();
         $body = new Body;
@@ -144,27 +237,40 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayProjectConfirmation($projects);
     }
+
     public function deleteproject()
     {
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
+        $tasks = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($tasks)) {
+            foreach ($tasks as $task) {
+                Model::getInstance()->delete('taches', 'Id_taches', $task->getId_taches());
+            }
+        }
 
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
+        $participants = Model::getInstance()->getByAttribute('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($participants)) {
+            Model::getInstance()->delete('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
+
+        $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($project)) {
+            Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
+
+        $admin = Model::getInstance()->getByAttribute('administrateur', 'Id_administrateur', $project[0]->getId_administrateur());
+        if (!empty($admin)) {
+            Model::getInstance()->delete('administrateur', 'Id_administrateur', $project[0]->getId_administrateur());
+        }
 
 
 
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $priority = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $charge = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        // $status = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
 
-        $head = new Head();
-        $header = new Header();
-        $body = new Body;
-        $head->displayHead();
-        $header->displayHeader();
-        $body->displayBodyTache($task);
+
+
+
+        UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
 }

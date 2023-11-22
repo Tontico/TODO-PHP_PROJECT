@@ -90,7 +90,6 @@ class Model extends PDO
     public function getByJoin($entity, $entityJoin, $attribute, $attributeJoin,$attributeUser, $value)
     {
         $query = $this->query("SELECT * FROM $entity JOIN $entityJoin ON $entity.$attribute = $entityJoin.$attributeJoin WHERE $entityJoin.$attributeUser = $value");
-        var_dump($query);
         return $query->fetchAll(PDO::FETCH_CLASS, Config::ENTITY . ucfirst($entity));
     }
 
@@ -107,7 +106,7 @@ class Model extends PDO
     }
 
 
-    public function updateById($entity, $id, $datas): void
+    public function updateById($entity,$attribute, $id, $datas): void
     {
         $sql = 'UPDATE ' . $entity . ' SET ';
         $count = count($datas) - 1;
@@ -121,7 +120,7 @@ class Model extends PDO
             }
             $i++;
         }
-        $sql = $sql . " WHERE id='$id'";
+        $sql = $sql . " WHERE $attribute='$id'";
         echo $sql . '<br>';
         var_dump($preparedDatas);
         $preparedRequest = $this->prepare($sql);
@@ -136,7 +135,8 @@ class Model extends PDO
 
     public function delete($entity, $param, $condition)
     {
-        $sql = "DELETE FROM $entity WHERE $param=$condition";
+        $sql = "DELETE FROM $entity WHERE $param = $condition";
+        echo $sql;
         $this->exec($sql);
     }
 
@@ -146,4 +146,20 @@ class Model extends PDO
         echo $sql;
         $this->exec($sql);
     }
+
+    // public function ChangeConstraint()
+    // {
+    //     $sql = " ALTER TABLE participants_projet NOCHECK CONSTRAINT ALL;";
+    //     echo $sql;
+    //     $this->exec($sql);
+    // }
+    /*public function ChangeConstraint()
+    {
+        $sql = " ALTER TABLE administrateur DROP INDEX Id_utilisateur ";
+        echo $sql;
+        $this->exec($sql);
+    }*/
 }
+
+
+
