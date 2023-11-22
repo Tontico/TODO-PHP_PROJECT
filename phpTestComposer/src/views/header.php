@@ -14,27 +14,32 @@ class Header
     {
 ?>
         <!-- Header with some bootstraps -->
-        <header class="bg-dark p-3 d-flex justify-content-between">
+        <header class="bg-dark p-3 d-flex justify-content-between align-items-center">
             <div class="col-1 d-flex text-light align-items-center">
                 <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
-                <?php if (SecurityController::isConnected()) : ?>
-                    <p class="m-0 ml-2">Bienvenue <?= $_SESSION['username'] ?></p>
-                <?php endif; ?>
-
+                <h1>Gest'Flex</h1>
             </div>
-            <nav class="navbar navbar-expand-lg navbar-dark col-11">
+            <nav class="navbar navbar-expand-lg navbar-dark col-10">
                 <ul class="navbar-nav mx-auto justify-content-around" style="width:100%">
-                    <?php if (!SecurityController::isConnected()) : ?>
-                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('UserController', 'displayForm', "connexion"); ?>">Se connecter</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('UserController', 'displayForm', "inscription"); ?>">S'enregistrer</a></li>
-                    <?php endif; ?>
                     <?php if (SecurityController::isConnected()) : ?>
-                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ProjectController', 'displayProjet'); ?>">Mes projets</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'deconnexion'); ?>">Se déconnecter</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('ProjectController', 'displayProjet'); ?>">
+                                <h1>Mes projets</h1>
+                            </a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('SecurityController', 'deconnexion'); ?>">
+                                <h1>Se déconnecter</h1>
+                            </a></li>
                     <?php endif; ?>
                 </ul>
             </nav>
+            <div class="col-1 d-flex text-light align-items-center justify-content-end">
+                <?php if (SecurityController::isConnected()) : ?>
+                    <h1><?= $_SESSION['username'] ?></h1>
+                <?php endif; ?>
+                <img src="public/assets/avatars/avatar.jpg" alt="logo" style="width: 50px; height:50px; object-fit: cover; border-radius: 50%;">
+
+            </div>
         </header>
+
 <?php
     }
 }

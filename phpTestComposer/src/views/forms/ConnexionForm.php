@@ -18,21 +18,28 @@ class ConnexionForm extends AbstractForm
 ?>
         <main>
             <form id="security_form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST">
+                <div class="d-flex justify-content-center">
+                    <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
+                </div>
+
                 <?php if (!empty($this->error)) : ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php foreach ($this->error as $key => $value) {
+                        <?php foreach ($this->error as $value) {
                             echo $value . "</br>";
                         } ?></div>
                 <?php endif; ?>
 
                 <label for="email">Username</label>
-                <input type="text" name="email" class="form-control" placeholder="Adresse mail" required autofocus style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
+                <input type="text" name="email" class="form-control" <?php if (!empty($this->inputValues)) : ?> value="<?= $this->inputValues['email']; ?>" <?php endif; ?> placeholder="Adresse mail" required autofocus style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()">
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
 
                 <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">
-                    Log in
+                    Connexion
                 </button>
+                <a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('UserController', 'displayForm', "inscription"); ?>">
+                    <p>Pas encore inscrit ? </p>
+                </a>
 
                 <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
                 <script>
@@ -54,7 +61,6 @@ class ConnexionForm extends AbstractForm
     // Method to process the login form
     public function processForm()
     {
-        $this->error = [];
         if (isset($_POST['submit'])) {
             $formDatas = ['email' => $_POST['email'], 'password' => $_POST['password']];
             // Call the sanitize method
@@ -67,7 +73,8 @@ class ConnexionForm extends AbstractForm
             // Look if login is empty OR if password doesn't match with the DB
             if (empty($utilisateur) || !password_verify($password, $utilisateur[0]->getMdp_utilisateur())) {
                 $this->error[] = 'Identifiants invalides';
-                return $this->error;
+                $this->inputValues['email'] = $username;
+                return [$this->error, $this->inputValues];
             } else {
 
                 // Stock the user data in SESSION
