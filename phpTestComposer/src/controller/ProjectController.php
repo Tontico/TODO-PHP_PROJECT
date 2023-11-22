@@ -10,7 +10,8 @@ use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
-
+use Keha\Test\views\forms\ProjectForm;
+use Keha\Test\Entity\Participants_projet;
 
 class ProjectController extends AbstractController
 {
@@ -228,7 +229,8 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
-        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_SESSION['userId']);
+        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_GET['Id_Projet']);
+        var_dump($projects);
         $head = new Head();
         $header = new Header();
         $body = new Body;
@@ -241,19 +243,34 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
+        $tasks = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($tasks)) {
+            foreach ($tasks as $task) {
+                Model::getInstance()->delete('taches', 'Id_taches', $task->getId_taches());
+            }
+        }
 
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
+        $participants = Model::getInstance()->getByAttribute('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($participants)) {
+                Model::getInstance()->delete('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
 
+        $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($project)) {
+                Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
 
+        $admin = Model::getInstance()->getByAttribute('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+        if (!empty($admin)) {
+                Model::getInstance()->delete('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+        }
+        
+        
 
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+       
 
-        $head = new Head();
-        $header = new Header();
-        $body = new Body;
-        $head->displayHead();
-        $header->displayHeader();
-        $body->displayBodyTache($task);
+       
+
+        UrlGenerator::redirect('IndexController', 'displayProjet');
     }
 }

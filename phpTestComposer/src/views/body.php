@@ -5,6 +5,7 @@ namespace Keha\Test\views;
 use Keha\Test\App\UrlGenerator;
 use Keha\test\controller\Utilisateur;
 use Keha\Test\App\Model;
+use Keha\Test\App\Entity\Priorite;
 
 //Class that create the Body
 class Body
@@ -26,7 +27,7 @@ class Body
                         <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
                         <p class='card-text'>" . $project->getDescription_projet() . "</p>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
-                        <a href='' class='btn btn-danger'>Supprimez le projet</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-danger'>Supprimez le projet</a>
                     </div>
                 </div>
             </div>";
@@ -85,6 +86,7 @@ class Body
     public function displayBodyTache($data)
     {
         $data = $data[0];
+        
         //Il faudra ajouter le nom du projet
         echo "<body>
         <h1>NOM PROJET</h1>";
@@ -132,14 +134,14 @@ class Body
 
     public function displayProjectConfirmation($data)
     {
-
+        $data= $data[0];
         echo "<body>
-<h1>NOM PROJET</h1>";
+<h1>Etes vous sur de vouloir supprimer le projet :".$data->getTitre_projet()."?</h1>
+<div class='d-flex justify-content-center'> 
+<a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteproject') ."&Id_Projet=".$data->getId_projet(). "' class='btn btn-primary p-2 m-3'>Supprimer</a> <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayProjet') . "' class='btn btn-danger p-2 m-3'>Revenir à la page des projets</a><br>
+</div>";       
 
-        echo "<div>
-            <h2 class=''> " . $data->getNom_tache() . "</h2>
-            <p>Priorité taches, et statut tache<p/>
-            <h3 class='h4'> Utilisateur en charge de la tache: " . ($data->getUtilisateur())[0]->getNom_utilisateur() . "</h3>
-            <p class=''>" . $data->getDescritpion_tache() . "</p>";
+
+
     }
 }

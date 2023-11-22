@@ -5,16 +5,11 @@ namespace Keha\Test\views\forms;
 
 
 use Keha\Test\App\UrlGenerator;
+use Keha\Test\Views\Forms\AbstractForm;
 
 // Function to display the connection form
-class InscriptionForm
+class InscriptionForm extends AbstractForm
 {
-    public $error;
-
-    public function __construct()
-    {
-        $this->error = [];
-    }
 
     // Method to display the connection form
     public function displayInscriptionForm()
@@ -86,40 +81,18 @@ class InscriptionForm
             // Update the formDatas & error value with the sanitized ones
             $formDatas = $sanitizedDatas['formDatas'];
             $this->error = $sanitizedDatas['error'];
-            // Call the validate firstname method
-            $this->validatePassword($formDatas['password'], $formDatas['confirm_password']);
             // Call the validate password method
+            $this->validatePassword($formDatas['password'], $formDatas['confirm_password']);
+            // Call the validate firstname method
             $this->validateFirstname($formDatas['firstname']);
+            // Call the validate lastname method
+            $this->validateLastname($formDatas['lastname']);
             // If error still empty, form is valide
             if (empty($this->error)) {
                 return true;
             }
         }
         return $this->error;
-    }
-
-    // Method to sanitize form inputs values
-    private function sanitizeFormInputs($formDatas)
-    {
-        $error = [];
-        foreach ($formDatas as $key => $value) {
-            if (is_string($value)) {
-                if ($key === 'email') {
-                    // Sanitize email 
-                    $validateEmail = filter_var($value, FILTER_VALIDATE_EMAIL);
-                    if ($validateEmail === false) {
-                        $error['erreurEmail$key'] = "Erreur de format dans le champs $key";
-                    }
-                }
-                // Protect against HTML injections 
-                $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-                // Replace the old value
-                $formDatas[$key] = $value;
-            } else {
-                $error['erreurEmail$key'] = "Erreur de format dans le champs $key";
-            }
-        }
-        return ['formDatas' => $formDatas, 'error' => $error];
     }
 
     // Method that check the validity of the password
@@ -159,8 +132,17 @@ class InscriptionForm
             $this->error['erreurFirstnameLength'] = "Le prénom doit faire au moins 2 caractères";
         }
         // Check if a number is in the firstname
-        if (preg_match('/\d/', $firstname)) {
-            $this->error['erreurFirstnameNumber'] = "Le prénom ne doit pas contenir de chiffre";
+        if (preg_match('/\d/', $firstname) || preg_match('/[!@#$%^&*()-_=+{};:,<.>]/', $firstname)) {
+            $this->error['erreurFirstnameNumber'] = "Le prénom ne doit pas contenir de chiffre  ou de caractère spécial";
+        }
+    }
+
+    // Method that check the validity of the password
+    private function validateLastname($lastname)
+    {
+        // Check if a number is in the lastname
+        if (preg_match('/\d/', $lastname) || preg_match('/[!@#$%^&*()-_=+{};:,<.>]/', $lastname)) {
+            $this->error['erreurLastnameNumber'] = "Le nom ne doit pas contenir de chiffre ou de caractère spécial";
         }
     }
 }

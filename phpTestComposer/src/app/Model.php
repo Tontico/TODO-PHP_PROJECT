@@ -135,7 +135,8 @@ class Model extends PDO
 
     public function delete($entity, $param, $condition)
     {
-        $sql = "DELETE FROM $entity WHERE $param=$condition";
+        $sql = "DELETE FROM $entity WHERE $param = $condition";
+        echo $sql;
         $this->exec($sql);
     }
 
@@ -145,4 +146,20 @@ class Model extends PDO
         echo $sql;
         $this->exec($sql);
     }
+
+    // public function ChangeConstraint()
+    // {
+    //     $sql = " ALTER TABLE participants_projet NOCHECK CONSTRAINT ALL;";
+    //     echo $sql;
+    //     $this->exec($sql);
+    // }
+    public function ChangeConstraint()
+    {
+        $sql = " ALTER TABLE administrateur DROP INDEX Id_utilisateur ";
+        echo $sql;
+        $this->exec($sql);
+    }
 }
+
+
+
