@@ -37,9 +37,7 @@ class UserController extends AbstractController
     {
         $methodName = "display" .  ucfirst(strtolower("$this->formName")) . "Form";
         $head = new Head();
-        $header = new Header();
         $head->displayHead();
-        $header->displayHeader();
         $this->form->$methodName();
     }
 
