@@ -27,8 +27,8 @@ class Body
                         <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
                         <p class='card-text'>" . $project->getDescription_projet() . "</p>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-danger'>Supprimez le projet</a>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() ."' class='btn btn-success mt-1'>Modifiez le projet</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-danger'>Supprimez le projet</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-success mt-1'>Modifiez le projet</a>
                     </div>
                 </div>
             </div>";
@@ -71,9 +71,19 @@ class Body
         // a modifier pour ajouter le nom d'utilisateur
         foreach ($task as $data => $key) {
             echo "<div class='col-4'>
-            <h2 class=''> " . $key->getNom_tache() . "</h2>
-            <h3 class='h4'> Utilisateur en charge de la tache:" . /*$key->getUtilisateur()[0]->getNom_utilisateur().*/ "</h3>
-            <p class=''>" . $key->getDescritpion_tache() . "</p>
+            <h2 class=''> " . $key->getNom_tache() . "</h2>";
+            if (!empty($key->getUtilisateur()) && ($key->getUtilisateur()[0]) !== NULL) {
+                echo "<p class='h5'> Utilisateur en charge de la tache:" . $key->getUtilisateur()[0]->getPrenom_utilisateur() . "</p>";
+            } else {
+                echo "<p class ='h5'>pas d'utilisateurs assignés</p>";
+            }
+            if (!empty($key->getPriorite()) && ($key->getPriorite()[0]) !== NULL) {
+                echo "<p>Priorite de la tache: " . $key->getPriorite()[0]->getEtat_priorite() . "<p/>";
+            } else {
+                echo "pas de priorité pour la tache actuellement" . "<br>";
+            }
+
+            echo "<p class=''>" . $key->getDescritpion_tache() . "</p>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTache') . "&Id_taches=" . $key->getId_taches() . "'class=''> Lien vers la tache</a>
             </div>";
         }
@@ -87,10 +97,11 @@ class Body
     public function displayBodyTache($data)
     {
         $data = $data[0];
-        
+
         //Il faudra ajouter le nom du projet
         echo "<body>
-        <h1>NOM PROJET</h1>";
+        <h1 class='h1'>" . $data->getProjet()[0]->getTitre_projet() . "</h1>";
+
         if (!empty($data->getStatus()) && ($data->getStatus()[0]) !== NULL) {
             echo "<p>Statut de la tache: " . $data->getStatus()[0]->getEtat_status() . "<p/>";
         } else {
@@ -109,15 +120,32 @@ class Body
 
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
         echo "<div>
-                    <h2 class=''> " . $data->getNom_tache() . "</h2>
-                    <h3 class='h4'> Utilisateur en charge de la tache: " ./*($data->getUtilisateur())[0]->getNom_utilisateur().*/ "</h3>
-                    <p class=''>" . $data->getDescritpion_tache() . "</p>";
+                    <h2 class=''> " . $data->getNom_tache() . "</h2>";
+        if (!empty($data->getUtilisateur()) && ($data->getUtilisateur()[0]) !== NULL) {
+            echo "<p class='h5'> Utilisateur en charge de la tache:" . $data->getUtilisateur()[0]->getPrenom_utilisateur() . "</p>";
+        } else {
+            echo "<p class ='h5'>pas d'utilisateurs assignés</p>";
+        }
+        echo "<p class=''>" . $data->getDescritpion_tache() . "</p>";
 
         if (($data->getDate_realisation_tache()) === NULL) {
             echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et à finir pour le : " . $data->getDate_butoire_tache() . "</p>";
         } else {
             echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et fini le : " . $data->getDate_realisation_tache() . "</p>";
         }
+
+        $idParticipates = Model::getInstance()->getByAttribute('participants_projet', 'Id_Projet', $data->getId_projet());
+        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'AssignUserTask') . "&Id_taches=" . $_GET['Id_taches'] . "' method='POST'>
+                <label for='userName'>user:</label>
+                <select class='form-select' name='userName' id='userName'>";
+
+        echo "<option selected>--Please choose an option--</option>";
+        foreach ($idParticipates as $idParticipate) {
+            echo "<option value='" . $idParticipate->GetNomUser()[0]->getId_utilisateur() . "'>" . $idParticipate->getNomUser()[0]->getPrenom_utilisateur() . "</option>";
+        }
+        echo "</select>
+                <button type='submit' name='submit' class='btn btn-primary mt-3'>Assigner</button>
+                </form>";
 
         echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
 
@@ -128,21 +156,16 @@ class Body
     </div>
         </div>
     </body>";
-        /*<a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>*/
     }
 
 
     public function displayProjectConfirmation($data)
     {
-        $data= $data[0];
+        $data = $data[0];
         echo "<body>
-<h1>Etes vous sur de vouloir supprimer le projet :".$data->getTitre_projet()."?</h1>
-<div class='d-flex justify-content-center'> 
-<a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteproject') ."&Id_Projet=".$data->getId_projet(). "' class='btn btn-primary p-2 m-3'>Supprimer</a> <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayProjet') . "' class='btn btn-danger p-2 m-3'>Revenir à la page des projets</a><br>
-</div>";       
-
-
-
+            <h1>Etes vous sur de vouloir supprimer le projet :" . $data->getTitre_projet() . "?</h1>
+            <div class='d-flex justify-content-center'> 
+                <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteproject') . "&Id_Projet=" . $data->getId_projet() . "' class='btn btn-primary p-2 m-3'>Supprimer</a> <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayProjet') . "' class='btn btn-danger p-2 m-3'>Revenir à la page des projets</a><br>
+            </div>";
     }
 }

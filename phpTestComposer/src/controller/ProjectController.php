@@ -135,8 +135,8 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-       
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"],'ORDER BY Id_priorite DESC');
+
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"], 'ORDER BY Id_priorite DESC');
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
 
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
@@ -159,19 +159,17 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-        // $data = new Taches(1, "Titre Premiere tache", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", "01-10-2024", NULL, "01-12-2024", 1, 1, 1, 1, 1, 1);
-
-
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        if(empty($task)){
+        if (empty($task)) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if task does not exist
         }
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $task[0]->getId_projet());
         if (empty($participant)) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not affiliated with this projet
         }
+
+
 
         $head = new Head();
         $header = new Header();
@@ -262,6 +260,17 @@ class ProjectController extends AbstractController
         Model::getInstance()->updateById('taches', 'Id_taches', $_GET['Id_taches'], $datas);
 
         return UrlGenerator::redirect('ProjectController', 'displayProjet');
+    }
+
+    public function assignUserTask()
+    {
+        //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
+        $data = [
+            'Id_utilisateur' => $_POST['userName'],
+        ];
+        Model::getInstance()->updateById("taches", 'Id_taches', $_GET['Id_taches'], $data);
+
+        UrlGenerator::redirect("ProjectController", "displayProjet");
     }
 
     public function ConfirmationDelete()
