@@ -5,7 +5,11 @@ h1 {
     margin-right: 5px !important;
 }
 
-.btn-card-project {
-    margin:0px !important;
-    margin-right:5px !important;
+body {
+    background-color: #1e1f21 !important;
+    height: 100vh !important;
+}
+
+header {
+    height: 10% !important;
 }
