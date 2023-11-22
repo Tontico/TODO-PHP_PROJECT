@@ -48,6 +48,7 @@ class UserController extends AbstractController
     {
         // Error is used to stock errors DATA AND user's datas if no error
         $error = $this->form->processForm(); // Process the registration form
+        $inputValues = $error[1];
         if (isset($error[0]) && $error[0] === true) {
             // If form is inscription, save user in DB
             if ($this->formName === "inscription") {
@@ -56,7 +57,7 @@ class UserController extends AbstractController
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if login ok
             exit;
         } else {
-            $this->displayForm($error); // Redisplay the login form with error value
+            $this->displayForm($error, $inputValues); // Redisplay the login form with error value
         }
     }
 

@@ -5,10 +5,11 @@ namespace Keha\Test\Views\Forms;
 abstract class AbstractForm
 {
     public $error;
+    public $inputValues;
 
     public function __construct()
     {
-        //$this->datas = $datas;
+        $this->inputValues = [];
         $this->error = [];
     }
 

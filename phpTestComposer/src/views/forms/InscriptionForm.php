@@ -16,11 +16,13 @@ class InscriptionForm extends AbstractForm
     {
 ?><main>
             <form id="security_form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'inscription') ?>" method="POST">
-
+                <div class="d-flex justify-content-center">
+                    <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
+                </div>
                 <div class="mb-3">
                     <?php if (!empty($this->error)) : ?>
                         <div class="alert alert-danger" role="alert">
-                            <?php foreach ($this->error as $key => $value) {
+                            <?php foreach ($this->error as $value) {
                                 echo $value . "</br>";
                             } ?></div>
                     <?php endif; ?>
@@ -29,18 +31,18 @@ class InscriptionForm extends AbstractForm
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstname">Prénom </label>
-                        <input type="text" class="form-control" name="firstname" required placeholder="Prénom" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                        <input type="text" class="form-control" name="firstname" <?php if (!empty($this->inputValues)) : ?> value="<?= $this->inputValues['firstname']; ?>" <?php endif; ?> required placeholder="Prénom" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="lastname">Nom <small>(facultatif)</small></label>
-                        <input type="text" class="form-control" name="lastname" placeholder="Nom" autofocus style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                        <input type="text" class="form-control" name="lastname" <?php if (!empty($this->inputValues)) : ?> value="<?= $this->inputValues['lastname']; ?>" <?php endif; ?> placeholder="Nom" autofocus style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="email">Adresse e-mail</label>
-                    <input type="text" class="form-control" name="email" required placeholder="E-mail" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
+                    <input type="text" class="form-control" name="email" <?php if (!empty($this->inputValues)) : ?> value="<?= $this->inputValues['email']; ?>" <?php endif; ?> required placeholder="E-mail" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
                 </div>
 
                 <div class="mb-3">
@@ -53,7 +55,10 @@ class InscriptionForm extends AbstractForm
                     <input type="password" class="form-control" name="confirm_password" required placeholder="Vérification de mot de passe" style="border-color: #007BFF;" onfocus="addShadow()" onblur="removeShadow()">
                 </div>
 
-                <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">S'inscrire</button>
+                <button class="btn btn-xl btn-primary form-control" type="submit" name="submit">Se connecter</button>
+                <a class="nav-link text-light" href="<?= UrlGenerator::generateUrl('UserController', 'displayForm', "connexion"); ?>">
+                    <p>Déjà inscrit ? </p>
+                </a>
                 <!-- Add of some js for to add/remove the blur because it's freacking bling bling :D -->
                 <script>
                     function addShadow() {
@@ -74,7 +79,6 @@ class InscriptionForm extends AbstractForm
     // Method to process the registration form
     public function processForm()
     {
-        $this->error = [];
         if (isset($_POST['submit'])) {
             $formDatas = ['lastname' => ucfirst(strtolower($_POST['lastname'])), 'firstname' => ucfirst(strtolower($_POST['firstname'])), "email" => strtolower($_POST['email']), 'password' => $_POST['password'], 'confirm_password' => $_POST['confirm_password']];
             // Call the sanitize method
@@ -93,7 +97,10 @@ class InscriptionForm extends AbstractForm
                 return [true, $formDatas];
             }
         }
-        return $this->error;
+        $this->inputValues['firstname'] = $formDatas['firstname'];
+        $this->inputValues['lastname'] = $formDatas['lastname'];
+        $this->inputValues['email'] = $formDatas['email'];
+        return [$this->error, $this->inputValues];
     }
 
     // Method that check the validity of the password

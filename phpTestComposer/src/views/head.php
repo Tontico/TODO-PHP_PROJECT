@@ -12,7 +12,7 @@ class Head
 
         <head>
             <meta charset="UTF-8">
-            <title>Mange tes morts</title>
+            <title>Gest'flex</title>
             <link rel="stylesheet" href="./public/style.css">
             <?php
             // Call the method to check the formName in the query if there is one
