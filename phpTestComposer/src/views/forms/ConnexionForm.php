@@ -38,12 +38,12 @@ class ConnexionForm extends AbstractForm
                 <script>
                     function addShadow() {
                         //Look for the ID loginForm + Add class focused
-                        document.getElementById("form").classList.add("focused");
+                        document.getElementById("security_form").classList.add("focused");
                     }
 
                     function removeShadow() {
                         //Look for the ID loginForm + Remove class focused
-                        document.getElementById("form").classList.remove("focused");
+                        document.getElementById("security_form").classList.remove("focused");
                     }
                 </script>
 

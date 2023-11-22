@@ -27,3 +27,6 @@ main {
     border-radius: 20px; 
     margin-top: -120px;
 }
+#security_form.focused {
+    box-shadow: 0 0 10px #007BFF, 0 0 15px #00A0FF, 0 0 20px #00C3FF;
+}
