@@ -137,7 +137,7 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('IndexController', 'displayIndex'); // Redirect if not connected
         }
-        $projects = Model::getInstance()->getByAttribute('Projet', 'Id_projet', $_GET['Id_Projet']);
+        $projects = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
         var_dump($projects);
         $head = new Head();
         $header = new Header();
@@ -168,9 +168,9 @@ class ProjectController extends AbstractController
                 Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
         }
 
-        $admin = Model::getInstance()->getByAttribute('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+        $admin = Model::getInstance()->getByAttribute('administrateur', 'Id_administrateur', $project[0]->getId_administrateur());
         if (!empty($admin)) {
-                Model::getInstance()->delete('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+                Model::getInstance()->delete('administrateur', 'Id_administrateur', $project[0]->getId_administrateur());
         }
         
         
@@ -179,6 +179,6 @@ class ProjectController extends AbstractController
 
        
 
-        UrlGenerator::redirect('IndexController', 'displayProjet');
+        UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
 }
