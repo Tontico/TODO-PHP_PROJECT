@@ -156,7 +156,7 @@ class Model extends PDO
     // }
     public function ChangeConstraint()
     {
-        $sql = " ALTER TABLE participants_projet DROP INDEX Id_utilisateur AND ALTER TABLE administrateur DROP INDEX Id_utilisateur ";
+        $sql = " ALTER TABLE administrateur DROP INDEX Id_utilisateur ";
         echo $sql;
         $this->exec($sql);
     }

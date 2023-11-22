@@ -11,6 +11,7 @@ use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
 use Keha\Test\views\forms\ProjectForm;
+use Keha\Test\Entity\Participants_projet;
 
 class ProjectController extends AbstractController
 {
@@ -156,13 +157,27 @@ class ProjectController extends AbstractController
                 Model::getInstance()->delete('taches', 'Id_taches', $task->getId_taches());
             }
         }
-        
-        // Model::getInstance()->ChangeConstraint();
-        Model::getInstance()->delete('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
-        // Model::getInstance()->ChangeConstraint('participants_projet', 'check',);
-        Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
-        Model::getInstance()->delete('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
 
+        $participants = Model::getInstance()->getByAttribute('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($participants)) {
+                Model::getInstance()->delete('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
+
+        $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
+        if (!empty($project)) {
+                Model::getInstance()->delete('projet', 'Id_projet', $_GET["Id_Projet"]);
+        }
+
+        $admin = Model::getInstance()->getByAttribute('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+        if (!empty($admin)) {
+                Model::getInstance()->delete('administrateur', 'Id_utilisateur', $_SESSION["userId"]);
+        }
+        
+        
+
+       
+
+       
 
         UrlGenerator::redirect('IndexController', 'displayProjet');
     }

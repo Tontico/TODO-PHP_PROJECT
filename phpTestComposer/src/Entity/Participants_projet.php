@@ -2,7 +2,7 @@
 
 namespace Keha\Test\Entity;
 
-class Participant_projet{
+class Participants_projet{
     private int $Id_projet;
     private int $Id_utilisateur;
 
