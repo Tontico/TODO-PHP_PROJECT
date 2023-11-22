@@ -171,15 +171,17 @@ class Taches
         return Model::getInstance()->getByAttribute('charge', 'Id_charge', $this->Id_charge);
     }
 
-    
-
-   
+    //Get an object Projet affiliated with this task
+    public function getProjet()
+    {
+        return Model::getInstance()->getByAttribute('projet', 'Id_projet', $this->Id_projet);
+    }
 
     /**
      * Get the value of Id_projet
      */ 
-    public function getProjet()
+    public function getId_projet()
     {
-        return Model::getInstance()->getByAttribute('projet', 'Id_projet', $this->Id_projet);
+        return $this->Id_projet;
     }
 }
