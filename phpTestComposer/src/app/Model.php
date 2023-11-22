@@ -153,12 +153,12 @@ class Model extends PDO
     //     echo $sql;
     //     $this->exec($sql);
     // }
-    public function ChangeConstraint()
+    /*public function ChangeConstraint()
     {
         $sql = " ALTER TABLE administrateur DROP INDEX Id_utilisateur ";
         echo $sql;
         $this->exec($sql);
-    }
+    }*/
 }
 
 
