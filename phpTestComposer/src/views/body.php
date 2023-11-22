@@ -120,7 +120,7 @@ class Body
 
         echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
 
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTache') . "' class=''>Supprimer la tache</a><br>
+            <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a><br>
             </div>
 
 

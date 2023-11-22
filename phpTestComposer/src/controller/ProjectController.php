@@ -121,6 +121,10 @@ class ProjectController extends AbstractController
         $task = Model::getInstance()->getByAttribute('taches', 'Id_projet', $_GET["Id_Projet"]);
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
 
+        $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
+        if (empty($participant)) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
 
         $head = new Head();
         $header = new Header();
@@ -129,6 +133,12 @@ class ProjectController extends AbstractController
         $header->displayHeader();
         $body->displayBodyTaches($task, $project);
     }
+
+
+
+
+
+
     //Display one tache if user is connected
     public function displayTache()
     {
@@ -142,6 +152,13 @@ class ProjectController extends AbstractController
 
 
         $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        if(empty($task)){
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if task does not exist
+        }
+        $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $task[0]->getId_projet());
+        if (empty($participant)) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not affiliated with this projet
+        }
 
         $head = new Head();
         $header = new Header();
@@ -180,11 +197,12 @@ class ProjectController extends AbstractController
             $datas['Date_butoire_tache'] = $_POST['Date_fin'];
         }
         if (isset($_POST['charge'])) {
-            $charge = Model::getInstance()->getByAttribute('Charge', 'Etat_charge', $_POST['charge']);
+            $charge = Model::getInstance()->getByAttribute('charge', 'Etat_charge', $_POST['charge']);
+            var_dump($charge);
             $datas['Id_charge'] = $charge[0]->getId_charge();
         }
         if (isset($_POST['priorite'])) {
-            $priorite = Model::getInstance()->getByAttribute('Priorite', 'Etat_priorite', $_POST['priorite']);
+            $priorite = Model::getInstance()->getByAttribute('priorite', 'Etat_priorite', $_POST['priorite']);
             $datas['Id_priorite'] = $priorite[0]->getId_priorite();
         }
         if (isset($_POST['status'])) {
@@ -265,10 +283,20 @@ class ProjectController extends AbstractController
             Model::getInstance()->delete('administrateur', 'Id_administrateur', $project[0]->getId_administrateur());
         }
 
+        UrlGenerator::redirect('ProjectController', 'displayProjet');
+    }
 
+    public function deleteTask()
+    {
+        if (!SecurityController::isConnected()) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        var_dump($task);
+        if (!empty($task)) {
 
-
-
+            Model::getInstance()->delete('taches', 'Id_taches', $_GET["Id_taches"]);
+        }
 
 
         UrlGenerator::redirect('ProjectController', 'displayProjet');
