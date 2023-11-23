@@ -61,6 +61,7 @@ class ConnexionForm extends AbstractForm
     // Method to process the login form
     public function processForm()
     {
+        $this->error = [];
         if (isset($_POST['submit'])) {
             $formDatas = ['email' => $_POST['email'], 'password' => $_POST['password']];
             // Call the sanitize method
