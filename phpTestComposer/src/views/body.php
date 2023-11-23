@@ -72,34 +72,36 @@ class Body
 
         echo "<h3>Projets dont je suis utilisateur</h3>";
         foreach ($projectsUser as $project) {
-            if ($count === 0) {
-                $colorProject = "blue";
-            } else {
-                $colorProject = "orange";
-            }
-            echo "<div class='col-md-4 mb-4'>";
-            if ($colorProject === "orange") {
-                echo "<div class='card card_orange'>";
-            } else {
-                echo "<div class='card'>";
-            }
-            echo "<div class='card_body'>
+            if (($project->getAdministrateur()[0]->getId_utilisateur()) !== ($_SESSION['userId'])) {
+                if ($count === 0) {
+                    $colorProject = "blue";
+                } else {
+                    $colorProject = "orange";
+                }
+                echo "<div class='col-md-4 mb-4'>";
+                if ($colorProject === "orange") {
+                    echo "<div class='card card_orange'>";
+                } else {
+                    echo "<div class='card'>";
+                }
+                echo "<div class='card_body'>
                     <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-card-project'><img src='public/assets/projects/project_icon_" . $colorProject . ".jpg' alt='logo' style='width: 50px; height: 50px; border-radius: 5px 0 0 5px;'></a>
                     <h4 class='card-title'>" . ucfirst($project->getTitre_projet()) . "</h4>
                     <div class='card_icon'>";
-            if (SecurityController::isAdmin($project->getId_projet())) {
-                echo "
+                if (SecurityController::isAdmin($project->getId_projet())) {
+                    echo "
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img class='revertColor' src='public/assets/projects/icon_modify.png' alt='logo' style='width: 20px; height: 20px;'></a>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img class='revertColor' src='public/assets/projects/icon_delete.png' alt='logo' style='width: 20px; height: 20px;'></a>";
-            }
-            echo "</div>
+                }
+                echo "</div>
                         </div>
                     </div>";
-            echo "</div>";
-            if ($count === 0) {
-                $count = 1;
-            } else {
-                $count = 0;
+                echo "</div>";
+                if ($count === 0) {
+                    $count = 1;
+                } else {
+                    $count = 0;
+                }
             }
         }
         echo "</div>
