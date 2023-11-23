@@ -403,8 +403,8 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
+
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
         }
 

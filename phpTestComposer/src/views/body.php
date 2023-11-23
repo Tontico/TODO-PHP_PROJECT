@@ -113,7 +113,8 @@ class Body
         echo "</div>
             </div>
         </section>
-    </main>";
+    </main>
+    </body>";
     }
 
 

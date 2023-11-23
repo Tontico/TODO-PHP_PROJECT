@@ -82,6 +82,8 @@ class ConnexionForm extends AbstractForm
                 $_SESSION['connected'] = 'connected';
                 $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
                 $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
+                $_SESSION['mode']= false;
+
                 return [true, $formDatas];
             }
         }
