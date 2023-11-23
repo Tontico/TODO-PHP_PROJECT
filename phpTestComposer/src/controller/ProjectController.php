@@ -15,7 +15,14 @@ use Keha\Test\Entity\Utilisateur;
 
 class ProjectController extends AbstractController
 {
-
+public function redirectIndex()
+{
+    $head = new Head();
+    $header = new Header();
+    $body = new Body();
+    $head->displayHead();
+    $header->displayHeader();
+}
     // Display project if user is connected
     public function displayProjet()
     {
@@ -184,8 +191,6 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not affiliated with this projet
         }
 
-
-
         $head = new Head();
         $header = new Header();
         $body = new Body;
@@ -201,20 +206,6 @@ class ProjectController extends AbstractController
         }
 
         $date = date("Y-m-d");
-
-        /*$user = Model::getInstance()->getByAttribute('Utilisateur', 'Nom_utilisateur', $_POST['nom_utilisateur']);
-
-        if (!$user) {
-
-            $userData = [
-                "Nom_utilisateur" => $_POST["nom_utilisateur"],
-            ];
-
-            $userId = Model::getInstance()->save('Utilisateur', $userData);
-        } else {
-
-            $userId = $user[0]->getId_utilisateur();
-        }*/
 
         $datas = [
             "Nom_tache" => $_POST["Titre_task"],
@@ -280,9 +271,13 @@ class ProjectController extends AbstractController
     public function assignUserTask()
     {
         //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
+        
         $data = [
             'Id_utilisateur' => $_POST['userName'],
         ];
+        if(empty($data)){
+            
+        }
         Model::getInstance()->updateById("taches", 'Id_taches', $_GET['Id_taches'], $data);
 
         UrlGenerator::redirect("ProjectController", "displayProjet");

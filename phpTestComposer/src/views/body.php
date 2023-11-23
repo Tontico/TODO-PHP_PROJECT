@@ -11,6 +11,16 @@ use Keha\Test\Controller\SecurityController;
 //Class that create the Body
 class Body
 {
+    /*public function displayIndexAccueil()
+    {
+        $user=Model::getInstance()->getbyAttribute()
+        echo "<body>
+        <div class='container-fluid'>
+        <div class ='row'>
+        <div class='col-12 mb-3>
+        <h1>Bievenue".
+        <a href=<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Ajoutez un projet</a>
+    }*/
     public function displayBodyProject($projectsAdmin, $projectsUser)
     {
         echo "<body>
@@ -77,22 +87,20 @@ class Body
             echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a>;<br>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'> Assigner un utilisateur</a><br>";
 
-                    if (isset($_GET["key"])) {
-                        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
+            if (isset($_GET["key"])) {
+                echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
                         <div class='mb-3'>
                             <input type='text' class='form-control' name='mailUser' placeholder='Adresse mail utilisateur' required>
                             </div>
                             <button type='submit' name='submit' class='btn btn-primary'>Assigner</button>
                             </form>";
             }
+        }
+        foreach ($participants as $participant) {
 
-                      
-                    }
-                    foreach ($participants as $participant){
-
-                        echo "<h3>".$participant->getUtilisateur()[0]->getNom_utilisateur()."</h3>";
-                    }
-                    echo  "</div>
+            echo "<h3>" . $participant->getUtilisateur()[0]->getNom_utilisateur() . "</h3>";
+        }
+        echo  "</div>
             <div class='row col-10'>";
 
         // a modifier pour ajouter le nom d'utilisateur
@@ -164,26 +172,40 @@ class Body
         }
         // Condition to show or hide link if is administrateur
         if (SecurityController::isAdmin($data->getProjet()[0]->getId_projet())) {
-        $idParticipates = Model::getInstance()->getByAttribute('participants_projet', 'Id_Projet', $data->getId_projet());
-        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'AssignUserTask') . "&Id_taches=" . $_GET['Id_taches'] . "' method='POST'>
+            $idParticipates = Model::getInstance()->getByAttribute('participants_projet', 'Id_Projet', $data->getId_projet());
+            echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'AssignUserTask') . "&Id_taches=" . $_GET['Id_taches'] . "' method='POST'>
                 <label for='userName'>user:</label>
-                <select class='form-select' name='userName' id='userName'>";
+                <select class='form-select' name='userName' onchange='checkOption()' id='userName'>";
 
-        echo "<option selected>--Please choose an option--</option>";
-        foreach ($idParticipates as $idParticipate) {
-            echo "<option value='" . $idParticipate->getUtilisateur()[0]->getId_utilisateur() . "'>" . $idParticipate->getUtilisateur()[0]->getPrenom_utilisateur() . "</option>";
-        }
-        echo "</select>
-                <button type='submit' name='submit' class='btn btn-primary mt-3'>Assigner</button>
-                </form>";
+            echo "<option disabled selected>--Attribuez un utilisateur--</option>";
+            foreach ($idParticipates as $idParticipate) {
+                echo "<option value='" . $idParticipate->getUtilisateur()[0]->getId_utilisateur() . "'>" . $idParticipate->getUtilisateur()[0]->getPrenom_utilisateur() . "</option>";
+            }
+            echo "</select>
+                <button type='submit' disabled name='submit' id='submit' class='btn btn-primary mt-3'>Assigner</button>
+                </form>
+
+                <script>
+                function checkOption(){
+                    let selectElement=document.getElementById('userName');
+                    let selectButton=document.getElementById('submit');
+
+                    if(selectElement.value !=''){
+                        selectButton.disabled = false;
+                    } else {
+                        selectButton.disabled = true;
+                    }
+                }
+                </script>
+
+                ";
 
             echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
 
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a><br>";
         }
         echo "</div>
-                </div>
-            </div>
+             
         </body>";
         /*<a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>*/
@@ -192,7 +214,6 @@ class Body
 
     public function displayProjectConfirmation($data)
     {
-        $data = $data[0];
         $data = $data[0];
         echo "<body>
 <h1>Etes vous sur de vouloir supprimer le projet :" . $data->getTitre_projet() . "?</h1>
