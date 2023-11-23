@@ -241,9 +241,9 @@ class Body
             }
             echo "</select>
                 <button type='submit' disabled name='submit' id='submit' class='btn btn-primary mt-3'>Assigner</button>
-                </form>
-
-                <script>
+                </form>";
+                //add script who disable submit if empty value
+                echo "<script>
                 function checkOption(){
                     let selectElement=document.getElementById('userName');
                     let selectButton=document.getElementById('submit');

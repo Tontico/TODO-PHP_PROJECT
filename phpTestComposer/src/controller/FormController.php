@@ -18,6 +18,7 @@ class FormController extends AbstractController
         //$this->datas = $datas;
         $this->error = false;
     }
+    //section ProjectForm
     public function constructProjectForm()
     {
         echo "<main class='main_project'>
@@ -71,7 +72,7 @@ class FormController extends AbstractController
         }
     }
 
-
+    //section Task
     public function constructTaskForm()
     {
         echo "<main class='main_project'>
