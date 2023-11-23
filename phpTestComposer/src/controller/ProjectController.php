@@ -401,25 +401,40 @@ class ProjectController extends AbstractController
 
     public function assignUser()
     {
+        $mailUserSanitized = $_POST['mailUser'];
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
-        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
+
+        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
         }
 
         $user = Model::getInstance()->getByAttribute("utilisateur", "Email_utilisateur", $_POST['mailUser']);
+
         if (empty($user)) {
             UrlGenerator::redirect('UserController', 'DisplayForm', 'inscription');
         }
-        $data = [
-            'Id_projet' => $_GET['Id_Projet'],
-            'Id_utilisateur' => $user[0]->getId_utilisateur(),
-        ];
 
-        Model::getInstance()->save("participants_projet", $data);
-        //redirection vers les projets
+        $projectId = $_GET['Id_Projet'];
+        $userId = $user[0]->getId_utilisateur();
+        $userfound = false;
+        // Check if the entry already exists
+        $existingEntry = Model::getInstance()->getByAttribute('participants_projet', 'Id_projet', $projectId);
+        foreach ($existingEntry as $entry) {
+            if ($userId === $entry->getId_utilisateur()) {
+                $userfound = true;
+            }
+        }
+        if ($userfound === false) {
+            // User hasn't be tag on the project
+            $data = [
+                'Id_projet' => $projectId,
+                'Id_utilisateur' => $userId,
+            ];
+            Model::getInstance()->save("participants_projet", $data);
+        }
+        // Redirect to project display
         UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
 }

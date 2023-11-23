@@ -27,7 +27,7 @@ class Body
             $taskName = $projectAndTask->Nom_tache;
             $projectName = $projectAndTask->getTitre_projet();
             $projectId = $projectAndTask->getId_projet();
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task'><p>$taskName</p> <p>$projectName</p> </div>";
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task'><p>$taskName</p> <p>$projectName</p> </div></a>";
         }
         echo "</div>
                     </div>
@@ -136,17 +136,17 @@ class Body
                     </div>
                     <div class='tasks_container'>
                         <div class='tasks_container_header'>
-                            <div class='tasks_container_header_title'><p>Tâches à réaliser</p></div>
-                            <div class='tasks_container_header_noTitle'><p>Responsable</p></div>
-                            <div class='tasks_container_header_noTitle'><p>Échéance</p></div>
-                            <div class='tasks_container_header_noTitle'><p>Priorité</p></div>
-                            <div class='tasks_container_header_noTitle'><p>Statut</p></div>
+                            <div class='tasks_container_header_title marginL'><p><strong>Tâches à réaliser</strong></p></div>
+                            <div class='tasks_container_header_noTitle'><p><strong>Responsable</strong></p></div>
+                            <div class='tasks_container_header_noTitle'><p><strong>Échéance</strong></p></div>
+                            <div class='tasks_container_header_noTitle'><p><strong>Priorité</strong></p></div>
+                            <div class='tasks_container_header_noTitle'><p><strong>Statut</strong></p></div>
                         </div>
                     </div>";
         foreach ($tasks as $task) {
-            echo "<div class='task_container'>";
+            echo "<div class='task_container bgGrey'>";
             echo "
-                    <div class='tasks_container_header_title'>
+                    <div class='tasks_container_header_title marginL'>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTache') . "&Id_taches=" . $task->getId_taches() . "'>
                             <p>" . (!empty($task->getNom_tache()) ? $task->getNom_tache() : "")  . "</p>
                         </a>
@@ -175,8 +175,19 @@ class Body
             } else {
                 echo "<div class='tasks_container_header_noTitle'><p></p></div>";
             }
+            echo  "</div>";
+        }
+        if (SecurityController::isAdmin($project[0]->getId_projet())) {
+            echo "  <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'> Assigner un utilisateur</a><br>";
 
-            echo "</div>";
+            if (isset($_GET["key"])) {
+                echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
+                        <div class='mb-3'>
+                            <input type='text' class='form-control' name='mailUser' placeholder='Adresse mail utilisateur' required>
+                        </div>
+                    <button type='submit' name='submit' class='btn btn-primary'>Assigner</button>
+                </form>";
+            }
         }
         echo "</section>
             </main>
@@ -190,80 +201,95 @@ class Body
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-
         $data = $data[0];
 
         //Il faudra ajouter le nom du projet
         echo "<body>
-        <h1 class='h1'>" . $data->getProjet()[0]->getTitre_projet() . "</h1>";
+            <main class='main_project'>
+                <div class='task_form_container'>
+                <div class='task_form_body'>
+                <div class='titleAndStatus'>
+                    <h1 class='h1'>" . ucfirst($data->getNom_tache()) . "</h1><p>" . $data->getProjet()[0]->getTitre_projet() . "</p></div>";
 
+        echo "<div class='metaDataTask'>
+            <div class='spaceBetween'>
+                <p>";
         if (!empty($data->getStatus()) && ($data->getStatus()[0]) !== NULL) {
-            echo "<p>Statut de la tache: " . $data->getStatus()[0]->getEtat_status() . "<p/>";
+            echo "Statut de la tache: " . $data->getStatus()[0]->getEtat_status();
         } else {
             echo "pas de statut pour la tache actuellement" . "<br>";
         }
+        echo "</p><p>";
+        if (($data->getDate_realisation_tache()) === NULL) {
+            echo "Date de fin : " . $data->getDate_butoire_tache();
+        } else {
+            echo "Fini le : " . $data->getDate_realisation_tache();
+        }
+        echo "</p></div><div class='spaceBetween'><p>";
+
         if (!empty($data->getPriorite()) && ($data->getPriorite()[0]) !== NULL) {
-            echo "<p>Priorite de la tache: " . $data->getPriorite()[0]->getEtat_priorite() . "<p/>";
+            echo "Priorite : " . $data->getPriorite()[0]->getEtat_priorite();
         } else {
             echo "pas de priorité pour la tache actuellement" . "<br>";
         }
+        echo "</p><p>";
         if (!empty($data->getCharge()) && ($data->getCharge()[0]) !== NULL) {
-            echo "<p>Charge de la tache: " . $data->getCharge()[0]->getEtat_charge() . "<p/>";
+            echo "Charge : " . $data->getCharge()[0]->getEtat_charge();
         } else {
             echo "pas de charge pour la tache actuellement" . "<br>";
         }
-
         // a modifier pour ajouter le nom d'utilisateur, la priorité et le statut de la tache
-        echo "<div>
-                    <h2 class=''> " . $data->getNom_tache() . "</h2>";
+        echo "</p></div><div><p>";
         if (!empty($data->getUtilisateur()) && ($data->getUtilisateur()[0]) !== NULL) {
-            echo "<p class='h5'> Utilisateur en charge de la tache:" . $data->getUtilisateur()[0]->getPrenom_utilisateur() . "</p>";
+            echo "Utilisateur assigné : " . $data->getUtilisateur()[0]->getPrenom_utilisateur();
         } else {
-            echo "<p class ='h5'>pas d'utilisateurs assignés</p>";
+            echo "Pas d'utilisateurs assignés</p>";
         }
-        echo "<p class=''>" . $data->getDescritpion_tache() . "</p>";
+        echo "</p>
+                </div>
+            </div>
+        <div class='task_details'>";
 
-        if (($data->getDate_realisation_tache()) === NULL) {
-            echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et à finir pour le : " . $data->getDate_butoire_tache() . "</p>";
-        } else {
-            echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et fini le : " . $data->getDate_realisation_tache() . "</p>";
-        }
+        echo "<p class=''> Déscription : <br>" . $data->getDescritpion_tache() . "</p>";
+        // if (($data->getDate_realisation_tache()) === NULL) {
+        //     echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et à finir pour le : " . $data->getDate_butoire_tache() . "</p>";
+        // } else {
+        //     echo "<p class=''> Tache commencé le : " . $data->getDate_debut_tache() . " et fini le : " . $data->getDate_realisation_tache() . "</p>";
+        // }
         // Condition to show or hide link if is administrateur
         if (SecurityController::isAdmin($data->getProjet()[0]->getId_projet())) {
             $idParticipates = Model::getInstance()->getByAttribute('participants_projet', 'Id_Projet', $data->getId_projet());
             echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'AssignUserTask') . "&Id_taches=" . $_GET['Id_taches'] . "' method='POST'>
-                <label for='userName'>user:</label>
-                <select class='form-select' name='userName' onchange='checkOption()' id='userName'>";
+                            <select class='form-select' name='userName' onchange='checkOption()' id='userName'>";
 
             echo "<option disabled selected>--Attribuez un utilisateur--</option>";
             foreach ($idParticipates as $idParticipate) {
                 echo "<option value='" . $idParticipate->getUtilisateur()[0]->getId_utilisateur() . "'>" . $idParticipate->getUtilisateur()[0]->getPrenom_utilisateur() . "</option>";
             }
             echo "</select>
-                <button type='submit' disabled name='submit' id='submit' class='btn btn-primary mt-3'>Assigner</button>
-                </form>
+                            <button type='submit' disabled name='submit' id='submit' class='btn btn-primary mt-3'>Assigner</button>
+                            </form>
 
-                <script>
-                function checkOption(){
-                    let selectElement=document.getElementById('userName');
-                    let selectButton=document.getElementById('submit');
+                            <script>
+                                function checkOption(){
+                                    let selectElement=document.getElementById('userName');
+                                    let selectButton=document.getElementById('submit');
 
-                    if(selectElement.value !=''){
-                        selectButton.disabled = false;
-                    } else {
-                        selectButton.disabled = true;
-                    }
-                }
-                </script>
-
-                ";
-
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a><br>
-
-            <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a><br>";
+                                    if(selectElement.value !=''){
+                                        selectButton.disabled = false;
+                                    } else {
+                                        selectButton.disabled = true;
+                                    }
+                                }
+                            </script>";
+            echo "<div class='spaceBetween'><a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormTask') . "&Id_projet=" . $data->getProjet()[0]->getId_projet() . "&Id_taches=" . $data->getId_taches() . "' class=''> Modifier la tache</a>
+                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'deleteTask') .  "&Id_taches=" . $data->getId_taches() . "' class=''>Supprimer la tache</a>";
         }
         echo "</div>
-             
+                        </div>
+                    </div>
+                </div>
+             </main>
         </body>";
         /*<a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>
             <a href='" . UrlGenerator::generateUrl('ProjectController', 'updateStatusTache') . "' class=''>Modifier le statut de la tache</a>*/
