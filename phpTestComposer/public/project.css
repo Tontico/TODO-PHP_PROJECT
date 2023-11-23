@@ -209,3 +209,8 @@ h3 {
     display: flex;
     justify-content: center;
 }
+
+.radioStateAndPriority {
+    display: flex;
+    justify-content: space-between;
+}

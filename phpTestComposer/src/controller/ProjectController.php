@@ -232,20 +232,22 @@ class ProjectController extends AbstractController
         }
 
         $date = date("Y-m-d");
+        $titleTask = htmlspecialchars($_POST['Titre_task'], ENT_QUOTES, 'UTF-8');
+        $descriptionTask = htmlspecialchars($_POST["Description_task"], ENT_QUOTES, 'UTF-8');
+        $dateTask = htmlspecialchars($_POST["Date_fin"], ENT_QUOTES, 'UTF-8');
 
         $datas = [
-            "Nom_tache" => $_POST["Titre_task"],
-            "Descritpion_tache" => $_POST["Description_task"],
+            "Nom_tache" => $titleTask,
+            "Descritpion_tache" => $descriptionTask,
             "Date_debut_tache" => $date,
             "Id_projet" => $_GET["Id_Projet"],
         ];
 
         if (isset($_POST['Date_fin'])) {
-            $datas['Date_butoire_tache'] = $_POST['Date_fin'];
+            $datas['Date_butoire_tache'] = $dateTask;
         }
         if (isset($_POST['charge'])) {
             $charge = Model::getInstance()->getByAttribute('charge', 'Etat_charge', $_POST['charge']);
-            var_dump($charge);
             $datas['Id_charge'] = $charge[0]->getId_charge();
         }
         if (isset($_POST['priorite'])) {
