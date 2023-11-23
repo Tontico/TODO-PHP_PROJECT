@@ -18,6 +18,7 @@ class FormController extends AbstractController
         //$this->datas = $datas;
         $this->error = false;
     }
+    //section ProjectForm
     public function constructProjectForm()
     {
         echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'createProject') . "' method='POST'>
@@ -61,7 +62,7 @@ class FormController extends AbstractController
         }
     }
 
-
+    //section Task
     public function constructTaskForm()
     {
         echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'createTask') . "&Id_Projet=" . $_GET['Id_Projet'] . "' method='POST'>

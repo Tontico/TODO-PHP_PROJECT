@@ -132,7 +132,7 @@ class Body
 
         // Condition to show or hide link if is administrateur
         if (SecurityController::isAdmin($project[0]->getId_projet())) {
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a>;<br>
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormTask') . "&Id_Projet=" . $project[0]->getId_projet() . "'> Creer une nouvelle Tache</a><br>
                         <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'> Assigner un utilisateur</a><br>";
 
             if (isset($_GET["key"])) {
@@ -234,9 +234,9 @@ class Body
             }
             echo "</select>
                 <button type='submit' disabled name='submit' id='submit' class='btn btn-primary mt-3'>Assigner</button>
-                </form>
-
-                <script>
+                </form>";
+                //add script who disable submit if empty value
+                echo "<script>
                 function checkOption(){
                     let selectElement=document.getElementById('userName');
                     let selectButton=document.getElementById('submit');
