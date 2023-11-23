@@ -8,63 +8,112 @@ use Keha\Test\App\Model;
 use Keha\Test\App\Entity\Priorite;
 use Keha\Test\Controller\SecurityController;
 
+
 //Class that create the Body
 class Body
 {
-    public function displayBodyProject($projectsAdmin, $projectsUser)
+    public function displayBodyProject($projectsAdmin, $projectsUser, $projectAndTasks)
     {
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        echo "<body>
-        <div class='container-fluid'>
-            <div class='row'>
-                <div class='col-12 mb-3'>
-                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Ajoutez un projet</a>
+        // Var to change the projects colors
+        // var_dump($userTasks[0]->getNom_tache());
+        // var_dump($projectAndTasks);
+        // var_dump($projectAndTasks[0]->getTitre_projet());
+        // $nomTache = $userTasks[0]->getNom_tache();
+        $count = 0;
+        $colorProject = "blue";
+        echo "
+        <main>
+        <h2 class='title_username'>Bienvenue " . $_SESSION['username'] . "</h2>
+            <section class='resum_container'>
+                <div class='resum_container_part'>
+                <div class='row'>
+                    <h3>Mes tâches</h3>";
+        foreach ($projectAndTasks as $projectAndTask) {
+            echo $projectAndTask->Nom_tache;
+            echo $projectAndTask->getTitre_projet();
+        }
+        echo "</div>
                 </div>
-                <h3>Projet dont je suis l'administrateur</h3>";
+                <div class='resum_container_part'>        
+                    <div class='row'>
+                        <h3>Projets dont je suis l'administrateur</h3>
+                        <div class='col-12 mt-3 mb-4'>
+                            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Créer un projet</a>
+                        </div>";
         foreach ($projectsAdmin as $project) {
-            echo "<div class='col-md-4 mb-4'>
-                        <div class='card'>
-                            <div class='card-body'>
-                                <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
-                                <p class='card-text'>" . $project->getDescription_projet() . "</p>";
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary btn-card-project'>Lien vers le projet</a>";
-
-            // Condition to show or hide link if is administrateur
-            if (SecurityController::isAdmin($project->getId_projet())) {
-                echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-danger btn-card-project'>Supprimez le projet</a>";
+            if ($count === 0) {
+                $colorProject = "blue";
+            } else {
+                $colorProject = "orange";
             }
 
-            // Condition to show or hide link if is administrateur
-            if (SecurityController::isAdmin($project->getId_projet())) {
-                echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-success btn-card-project'>Modifiez le projet</a>";
+            echo "<div class='col-md-4 mb-4'>";
+            if ($colorProject === "orange") {
+                echo "<div class='card card_orange'>";
+            } else {
+                echo "<div class='card'>";
             }
-
+            echo "<div class='card_body'>
+                <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-card-project'><img src='public/assets/projects/project_icon_" . $colorProject . ".jpg' alt='logo' style='width: 50px; height: 50px; border-radius: 5px 0 0 5px;'></a>
+                <h4 class='card-title'>" . ucfirst($project->getTitre_projet()) . "</h4>
+                <div class='card_icon'>";
+            if (SecurityController::isAdmin($project->getId_projet())) {
+                echo "
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img src='public/assets/projects/icon_modify.png' alt='logo' style='width: 20px; height: 20px;'></a>
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img src='public/assets/projects/icon_delete.png' alt='logo' style='width: 20px; height: 20px;'></a>";
+            }
             echo "</div>
-                        </div>
-                    </div>";
+                    </div>
+                </div>";
+            echo "</div>";
+            if ($count === 0) {
+                $count = 1;
+            } else {
+                $count = 0;
+            }
         }
 
-        echo "<h3>Projet dont je suis un utilisateur</h3>";
+        echo "<h3>Projets dont je suis utilisateur</h3>";
         foreach ($projectsUser as $project) {
             if(($project->getAdministrateur()[0]->getId_utilisateur()) !== ($_SESSION['userId'])){
-            echo "<div class='col-md-4 mb-4'>
-                <div class='card'>
-                    <div class='card-body'>
-                        <h4 class='card-title'>" . $project->getTitre_projet() . "</h5>
-                        <p class='card-text'>" . $project->getDescription_projet() . "</p>
-                        <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-primary'>Lien vers le projet</a>
-                        <a href='' class='btn btn-danger'>Supprimez le projet</a>
+            if ($count === 0) {
+                $colorProject = "blue";
+            } else {
+                $colorProject = "orange";
+            }
+            echo "<div class='col-md-4 mb-4'>";
+            if ($colorProject === "orange") {
+                echo "<div class='card card_orange'>";
+            } else {
+                echo "<div class='card'>";
+            }
+            echo "<div class='card_body'>
+                <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project->getId_projet() . "' class='btn btn-card-project'><img src='public/assets/projects/project_icon_" . $colorProject . ".jpg' alt='logo' style='width: 50px; height: 50px; border-radius: 5px 0 0 5px;'></a>
+                <h4 class='card-title'>" . ucfirst($project->getTitre_projet()) . "</h4>
+                <div class='card_icon'>";
+            if (SecurityController::isAdmin($project->getId_projet())) {
+                echo "
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayUpdateFormProject') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img src='public/assets/projects/icon_modify.png' alt='logo' style='width: 20px; height: 20px;'></a>
+                    <a href='" . UrlGenerator::generateUrl('ProjectController', 'ConfirmationDelete') . "&Id_Projet=" . $project->getId_projet() . "' class='btn'><img src='public/assets/projects/icon_delete.png' alt='logo' style='width: 20px; height: 20px;'></a>";
+            }
+            echo "</div>
                     </div>
-                </div>
-            </div>";
+                </div>";
+            echo "</div>";
+            if ($count === 0) {
+                $count = 1;
+            } else {
+                $count = 0;
+            }
         }
-        }
-
+    }
         echo "</div>
             </div>
-    </body>";
+        </section>
+    </main>";
     }
 
 

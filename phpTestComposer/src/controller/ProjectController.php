@@ -28,7 +28,7 @@ class ProjectController extends AbstractController
         $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
         $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
         $projectAdmin = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
-
+        $projectAndTasks = Model::getInstance()->getByJoin('projet', 'taches', 'Id_projet', 'Id_projet', 'Id_utilisateur', $_SESSION['userId']);
         $projectUser = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
 
         $head = new Head();
@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
         $body = new Body();
         $head->displayHead();
         $header->displayHeader();
-        $body->displayBodyProject($projectAdmin, $projectUser);
+        $body->displayBodyProject($projectAdmin, $projectUser, $projectAndTasks);
     }
 
     public function displayFormProject()
@@ -60,7 +60,7 @@ class ProjectController extends AbstractController
         if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
         //  UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
         }
-        
+
         $head = new Head();
         $header = new Header();
         $form = new FormController();
@@ -308,10 +308,11 @@ class ProjectController extends AbstractController
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
+        $task = Model::getInstance()->getByAttribute('taches', 'Id_taches', $_GET["Id_taches"]);
+        if (!SecurityController::isAdmin($task[0]->getId_projet())) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
-            exit();
         }
+     
 
         //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
         $data = [
