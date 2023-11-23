@@ -79,6 +79,7 @@ class InscriptionForm extends AbstractForm
     // Method to process the registration form
     public function processForm()
     {
+        $this->error = [];
         if (isset($_POST['submit'])) {
             $formDatas = ['lastname' => ucfirst(strtolower($_POST['lastname'])), 'firstname' => ucfirst(strtolower($_POST['firstname'])), "email" => strtolower($_POST['email']), 'password' => $_POST['password'], 'confirm_password' => $_POST['confirm_password']];
             // Call the sanitize method
