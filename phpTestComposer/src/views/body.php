@@ -13,6 +13,9 @@ class Body
 {
     public function displayBodyProject($projectsAdmin, $projectsUser)
     {
+        if (!SecurityController::isConnected()) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
         echo "<body>
         <div class='container-fluid'>
             <div class='row'>
@@ -45,6 +48,7 @@ class Body
 
         echo "<h3>Projet dont je suis un utilisateur</h3>";
         foreach ($projectsUser as $project) {
+            if(($project->getAdministrateur()[0]->getId_utilisateur()) !== ($_SESSION['userId'])){
             echo "<div class='col-md-4 mb-4'>
                 <div class='card'>
                     <div class='card-body'>
@@ -56,6 +60,7 @@ class Body
                 </div>
             </div>";
         }
+        }
 
         echo "</div>
             </div>
@@ -66,6 +71,10 @@ class Body
     //Affiche la view avec les différentes taches du projet
     public function displayBodyTaches($task, $project, $participants)
     {
+        if (!SecurityController::isConnected()) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
+        
         echo "<body>
         <h1>" . $project[0]->getTitre_projet() . "</h1>
         <div class='container-fluid w-100 m-0'>
@@ -123,6 +132,9 @@ class Body
 
     public function displayBodyTache($data)
     {
+        if (!SecurityController::isConnected()) {
+            UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+        }
 
 
         $data = $data[0];
@@ -191,8 +203,9 @@ class Body
 
 
     public function displayProjectConfirmation($data)
-    {
-        $data = $data[0];
+    { if (!SecurityController::isConnected()) {
+        UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
+    }
         $data = $data[0];
         echo "<body>
 <h1>Etes vous sur de vouloir supprimer le projet :" . $data->getTitre_projet() . "?</h1>

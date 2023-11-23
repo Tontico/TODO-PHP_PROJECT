@@ -2,6 +2,7 @@
 
 namespace Keha\Test\Entity;
 
+use Keha\Test\App\Model;
 class Projet
 {
     private int $Id_projet;
@@ -82,5 +83,10 @@ class Projet
         $this->Id_administrateur = $id_administrateur;
 
         return $this;
+    }
+
+    public function getAdministrateur()
+    {
+        return Model::getInstance()->getByAttribute('administrateur', 'Id_administrateur', $this->Id_administrateur);
     }
 }
