@@ -15,14 +15,14 @@ use Keha\Test\Entity\Utilisateur;
 
 class ProjectController extends AbstractController
 {
-public function redirectIndex()
-{
-    $head = new Head();
-    $header = new Header();
-    $body = new Body();
-    $head->displayHead();
-    $header->displayHeader();
-}
+    public function redirectIndex()
+    {
+        $head = new Head();
+        $header = new Header();
+        $body = new Body();
+        $head->displayHead();
+        $header->displayHeader();
+    }
     // Display project if user is connected
     public function displayProjet()
     {
@@ -65,7 +65,7 @@ public function redirectIndex()
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
         if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
-        //  UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
+            //  UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
         }
 
         $head = new Head();
@@ -149,17 +149,18 @@ public function redirectIndex()
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
-        
+
         if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
             exit();
         }
 
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
-        var_dump($project);
+        $titeProject = htmlspecialchars($_POST['Titre_projet'], ENT_QUOTES, 'UTF-8');
+        $descriptionProject = htmlspecialchars($_POST['Description_projet'], ENT_QUOTES, 'UTF-8');
         $datas = [
-            'Titre_projet' => $_POST['Titre_projet'],
-            'Description_projet' => $_POST['Description_projet'],
+            'Titre_projet' => $titeProject,
+            'Description_projet' => $descriptionProject,
             'Id_administrateur' => $project[0]->getId_administrateur(),
         ];
 
@@ -179,7 +180,7 @@ public function redirectIndex()
         $project = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET["Id_Projet"]);
 
         $participant = Model::getInstance()->getBy2Attribute('participants_projet', 'Id_utilisateur', $_SESSION["userId"], 'Id_projet', $_GET["Id_Projet"]);
-        $participants = Model::getInstance()->getByAttribute('participants_projet','Id_projet', $_GET["Id_Projet"]);
+        $participants = Model::getInstance()->getByAttribute('participants_projet', 'Id_projet', $_GET["Id_Projet"]);
         if (empty($participant)) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect to his own projects
         }
@@ -303,15 +304,14 @@ public function redirectIndex()
         if (!SecurityController::isAdmin($task[0]->getId_projet())) {
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
         }
-     
+
 
         //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
-        
+
         $data = [
             'Id_utilisateur' => $_POST['userName'],
         ];
-        if(empty($data)){
-            
+        if (empty($data)) {
         }
         Model::getInstance()->updateById("taches", 'Id_taches', $_GET['Id_taches'], $data);
 
@@ -394,7 +394,8 @@ public function redirectIndex()
         UrlGenerator::redirect('ProjectController', 'displayProjet');
     }
 
-    public function assignUser(){
+    public function assignUser()
+    {
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
@@ -403,18 +404,17 @@ public function redirectIndex()
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
         }
 
-        $user=Model::getInstance()->getByAttribute("utilisateur", "Email_utilisateur", $_POST['mailUser'] );
-        if(empty($user)){
-            UrlGenerator::redirect('UserController', 'DisplayForm','inscription' );
+        $user = Model::getInstance()->getByAttribute("utilisateur", "Email_utilisateur", $_POST['mailUser']);
+        if (empty($user)) {
+            UrlGenerator::redirect('UserController', 'DisplayForm', 'inscription');
         }
-    $data=[
-       'Id_projet' => $_GET['Id_Projet'],
-        'Id_utilisateur' => $user[0]->getId_utilisateur(),
+        $data = [
+            'Id_projet' => $_GET['Id_Projet'],
+            'Id_utilisateur' => $user[0]->getId_utilisateur(),
         ];
 
-   Model::getInstance()->save("participants_projet", $data);
-   //redirection vers les projets
-   UrlGenerator::redirect('ProjectController', 'displayProjet');
-     }
-   
+        Model::getInstance()->save("participants_projet", $data);
+        //redirection vers les projets
+        UrlGenerator::redirect('ProjectController', 'displayProjet');
+    }
 }
