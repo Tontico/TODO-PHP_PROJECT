@@ -247,15 +247,15 @@ class ProjectController extends AbstractController
             $datas['Date_butoire_tache'] = $dateTask;
         }
         if (isset($_POST['charge'])) {
-            $charge = Model::getInstance()->getByAttribute('charge', 'Etat_charge', $_POST['charge']);
+            $charge = Model::getInstance()->getByAttribute('charge', 'Etat_charge', htmlspecialchars($_POST['charge'], ENT_QUOTES, 'UTF-8'));
             $datas['Id_charge'] = $charge[0]->getId_charge();
         }
         if (isset($_POST['priorite'])) {
-            $priorite = Model::getInstance()->getByAttribute('priorite', 'Etat_priorite', $_POST['priorite']);
+            $priorite = Model::getInstance()->getByAttribute('priorite', 'Etat_priorite', htmlspecialchars($_POST['priorite'], ENT_QUOTES, 'UTF-8'));
             $datas['Id_priorite'] = $priorite[0]->getId_priorite();
         }
         if (isset($_POST['status'])) {
-            $status = Model::getInstance()->getByAttribute('status', 'Etat_status', $_POST['status']);
+            $status = Model::getInstance()->getByAttribute('status', 'Etat_status', htmlspecialchars($_POST['status'], ENT_QUOTES, 'UTF-8'));
             $datas['Id_status'] = $status[0]->getId_status();
         }
 
@@ -275,24 +275,24 @@ class ProjectController extends AbstractController
         }
 
         $datas = [
-            "Nom_tache" => $_POST["Titre_task"],
-            "Descritpion_tache" => $_POST["Description_task"],
+            "Nom_tache" => htmlspecialchars($_POST["Titre_task"], ENT_QUOTES, 'UTF-8'),
+            "Descritpion_tache" => htmlspecialchars($_POST["Description_task"], ENT_QUOTES, 'UTF-8'),
             "Id_projet" => $_GET["Id_Projet"],
         ];
 
         if (isset($_POST['Date_fin'])) {
-            $datas['Date_butoire_tache'] = $_POST['Date_fin'];
+            $datas['Date_butoire_tache'] = htmlspecialchars($_POST["Date_fin"], ENT_QUOTES, 'UTF-8');
         }
         if (isset($_POST['charge'])) {
-            $charge = Model::getInstance()->getByAttribute('Charge', 'Etat_charge', $_POST['charge']);
+            $charge = Model::getInstance()->getByAttribute('Charge', 'Etat_charge', htmlspecialchars($_POST["charge"], ENT_QUOTES, 'UTF-8'));
             $datas['Id_charge'] = $charge[0]->getId_charge();
         }
         if (isset($_POST['priorite'])) {
-            $priorite = Model::getInstance()->getByAttribute('Priorite', 'Etat_priorite', $_POST['priorite']);
+            $priorite = Model::getInstance()->getByAttribute('Priorite', 'Etat_priorite', htmlspecialchars($_POST["priorite"], ENT_QUOTES, 'UTF-8'));
             $datas['Id_priorite'] = $priorite[0]->getId_priorite();
         }
         if (isset($_POST['status'])) {
-            $status = Model::getInstance()->getByAttribute('status', 'Etat_status', $_POST['status']);
+            $status = Model::getInstance()->getByAttribute('status', 'Etat_status',  htmlspecialchars($_POST["status"], ENT_QUOTES, 'UTF-8'));
             $datas['Id_status'] = $status[0]->getId_status();
         }
         Model::getInstance()->updateById('taches', 'Id_taches', $_GET['Id_taches'], $datas);
@@ -314,7 +314,7 @@ class ProjectController extends AbstractController
         //$user = Model::getInstance()->getByAttribute('utilisateur','Id_utilisateur',$_POST['userName']);
 
         $data = [
-            'Id_utilisateur' => $_POST['userName'],
+            'Id_utilisateur' =>  htmlspecialchars($_POST["userName"], ENT_QUOTES, 'UTF-8'),
         ];
         if (empty($data)) {
         }
@@ -402,7 +402,7 @@ class ProjectController extends AbstractController
 
     public function assignUser()
     {
-        $mailUserSanitized = $_POST['mailUser'];
+        $mailUserSanitized = htmlspecialchars($_POST["mailUser"], ENT_QUOTES, 'UTF-8');
         if (!SecurityController::isConnected()) {
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
