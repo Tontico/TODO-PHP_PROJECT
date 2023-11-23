@@ -123,11 +123,14 @@ class ProjectController extends AbstractController
             "Id_utilisateur" => $userId,
         ];
 
+        $titeProject = htmlspecialchars($_POST['Titre_projet'], ENT_QUOTES, 'UTF-8');
+        $descriptionProject = htmlspecialchars($_POST["Description_projet"], ENT_QUOTES, 'UTF-8');
+
         $idAdmin = Model::getInstance()->save('administrateur', $adminInsertData);
 
         $datas = [
-            "Titre_projet" => $_POST["Titre_projet"],
-            "Description_projet" => $_POST["Description_projet"],
+            "Titre_projet" => $titeProject,
+            "Description_projet" => $descriptionProject,
             "Id_administrateur" => $idAdmin,
         ];
 
