@@ -42,19 +42,24 @@ class FormController extends AbstractController
     {
 
         $updateProject = Model::getInstance()->getByAttribute('projet', 'Id_projet', $_GET['Id_Projet']);
-        echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'updateProject') . "&Id_Projet=" . $updateProject[0]->getId_projet() . "' method='POST'>
-        <div class='mb-3'>
-            <label for='Titre_projet' class='form-label'>Nom du projet</label>
-            <input type='text' class='form-control' name='Titre_projet' value='" . $updateProject[0]->getTitre_projet() . "' required>
-        </div>
+        echo "<main class='main_project'>
+            <div class='update_form_container'>
+                <form  id= 'project_form' action='" . UrlGenerator::generateUrl('ProjectController', 'updateProject') . "&Id_Projet=" . $updateProject[0]->getId_projet() . "' method='POST'>
+                    
+                    <div class='mb-3'>
+                        <label for='Titre_projet' class='form-label'>Nom du projet</label>
+                        <input type='text' class='form-control' name='Titre_projet' value='" . $updateProject[0]->getTitre_projet() . "' required>
+                    </div>
 
-        <div class='mb-3'>
-            <label for='Description_projet' class='form-label'>Description</label>
-            <input type='text' class='form-control' name='Description_projet' value='" . $updateProject[0]->getDescription_projet() . "' required>
-        </div>
+                    <div class='mb-3'>
+                        <label for='Description_projet' class='form-label'>Description</label>
+                        <textarea class='form-control inputDescription' name='Description_projet' required>" . $updateProject[0]->getDescription_projet() . "</textarea>
+                    </div>
 
-        <button type='submit' name='submit' class='btn btn-primary'>Créer un projet</button>
-    </form>";
+                    <button type='submit' name='submit' class='btn btn-primary'>Modifier le projet</button>
+                </form>
+            </div>
+        </main>";
 
         if (isset($_POST["submit"])) {
             return UrlGenerator::redirect('ProjectController', 'displayProjet');
