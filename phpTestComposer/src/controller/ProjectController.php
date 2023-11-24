@@ -2,16 +2,13 @@
 
 namespace Keha\Test\Controller;
 
-use Keha\Test\Entity\Projet;
-use Keha\Test\Entity\Taches;
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
 use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\views\Body;
 use Keha\Test\App\Model;
-use Keha\Test\Entity\Participants_projet;
-use Keha\Test\Entity\Utilisateur;
+
 
 class ProjectController extends AbstractController
 {
@@ -31,13 +28,9 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
 
-        /*$data[1] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
-        $data[2] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);
-        $data[3] = new Projet(1, "Titre Premier projet", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, optio?", 1);*/
         $projectAdmin = Model::getInstance()->getByJoin('Projet', 'Administrateur', 'Id_administrateur', 'Id_administrateur', 'Id_utilisateur', $_SESSION['userId']);
         $projectAndTasks = Model::getInstance()->getByJoin('projet', 'taches', 'Id_projet', 'Id_projet', 'Id_utilisateur', $_SESSION['userId']);
         $projectUser = Model::getInstance()->getProjectByIdUser($_SESSION['userId']);
-
         $head = new Head();
         $header = new Header();
         $body = new Body();
@@ -65,7 +58,7 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('UserController', 'displayForm', 'connexion'); // Redirect if not connected
         }
         if (!SecurityController::isAdmin($_GET["Id_Projet"])) {
-            //  UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
+            UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not admin
         }
 
         $head = new Head();
@@ -232,7 +225,7 @@ class ProjectController extends AbstractController
         }
         //current date
         $date = date("Y-m-d");
-        
+
         $titleTask = htmlspecialchars($_POST['Titre_task'], ENT_QUOTES, 'UTF-8');
         $descriptionTask = htmlspecialchars($_POST["Description_task"], ENT_QUOTES, 'UTF-8');
         $dateTask = htmlspecialchars($_POST["Date_fin"], ENT_QUOTES, 'UTF-8');
@@ -262,7 +255,7 @@ class ProjectController extends AbstractController
 
         Model::getInstance()->save('taches', $datas);
 
-         UrlGenerator::redirect('ProjectController', 'displayTaches', '&Id_Projet=',$_GET['Id_Projet']);
+        UrlGenerator::redirect('ProjectController', 'displayTaches', '&Id_Projet=', $_GET['Id_Projet']);
     }
 
     public function updateTask()
@@ -437,6 +430,6 @@ class ProjectController extends AbstractController
             Model::getInstance()->save("participants_projet", $data);
         }
         // Redirect to project display
-        var_dump(UrlGenerator::redirect('ProjectController', 'displayTaches',"&Id_Projet=",$projectId));
+        UrlGenerator::redirect('ProjectController', 'displayTaches', "&Id_Projet=", $projectId);
     }
 }

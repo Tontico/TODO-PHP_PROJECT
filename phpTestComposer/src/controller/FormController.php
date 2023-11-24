@@ -6,7 +6,6 @@ use Keha\Test\App\AbstractController;
 use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
 
-
 class FormController extends AbstractController
 {
     public $error;
