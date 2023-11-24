@@ -6,7 +6,6 @@ use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
 
-
 class SecurityController extends AbstractController
 {
 
@@ -56,7 +55,7 @@ class SecurityController extends AbstractController
 
                 // Check if IDs match
                 if ($idUtilisateur === $_SESSION['userId']) {
-                    
+
                     return true;
                 }
             }

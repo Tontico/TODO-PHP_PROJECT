@@ -5,7 +5,6 @@ namespace Keha\Test\Controller;
 use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\App\AbstractController;
-use Keha\Test\views\Header;
 use Keha\Test\views\Head;
 use Keha\Test\Model\QueryParser;
 
