@@ -1,3 +1,4 @@
+
 h1 {
     font-size: 20px !important;
     margin: 0px !important;
@@ -6,19 +7,23 @@ h1 {
 }
 
 body {
-    background-color: #1e1f21 !important;
+    background: linear-gradient(rgba(136, 109, 109, 0.968),rgb(215, 204, 209)) !important;
     height: 100vh !important;
-} 
+}
 
 header {
     height: 10% !important;
 }
-.bgdark{
-    background-color: #212529 !important;
-}
+/* .buttonLD{
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin: 15px;
+
+} */
 
 .buttonLD {
-    background-color: #4a5766;
+    background-color: #29323c;
     
     padding: 5px 10px;
     text-align: center;
@@ -34,7 +39,14 @@ header {
     background-color: #495058
   }
 
-a{
-    text-decoration: none !important;
+  .bgdark{
+    background-color:rgb(113, 52, 52) !important;
+
 }
+a {
+    color: rgb(156, 38, 38);
+}
+
+
+
 

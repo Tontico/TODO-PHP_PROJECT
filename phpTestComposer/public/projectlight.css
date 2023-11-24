@@ -1,14 +1,14 @@
 .title_username {
     margin-bottom: 50px;
-    color: white !important;
+    color: #37474F !important;
     width:100%;
     text-align: center;
 }
-h1, h2, h3, h4, h5, h6, p {
+/* h1, h2, h3, h4, h5, h6, p {
     color: white !important;
-}
+} */
 h3 {
-    color: white !important;
+    color: #37474F !important;
     font-size: 20px !important;
     margin-bottom: 10px !important;
     margin-top: 10px !important;
@@ -18,10 +18,10 @@ h3 {
 }
 
 .bgGrey {
-    background-color: #2a2b2d;
+    background-color: rgb(248,248,237);
 }
 .bgGrey:hover {
-    background-color: #424242;
+    background-color: rgb(160, 109, 109);
 }
 
 .main_project {
@@ -31,65 +31,6 @@ h3 {
     flex-direction: column;
     justify-content: center;
 }
-
-.main_flex_row {
-    display: flex !important;
-    flex-direction: row;
-}
-
-.containerUserList{
-    border-bottom: 1px solid rgb(82, 81, 81);
-}
-
-.list_users {
-    width: 15%;
-    height: 90vh;
-    padding:5px;
-    box-sizing: border-box;
-    color: white !important;
-    border-top: 1px solid rgb(82, 81, 81);
-    border-right: 1px solid rgb(82, 81, 81);
-}
-
-.greenLink{ 
-    color:#53a502;
-}
-
-#formAddUserProject {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.inputHide {
-    background-color: transparent!important;
-    color:white!important;
-    border:none !important;
-    margin:0!important;
-    padding:0px!important;
-    font-size: 14px !important;
-}
-
-.inputHide::placeholder {
-    background-color: rgba(255, 255, 255, 0.075)!important;
-    color:white!important;
-    border:none !important;
-    margin:0!important;
-    padding:0px!important;
-    margin-left:-15px!important;
-    margin-right:-15px!important;
-}
-
-.btnAddUserProject{
-    height: 25px;
-    background-color: transparent ;
-    color:#944ad1;
-    border:none;
-    text-align: left;
-    padding:0;
-    margin-top: 0;
-
- }
 
 .resum_container {
     display: flex;
@@ -101,7 +42,7 @@ h3 {
     width:40%;
     max-height: 500px !important;
     padding: 20px;
-    background-color: #2a2b2d;
+    background-color: rgb(248,248,237);
     border: 1px solid rgb(82, 81, 81);
     border-radius: 20px;
 }
@@ -109,7 +50,10 @@ h3 {
 .card {
     display: flex !important;
     flex-direction: column !important;
-    background-color: blue !important;
+    background-color: rgb(160, 91, 91) !important;
+}
+.card h4 {
+   color: white;
 }
 
 .card:hover {
@@ -117,7 +61,7 @@ h3 {
 }
 
 .card_orange {
-    background-color: orange !important;
+    background-color: rgb(216, 146, 146) !important;
 }
 
 .card h4 {
@@ -164,15 +108,15 @@ h3 {
     justify-content: space-between !important;
     align-items: center !important;
     width:100% !important;
-    border-top: 1px solid rgb(82, 81, 81);
-    border-bottom: 1px solid rgb(82, 81, 81);
+    border-top: 1px solid rgb(113, 52, 52);
+    border-bottom: 1px solid rgb(113, 52, 52);
     box-sizing: border-box;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .line_task:hover {
-    background-color: #424242;
+    background-color: rgb(160, 109, 109);
 }
 
 .resum_container_part a {
@@ -183,6 +127,7 @@ h3 {
     margin: 0;
     margin-top: 2px;
     margin-bottom: 2px;
+    color: white;
 }
 
 .project_tasks {
@@ -190,17 +135,24 @@ h3 {
     min-height: 40px;
 }
 
+.project_tasks a {
+    text-decoration: none !important;
+}
 
 .projectName {
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid rgb(82, 81, 81);
-    border-bottom: 1px solid rgb(82, 81, 81);
+    border-top: 1px solid rgb(113, 52, 52);
+    border-bottom: 1px solid rgb(113, 52, 52);
+    color: #37474F ;
 }
 
 .projectNameAndIcon {
     display: flex;
     align-items: flex-end;
+}
+.projectNameAndIcon h2{
+   color: white;
 }
 
 .projectNameAndIcon h2{
@@ -209,7 +161,8 @@ h3 {
 
 .projectDescription p {
     margin: 5px !important;
-    border-bottom: 1px solid rgb(82, 81, 81);
+    border-bottom: 1px solid rgb(113, 52, 52);
+    color: white ;
 }
 
 .container_createTask {
@@ -236,12 +189,14 @@ h3 {
 .tasks_container_header, .task_container {
     width:100%;
     display:flex !important;
+    background-color: rgb(248,248,237);
 }   
 
 .tasks_container_header p, .task_container p {
     margin:0;
     margin-top:2px;
     margin-bottom:2px;
+    color: #37474F ;
 }
 
 .task_container {
@@ -260,9 +215,9 @@ h3 {
 }
 
 #project_form {
-    color: white!important;
+    color: #37474F!important;
     padding: 20px;
-    background-color: #2a2b2d;
+    background-color: rgb(248,248,237);
     width: 40%;
     border: 1px solid rgb(82, 81, 81);
     border-radius: 20px; 
@@ -277,7 +232,7 @@ h3 {
     margin-top: 10px;
     margin-bottom: 0px;
     text-align: center;
-    color:#007BFF;
+    color:#37474F;
 }
 
 .update_form_container {
@@ -301,10 +256,13 @@ h3 {
 .task_form_body {
     width:60%;
     padding: 20px;
-    background-color: #2a2b2d;
+    background-color: rgb(248,248,237);
     width: 40%;
     border: 1px solid rgb(82, 81, 81);
     border-radius: 20px; 
+}
+.task_form_body p, .task_form_body h1, .task_form_body h2{
+    color: #37474F;
 }
 
 .titleAndStatus {
@@ -323,6 +281,10 @@ h3 {
     text-align: right !important;
     width:50% !important;
 
+}
+.main_flex_row {
+    display: flex !important;
+    flex-direction: row;
 }
 
 .main_project p{
@@ -343,27 +305,58 @@ h3 {
     margin-bottom: 10px !important;
     border-bottom: 1px solid rgb(82, 81, 81);
 }
+.btnboot1{
+    background-color: rgb(113, 52, 52);
+    border-color:  rgb(113, 52, 52);
+}
+ 
+.btnboot1:hover{
+    background-color: rgb(156, 74, 74);
+}
+.taskC {
+    color: #37474F !important;
+}
 
+.taskpc{
+    color: #37474F !important;
+}
 .vert{
-    background-color: rgb(83, 165, 2);
+    background-color: rgb(104, 192, 16);
     margin-left: 30%!important;
     margin-right: 30%!important;
     border-radius: 5px;
 }
 .orange{
-    background-color: chocolate;
+    background-color: rgb(233, 130, 57);
     margin-left: 30%!important;
     margin-right: 30%!important;
     border-radius: 5px;
 }
 
 .rouge{
-    background-color: rgb(139,0,0);
+    background-color: rgb(211, 16, 16);
     margin-left: 30%!important;
     margin-right: 30%!important;
     border-radius: 5px;
 }
 
+.containerUserList{
+    border-bottom: 1px solid rgb(82, 81, 81);
+}
+ 
+.list_users {
+    width: 15%;
+    height: 90vh;
+    padding:5px;
+    box-sizing: border-box;
+    color: white !important;
+    border-top: 1px solid rgb(82, 81, 81);
+    border-right: 1px solid rgb(82, 81, 81);
+}
+ 
+.greenLink{
+    color:rgb(248,248,237);
+}
 .title_font_small {
     font-size: 15px;
 }

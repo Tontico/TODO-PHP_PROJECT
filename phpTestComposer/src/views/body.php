@@ -27,16 +27,16 @@ class Body
             $taskName = $projectAndTask->Nom_tache;
             $projectName = $projectAndTask->getTitre_projet();
             $projectId = $projectAndTask->getId_projet();
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task'><p>$taskName</p> <p>$projectName</p> </div></a>";
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task bgt'><p class='taskpc'>$taskName</p> <p class='taskpc'>$projectName</p> </div></a>";
         }
         echo "</div>
-                    </div>
-                    <div class='resum_container_part'>        
-                        <div class='row'>
-                            <h3>Projets dont je suis l'administrateur</h3>
-                            <div class='col-12 mt-3 mb-4'>
-                                <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Créer un projet</a>
-                            </div>";
+                </div>
+                <div class='resum_container_part'>        
+                    <div class='row'>
+                        <h3>Projets dont je suis l'administrateur</h3>
+                        <div class='col-12 mt-3 mb-4'>
+                            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary btnboot1'>Créer un projet</a>
+                        </div>";
         foreach ($projectsAdmin as $project) {
             if ($count === 0) {
                 $colorProject = "blue";
@@ -115,7 +115,7 @@ class Body
     {
         echo "<body>
             <main class='main_flex_row'>
-                <aside class='list_users bg-dark'>
+                <aside class='list_users bgdark'>
                     <h2 class='title_font_small'>Liste des utilisateurs :</h2><pre class='containerUserList'>";
         foreach ($participants as $participant) {
             echo $participant->getUtilisateur()[0]->getNom_utilisateur() . " " . $participant->getUtilisateur()[0]->getPrenom_utilisateur() . "<br>";
@@ -168,37 +168,37 @@ class Body
                     </div>";
             $utilisateur = $task->getUtilisateur();
             if (!empty($utilisateur) && isset($utilisateur[0])) {
-                echo "<div class='tasks_container_header_noTitle'><p>" . (!empty($utilisateur[0]->getNom_utilisateur()) ? $utilisateur[0]->getNom_utilisateur() : "") . " " . (!empty($utilisateur[0]->getPrenom_utilisateur()) ? $utilisateur[0]->getPrenom_utilisateur() : "") . "</p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p>" . (!empty($utilisateur[0]->getNom_utilisateur()) ? $utilisateur[0]->getNom_utilisateur() : "") . " " . (!empty($utilisateur[0]->getPrenom_utilisateur()) ? $utilisateur[0]->getPrenom_utilisateur() : "") . "</p></div>";
             } else {
-                echo "<div class='tasks_container_header_noTitle'><p></p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
             $date = $task->getUtilisateur();
             if (!empty($date) && isset($date[0])) {
-                echo "<div class='tasks_container_header_noTitle'><p>" . (!empty($task->getDate_butoire_tache()) ? $task->getDate_butoire_tache() : "") . "</p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p>" . (!empty($task->getDate_butoire_tache()) ? $task->getDate_butoire_tache() : "") . "</p></div>";
             } else {
-                echo "<div class='tasks_container_header_noTitle'><p></p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
             $priority = $task->getPriorite();
             if (!empty($priority)) {
                 $class = "";
                 if ($priority[0]->getId_priorite() === 1) {
-                    $class = "class='vert'";
+                    $class = "class='vert taskc'";
                 }
                 if ($priority[0]->getId_priorite() === 2) {
-                    $class = "class='orange'";
+                    $class = "class='orange taskc'";
                 }
                 if ($priority[0]->getId_priorite() === 3) {
-                    $class = "class='rouge'";
+                    $class = "class='rouge taskc'";
                 }
                 echo "<div class='tasks_container_header_noTitle'><p " . $class . ">" . (!empty($task->getPriorite()[0]->getEtat_priorite()) ? $task->getPriorite()[0]->getEtat_priorite() : "") . "</p></div>";
             } else {
-                echo "<div class='tasks_container_header_noTitle'><p></p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
             $status = $task->getStatus();
             if (!empty($status) && isset($status[0])) {
-                echo "<div class='tasks_container_header_noTitle'><p>" . (!empty($task->getStatus()[0]->getEtat_status()) ? $task->getStatus()[0]->getEtat_status() : "") . "</p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p>" . (!empty($task->getStatus()[0]->getEtat_status()) ? $task->getStatus()[0]->getEtat_status() : "") . "</p></div>";
             } else {
-                echo "<div class='tasks_container_header_noTitle'><p></p></div>";
+                echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
             echo  "</div>";
         }

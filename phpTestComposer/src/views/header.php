@@ -11,10 +11,12 @@ use Keha\Test\Controller\SecurityController;
 class Header
 {
     public function displayHeader()
-    {
+    {  
+
+
 ?>
         <!-- Header with some bootstraps -->
-        <header class="bg-dark p-3 d-flex justify-content-between align-items-center">
+        <header class="bgdark p-3 d-flex justify-content-between align-items-center">
             <div class="col-1 d-flex text-light align-items-center">
                 <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
                 <h1>Gest'Flex</h1>
@@ -30,7 +32,27 @@ class Header
                             </a></li>
                     <?php endif; ?>
                 </ul>
-            </nav>
+         
+            <?php 
+            if (SecurityController::isConnected()){
+                $dataURL="?";
+                 if(isset($_GET)){
+                   foreach($_GET as $cle => $valeur){
+                    $dataURL= $dataURL."&".$cle ."=".$valeur;
+                     }
+                 
+                }
+   
+             echo "<div class='nav-item'>
+                    <form action='". $_SERVER['PHP_SELF'].$dataURL."' method='POST'>
+                    <input type='submit' name='mode' class='btn btn-secondary buttonLD' value='".$_SESSION['mode']." mode'>
+                    </form>
+                    </div>";
+}
+
+?>
+                    </nav>
+
             <div class="col-1 d-flex text-light align-items-center justify-content-end">
                 <?php if (SecurityController::isConnected()) : ?>
                     <h1><?= $_SESSION['username'] ?></h1>
