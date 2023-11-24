@@ -17,3 +17,20 @@ header {
     background-color: black;
 }
 
+.buttonLD {
+    background-color: #29323c;
+    
+    padding: 5px 10px;
+    text-align: center;
+    color: white;
+    /* border-radius: 0; */
+    border-color:  #29323c;
+    display: block;
+    margin: 15px;
+    
+  }
+
+  .buttonLD:hover {
+    background-color: #495058
+  }
+

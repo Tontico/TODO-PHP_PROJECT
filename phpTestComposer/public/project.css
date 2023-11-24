@@ -4,15 +4,28 @@
     width:100%;
     text-align: center;
 }
-
+h1, h2, h3, h4, h5, h6, p {
+    color: white !important;
+}
 h3 {
     color: white !important;
     font-size: 20px !important;
     margin-bottom: 10px !important;
     margin-top: 10px !important;
 }
+.marginL {
+    margin-left:5px;
+}
 
-main {
+.bgGrey {
+    background-color: #2a2b2d;
+}
+.bgGrey:hover {
+    background-color: #424242;
+}
+
+.main_project {
+    color: white !important;
     height:90% !important;
     display: flex;
     flex-direction: column;
@@ -37,8 +50,11 @@ main {
 .card {
     display: flex !important;
     flex-direction: column !important;
-    color: white !important;
     background-color: blue !important;
+}
+
+.card:hover {
+    transform: scale(1.1); 
 }
 
 .card_orange {
@@ -79,7 +95,195 @@ main {
     right:2px;
 }
 
-.card_icon img {
+.revertColor {
     filter: invert(100%);
 }
 
+.line_task {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width:100% !important;
+    border-top: 1px solid rgb(82, 81, 81);
+    border-bottom: 1px solid rgb(82, 81, 81);
+    box-sizing: border-box;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.line_task:hover {
+    background-color: #424242;
+}
+
+.resum_container_part a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+.line_task p {
+    margin: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.project_tasks {
+    width:100%;
+    min-height: 40px;
+}
+
+.project_tasks a {
+    text-decoration: none!important;
+}
+
+.projectName {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgb(82, 81, 81);
+    border-bottom: 1px solid rgb(82, 81, 81);
+}
+
+.projectNameAndIcon {
+    display: flex;
+    align-items: flex-end;
+}
+
+.projectNameAndIcon h2{
+    margin:0;
+}
+
+.projectDescription p {
+    margin: 5px !important;
+    border-bottom: 1px solid rgb(82, 81, 81);
+}
+
+.container_createTask {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.container_createTask p{
+    margin:0;
+}
+
+
+.tasks_container {
+    border-top: 1px solid rgb(82, 81, 81);
+    border-bottom: 1px solid rgb(82, 81, 81);
+    width: 100%;
+}
+
+.tasks_container p{
+    color: rgb(134, 132, 132) !important;
+}
+
+.tasks_container_header, .task_container {
+    width:100%;
+    display:flex !important;
+}   
+
+.tasks_container_header p, .task_container p {
+    margin:0;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+.task_container {
+    border-bottom: 1px solid rgb(82, 81, 81);
+}
+
+.tasks_container_header_title {
+    width:50%;
+}
+
+.tasks_container_header_noTitle {
+    width:12.5%;
+    text-align: center;
+    margin:0;
+    border-left: 1px solid rgb(82, 81, 81);
+}
+
+#project_form {
+    color: white!important;
+    padding: 20px;
+    background-color: #2a2b2d;
+    width: 40%;
+    border: 1px solid rgb(82, 81, 81);
+    border-radius: 20px; 
+}
+
+.inputDescription {
+    height: 200px;
+}
+
+#project_form p{
+    width:100%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-align: center;
+    color:#007BFF;
+}
+
+.update_form_container {
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+.radioStateAndPriority {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task_form_container {
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task_form_body {
+    width:60%;
+    padding: 20px;
+    background-color: #2a2b2d;
+    width: 40%;
+    border: 1px solid rgb(82, 81, 81);
+    border-radius: 20px; 
+}
+
+.titleAndStatus {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid rgb(82, 81, 81);
+
+}
+
+.titleAndStatus h1{
+    margin:0 !important;
+    width:50% !important;
+}
+.titleAndStatus p{
+    margin:0 !important;
+    text-align: right !important;
+    width:50% !important;
+
+}
+
+.main_project p{
+    margin-bottom: 5px !important;
+}
+
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task_details{
+    margin-top: 20px;
+}
+
+.metaDataTask {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid rgb(82, 81, 81);
+}
