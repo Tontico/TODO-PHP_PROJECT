@@ -292,15 +292,18 @@ h3 {
     background-color: rgb(83, 165, 2);
     margin-left: 30%!important;
     margin-right: 30%!important;
+    border-radius: 5px;
 }
 .orange{
     background-color: chocolate;
     margin-left: 30%!important;
     margin-right: 30%!important;
+    border-radius: 5px;
 }
 
 .rouge{
     background-color: red;
     margin-left: 30%!important;
     margin-right: 30%!important;
+    border-radius: 5px;
 }
