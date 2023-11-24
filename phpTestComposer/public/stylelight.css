@@ -7,10 +7,43 @@ h1 {
 }
 
 body {
-    background-color: #e2ecec !important;
+    background: linear-gradient(rgba(136, 109, 109, 0.968),rgb(215, 204, 209)) !important;
     height: 100vh !important;
-} 
+}
 
 header {
     height: 10% !important;
 }
+/* .buttonLD{
+    background-color: black;
+    color: white;
+    padding: 5px;
+    margin: 15px;
+
+} */
+
+.buttonLD {
+    background-color: #29323c;
+    
+    padding: 5px 10px;
+    text-align: center;
+    color: white;
+    /* border-radius: 0; */
+    border-color:  #29323c;
+    display: block;
+    margin: 15px;
+    
+  }
+
+  .buttonLD:hover {
+    background-color: #495058
+  }
+
+  .bgdark{
+    background-color:rgb(113, 52, 52);
+
+}
+
+
+
+

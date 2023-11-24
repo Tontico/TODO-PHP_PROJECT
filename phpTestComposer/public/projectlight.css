@@ -1,12 +1,12 @@
 .title_username {
     margin-bottom: 50px;
-    color: #6b7373 !important;
+    color: #37474F !important;
     width:100%;
     text-align: center;
 }
 
 h3 {
-    color: #6b7373 !important;
+    color: #37474F !important;
     font-size: 20px !important;
     margin-bottom: 10px !important;
     margin-top: 10px !important;
@@ -29,8 +29,8 @@ main {
     width:40%;
     max-height: 500px !important;
     padding: 20px;
-    background-color: #b5b9b9;
-    border: 1px solid rgb(82, 81, 81);
+    background-color: rgb(248, 248, 237);
+    border: 1px solid #37474F;
     border-radius: 20px;
 }
 
@@ -83,3 +83,11 @@ main {
     filter: invert(100%);
 }
 
+.btnboot1{
+    background-color: rgb(246, 246, 246);
+    border-color:  rgb(113, 52, 52);
+}
+
+.btnboot1:hover{
+    background-color: rgb(156, 74, 74);
+}

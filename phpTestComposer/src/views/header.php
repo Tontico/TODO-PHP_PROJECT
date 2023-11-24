@@ -16,7 +16,7 @@ class Header
 
 ?>
         <!-- Header with some bootstraps -->
-        <header class="bg-dark p-3 d-flex justify-content-between align-items-center">
+        <header class="bgdark p-3 d-flex justify-content-between align-items-center">
             <div class="col-1 d-flex text-light align-items-center">
                 <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
                 <h1>Gest'Flex</h1>
@@ -40,17 +40,14 @@ class Header
                    foreach($_GET as $cle => $valeur){
                     $dataURL= $dataURL."&".$cle ."=".$valeur;
                      }
-                    //  <a href='". $_SERVER['PHP_SELF'].$dataURL."'></a>
                  
                 }
    
-             echo "<div class='cont'>
-             <form action='". $_SERVER['PHP_SELF'].$dataURL."' method='POST'>
-             <input type='text' value='1' name='mode' style='display: none;'>
-                    <input type='submit' name='mode'>
+             echo "<div class='nav-item'>
+                    <form action='". $_SERVER['PHP_SELF'].$dataURL."' method='POST'>
+                    <input type='submit' name='mode' class='btn btn-secondary buttonLD' value='Changer le mode'>
                     </form>
-                    </div>
-                    ";
+                    </div>";
 }
 
 ?>

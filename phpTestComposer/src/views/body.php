@@ -41,7 +41,7 @@ class Body
                     <div class='row'>
                         <h3>Projets dont je suis l'administrateur</h3>
                         <div class='col-12 mt-3 mb-4'>
-                            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary'>Créer un projet</a>
+                            <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayFormProject') . "' class='btn btn-primary btnboot1'>Créer un projet</a>
                         </div>";
         foreach ($projectsAdmin as $project) {
             if ($count === 0) {
