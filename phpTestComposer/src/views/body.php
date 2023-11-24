@@ -164,11 +164,21 @@ class Body
             } else {
                 echo "<div class='tasks_container_header_noTitle'><p></p></div>";
             }
-            $priority = $task->getPriorite();
-            if (!empty($priority) && isset($priority[0])) {
-                echo "<div class='tasks_container_header_noTitle'><p>" . (!empty($task->getPriorite()[0]->getEtat_priorite()) ? $task->getPriorite()[0]->getEtat_priorite() : "") . "</p></div>";
-            } else {
-                echo "<div class='tasks_container_header_noTitle'><p></p></div>";
+               $priority = $task->getPriorite();
+           if (!empty($priority)) 
+            {        $class="";
+               if ($priority[0]->getId_priorite()=== 1){
+                   $class="class='vert'";
+               }
+               if ($priority[0]->getId_priorite()=== 2){
+                   $class="class='orange'";
+               }
+               if ($priority[0]->getId_priorite()=== 3){
+                   $class="class='rouge'"; 
+               }
+               echo "<div class='tasks_container_header_noTitle'><p ".$class.">" . (!empty($task->getPriorite()[0]->getEtat_priorite()) ? $task->getPriorite()[0]->getEtat_priorite() : "") . "</p></div>";
+          } else {
+               echo "<div class='tasks_container_header_noTitle'><p></p></div>";
             }
             $status = $task->getStatus();
             if (!empty($status) && isset($status[0])) {
