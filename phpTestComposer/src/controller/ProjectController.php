@@ -230,8 +230,9 @@ class ProjectController extends AbstractController
             UrlGenerator::redirect('ProjectController', 'displayProjet'); // Redirect if not connected
             exit();
         }
-
+        //current date
         $date = date("Y-m-d");
+        
         $titleTask = htmlspecialchars($_POST['Titre_task'], ENT_QUOTES, 'UTF-8');
         $descriptionTask = htmlspecialchars($_POST["Description_task"], ENT_QUOTES, 'UTF-8');
         $dateTask = htmlspecialchars($_POST["Date_fin"], ENT_QUOTES, 'UTF-8');
@@ -242,7 +243,7 @@ class ProjectController extends AbstractController
             "Date_debut_tache" => $date,
             "Id_projet" => $_GET["Id_Projet"],
         ];
-
+        //if are optionnal if user want to take these data
         if (isset($_POST['Date_fin'])) {
             $datas['Date_butoire_tache'] = $dateTask;
         }
@@ -261,7 +262,7 @@ class ProjectController extends AbstractController
 
         Model::getInstance()->save('taches', $datas);
 
-        return UrlGenerator::redirect('ProjectController', 'displayProjet');
+         UrlGenerator::redirect('ProjectController', 'displayTaches', '&Id_Projet=',$_GET['Id_Projet']);
     }
 
     public function updateTask()
@@ -436,6 +437,6 @@ class ProjectController extends AbstractController
             Model::getInstance()->save("participants_projet", $data);
         }
         // Redirect to project display
-        UrlGenerator::redirect('ProjectController', 'displayProjet');
+        var_dump(UrlGenerator::redirect('ProjectController', 'displayTaches',"&Id_Projet=",$projectId));
     }
 }
