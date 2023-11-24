@@ -27,7 +27,7 @@ class Body
             $taskName = $projectAndTask->Nom_tache;
             $projectName = $projectAndTask->getTitre_projet();
             $projectId = $projectAndTask->getId_projet();
-            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task'><p>$taskName</p> <p>$projectName</p> </div></a>";
+            echo "<a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $projectId . "'><div class='line_task bgt'><p class='taskpc'>$taskName</p> <p class='taskpc'>$projectName</p> </div></a>";
         }
         echo "</div>
                 </div>

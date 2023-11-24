@@ -131,9 +131,6 @@ h3 {
     min-height: 40px;
 }
 
-.project_tasks a {
-    text-decoration: none!important;
-}
 
 .projectName {
     display: flex;

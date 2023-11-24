@@ -14,11 +14,11 @@ header {
     height: 10% !important;
 }
 .bgdark{
-    background-color: black;
+    background-color: #212529 !important;
 }
 
 .buttonLD {
-    background-color: #29323c;
+    background-color: #4a5766;
     
     padding: 5px 10px;
     text-align: center;
@@ -33,4 +33,8 @@ header {
   .buttonLD:hover {
     background-color: #495058
   }
+
+a{
+    text-decoration: none !important;
+}
 
