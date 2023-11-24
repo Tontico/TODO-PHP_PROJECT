@@ -18,7 +18,7 @@ class ConnexionForm extends AbstractForm
 ?>
         <main>
             <form id="security_form" action="<?= UrlGenerator::generateUrl('UserController', 'handleSubmit', 'connexion') ?>" method="POST">
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center align-self-center">
                     <img src="public/assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
                 </div>
 
@@ -81,6 +81,8 @@ class ConnexionForm extends AbstractForm
                 $_SESSION['connected'] = 'connected';
                 $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
                 $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
+                $_SESSION['mode']= "Sombre";
+
                 return [true, $formDatas];
             }
         }
