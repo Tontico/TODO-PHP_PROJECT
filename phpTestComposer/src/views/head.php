@@ -9,7 +9,12 @@ class Head
     public function displayHead()
     {
         if (isset($_POST['mode'])) {
-            $_SESSION['mode'] = !$_SESSION['mode'];
+            if ($_SESSION['mode']==="Dark"){
+                $_SESSION['mode'] = "Light";
+                
+            } else{
+                $_SESSION['mode'] = "Dark";
+            }
         }
 ?>
         <!DOCTYPE html>
@@ -27,7 +32,7 @@ class Head
             if ($formName !== null) { ?>
                 <link rel="stylesheet" href="./public/login.css">
             <?php } else {
-                if ($_SESSION['mode'] === true) {
+                if ($_SESSION['mode'] === "Dark") {
                     echo "<link rel='stylesheet' href='./public/stylelight.css'>
                 <link rel='stylesheet' href='./public/projectlight.css'>";
                 } else {

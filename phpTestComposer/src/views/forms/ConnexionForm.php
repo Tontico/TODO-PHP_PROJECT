@@ -29,7 +29,7 @@ class ConnexionForm extends AbstractForm
                         } ?></div>
                 <?php endif; ?>
 
-                <label for="email">Username</label>
+                <label for="email">Email</label>
                 <input type="text" name="email" class="form-control" <?php if (!empty($this->inputValues)) : ?> value="<?= $this->inputValues['email']; ?>" <?php endif; ?> placeholder="Adresse mail" required autofocus style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()">
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required style="margin-bottom: 20px;" onfocus="addShadow()" onblur="removeShadow()"><!-- Ajoute les listener onfocus et onblur -->
@@ -68,21 +68,20 @@ class ConnexionForm extends AbstractForm
             $sanitizedDatas = $this->sanitizeFormInputs($formDatas);
             // Update the formDatas & error value with the sanitized ones
             $this->error = $sanitizedDatas['error'];
-            $username = $sanitizedDatas['formDatas']['email'];
+            $email = $sanitizedDatas['formDatas']['email'];
             $password = $sanitizedDatas['formDatas']['password'];
-            $utilisateur = Model::getInstance()->getByAttribute('Utilisateur', 'Nom_utilisateur', $username);
+            $utilisateur = Model::getInstance()->getByAttribute('Utilisateur', 'Email_utilisateur', $email);
             // Look if login is empty OR if password doesn't match with the DB
             if (empty($utilisateur) || !password_verify($password, $utilisateur[0]->getMdp_utilisateur())) {
                 $this->error[] = 'Identifiants invalides';
-                $this->inputValues['email'] = $username;
+                $this->inputValues['email'] = $email;
                 return [$this->error, $this->inputValues];
             } else {
-
                 // Stock the user data in SESSION
                 $_SESSION['connected'] = 'connected';
                 $_SESSION['userId'] = $utilisateur[0]->getId_utilisateur();
                 $_SESSION['username'] = $utilisateur[0]->getPrenom_utilisateur();
-                $_SESSION['mode']= false;
+                $_SESSION['mode']= "Sombre";
 
                 return [true, $formDatas];
             }

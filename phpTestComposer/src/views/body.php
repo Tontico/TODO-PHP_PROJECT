@@ -111,12 +111,26 @@ class Body
     <body>";
     }
 
-
-    // Affiche la view avec les différentes taches du projet
-    public function displayBodyTaches($tasks, $project)
+    public function displayBodyTaches($tasks, $project, $participants)
     {
         echo "<body>
-            <main>
+            <main class='main_flex_row'>
+                <aside class='list_users bgdark'>
+                    <h2 class='title_font_small'>Liste des utilisateurs :</h2><pre class='containerUserList'>";
+        foreach ($participants as $participant) {
+            echo $participant->getUtilisateur()[0]->getNom_utilisateur() . " " . $participant->getUtilisateur()[0]->getPrenom_utilisateur() . "<br>";
+        }
+        if (SecurityController::isAdmin($project[0]->getId_projet())) {
+            echo "</pre><a class='greenLink' href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'>Ajouter un utilisateur</a><br>";
+            if (isset($_GET["key"])) {
+                echo "<form id='formAddUserProject' action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
+                    <input type='text' class='form-control inputHide' name='mailUser' placeholder='Adresse mail utilisateur' required>
+                    <button type='submit' name='submit' class='btnAddUserProject'>Assigner</button>
+                </form>";
+            }
+        }
+
+        echo "</aside>
                 <section class='project_tasks'>
                     <div class='projectName'>
                         <div class='projectNameAndIcon'>
@@ -165,8 +179,18 @@ class Body
                 echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
             $priority = $task->getPriorite();
-            if (!empty($priority) && isset($priority[0])) {
-                echo "<div class='tasks_container_header_noTitle taskC'><p>" . (!empty($task->getPriorite()[0]->getEtat_priorite()) ? $task->getPriorite()[0]->getEtat_priorite() : "") . "</p></div>";
+            if (!empty($priority)) {
+                $class = "";
+                if ($priority[0]->getId_priorite() === 1) {
+                    $class = "class='vert taskc'";
+                }
+                if ($priority[0]->getId_priorite() === 2) {
+                    $class = "class='orange taskc'";
+                }
+                if ($priority[0]->getId_priorite() === 3) {
+                    $class = "class='rouge taskc'";
+                }
+                echo "<div class='tasks_container_header_noTitle'><p " . $class . ">" . (!empty($task->getPriorite()[0]->getEtat_priorite()) ? $task->getPriorite()[0]->getEtat_priorite() : "") . "</p></div>";
             } else {
                 echo "<div class='tasks_container_header_noTitle taskC'><p></p></div>";
             }
@@ -178,17 +202,7 @@ class Body
             }
             echo  "</div>";
         }
-        if (SecurityController::isAdmin($project[0]->getId_projet())) {
-            echo "  <a href='" . UrlGenerator::generateUrl('ProjectController', 'displayTaches') . "&Id_Projet=" . $project[0]->getId_projet() . "&key=1'> Assigner un utilisateur</a><br>";
-            if (isset($_GET["key"])) {
-                echo "<form action='" . UrlGenerator::generateUrl('ProjectController', 'assignUser') . "&Id_Projet=" . $project[0]->getId_projet() . "' method='POST'>
-                        <div class='mb-3'>
-                            <input type='text' class='form-control' name='mailUser' placeholder='Adresse mail utilisateur' required>
-                        </div>
-                    <button type='submit' name='submit' class='btn btn-primary'>Assigner</button>
-                </form>";
-            }
-        }
+
         echo "</section>
             </main>
         <body>";

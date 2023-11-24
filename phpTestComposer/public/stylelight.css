@@ -40,7 +40,7 @@ header {
   }
 
   .bgdark{
-    background-color:rgb(113, 52, 52);
+    background-color:rgb(113, 52, 52) !important;
 
 }
 a {

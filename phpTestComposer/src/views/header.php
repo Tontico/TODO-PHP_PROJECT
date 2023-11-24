@@ -45,7 +45,7 @@ class Header
    
              echo "<div class='nav-item'>
                     <form action='". $_SERVER['PHP_SELF'].$dataURL."' method='POST'>
-                    <input type='submit' name='mode' class='btn btn-secondary buttonLD' value='Changer le mode'>
+                    <input type='submit' name='mode' class='btn btn-secondary buttonLD' value='".$_SESSION['mode']." mode'>
                     </form>
                     </div>";
 }
