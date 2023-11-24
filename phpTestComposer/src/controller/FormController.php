@@ -5,9 +5,7 @@ namespace Keha\Test\Controller;
 use Keha\Test\App\AbstractController;
 use Keha\Test\App\Model;
 use Keha\Test\App\UrlGenerator;
-use Keha\Test\views\Head;
-use Keha\Test\Views\Header;
-use Keha\Test\views\Body;
+
 
 class FormController extends AbstractController
 {
@@ -15,7 +13,6 @@ class FormController extends AbstractController
 
     public function __construct()
     {
-        //$this->datas = $datas;
         $this->error = false;
     }
     //section ProjectForm
@@ -190,7 +187,7 @@ class FormController extends AbstractController
                 <label for='$option'>$option</label>
             </div>";
         }
-    
+
         echo "</div>
                 <div class='mb-3'>
                 <h6>Sélectionnez la priorité de la tâche :</h6>";
@@ -202,7 +199,7 @@ class FormController extends AbstractController
                 <label for='$option'>$option</label>
             </div>";
         }
-       
+
 
         echo "</div>
                 <div class='mb-3'>
