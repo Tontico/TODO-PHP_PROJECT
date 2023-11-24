@@ -6,6 +6,7 @@ namespace Keha\Test\views\forms;
 
 use Keha\Test\App\UrlGenerator;
 use Keha\Test\Views\Forms\AbstractForm;
+use Keha\Test\App\Model;
 
 // Function to display the connection form
 class InscriptionForm extends AbstractForm
@@ -87,23 +88,32 @@ class InscriptionForm extends AbstractForm
             // Update the formDatas & error value with the sanitized ones
             $formDatas = $sanitizedDatas['formDatas'];
             $this->error = $sanitizedDatas['error'];
-            // Call the validate password method
-            $this->validatePassword($formDatas['password'], $formDatas['confirm_password']);
-            // Call the validate firstname method
-            $this->validateFirstname($formDatas['firstname']);
-            // Call the validate lastname method
-            $this->validateLastname($formDatas['lastname']);
+
+            // Check if the email already exists
+            $existingUser = Model::getInstance()->getByAttribute('utilisateur', 'Email_utilisateur', $formDatas['email']);
+
+            if (!empty($existingUser)) {
+                $this->error[] = 'Cet email est déjà enregistré.';
+            } else {
+                // Call the validate password method
+                $this->validatePassword($formDatas['password'], $formDatas['confirm_password']);
+                // Call the validate firstname method
+                $this->validateFirstname($formDatas['firstname']);
+                // Call the validate lastname method
+                $this->validateLastname($formDatas['lastname']);
+            }
+
             // If error still empty, form is valide
             if (empty($this->error)) {
                 return [true, $formDatas];
             }
         }
+
         $this->inputValues['firstname'] = $formDatas['firstname'];
         $this->inputValues['lastname'] = $formDatas['lastname'];
         $this->inputValues['email'] = $formDatas['email'];
         return [$this->error, $this->inputValues];
     }
-
     // Method that check the validity of the password
     private function validatePassword($password, $confirm_password)
     {
